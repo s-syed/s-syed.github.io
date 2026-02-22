@@ -619,3 +619,43 @@ section:last-of-type { border-bottom: none; }
 }
 
 .lec-refs a:hover { background: #ede9fe; text-decoration: none; }
+
+/* ── Topic cards (project suggested topics) ── */
+.topic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.topic-card {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.topic-card:last-child { border-bottom: none; }
+
+.topic-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.topic-refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.topic-refs a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--tag-text);
+  background: var(--tag-bg);
+  padding: 0.1rem 0.5rem;
+  text-decoration: none;
+}
+
+.topic-refs a:hover { background: #ede9fe; text-decoration: none; }

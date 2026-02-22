@@ -230,10 +230,21 @@
 
   <!-- ════════════════════════════════════
        PROJECT
-       To add/link a topic:
-         plain:   <li>Topic Name</li>
-         linked:  <li><a href="URL">Topic Name</a></li>
-         + refs:  <li>Topic &mdash; <a href="#">Paper 1</a>, <a href="#">Paper 2</a></li>
+       To add/link a topic, use this structure:
+
+       Plain:
+         <div class="topic-card">
+           <div class="topic-name">Topic Name</div>
+         </div>
+
+       With paper references:
+         <div class="topic-card">
+           <div class="topic-name">Topic Name</div>
+           <div class="topic-refs">
+             <a href="URL">Author et al. (Year)</a>
+             <a href="URL">Author et al. (Year)</a>
+           </div>
+         </div>
   ════════════════════════════════════ -->
   <section id="projects">
     <div class="section-label">Project</div>
@@ -258,21 +269,62 @@
     <div class="section-label" style="margin-top:0;">Suggested Topics</div>
     <p class="project-intro">Students may also propose their own topic in consultation with the instructor.</p>
 
-    <!-- To add a topic: <li>Topic Name</li>  or  <li><a href="URL">Topic Name</a></li> -->
-    <ol class="project-list">
-      <li>Neural Transport for Parallel Tempering</li>
-      <li>Optimal Annealing Paths</li>
-      <li>Diffusion Samplers</li>
-      <li>Normalizing Flows &amp; SMC</li>
-      <li>MCMC for Bayesian Neural Networks</li>
-      <li>Applications in Astrophysics</li>
-      <li>Sampling for Protein Folding</li>
-      <li>Non-Reversible MCMC</li>
-      <li>Free Energy Perturbation Methods</li>
-      <li>Variance Reduction in Monte Carlo</li>
-    </ol>
+    <div class="topic-list">
+
+      <div class="topic-card">
+        <div class="topic-name">Neural Transport for Parallel Tempering</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-name">Optimal Annealing Paths</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-name">Diffusion Samplers</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-name">Normalizing Flows &amp; SMC</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-name">MCMC for Bayesian Neural Networks</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-name">Applications in Astrophysics</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-name">Sampling for Protein Folding</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-name">Non-Reversible MCMC</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-name">Free Energy Perturbation Methods</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-name">Variance Reduction in Monte Carlo</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+    </div>
 
   </section>
+
 
   <footer class="site-footer">
     <span>STAT 547E &nbsp;&middot;&nbsp; UBC Statistics &nbsp;&middot;&nbsp; 2025</span>
