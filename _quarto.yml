@@ -1,27 +1,11 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: _site
+  resources:
+    - "index.html"
+    - "assets/**"
+    - "teaching/**"
+    - "uploads/**"
 
 website:
   title: "Saifuddin Syed"
-  favicon: assets/favicon.ico
-  navbar:
-    left:
-      - text: "Publications"
-        href: index.qmd#publications
-      - text: "Teaching"
-        href: index.qmd#teaching
-      - text: "Students"
-        href: index.qmd#students
-      - text: "Contact"
-        href: index.qmd#contact
-    right:
-      - text: "CV"
-        href: uploads/cv.pdf
-
-format:
-  html:
-    theme: none
-    css: assets/style.css
-    toc: false
-    anchor-sections: false

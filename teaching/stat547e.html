@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STAT 547E &mdash; Scalable Sampling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ════════════════════════════════════
+       NAV
+  ════════════════════════════════════ -->
+  <nav class="site-nav">
+    <a class="nav-name" href="/">Saifuddin Syed</a>
+    <ul class="nav-links">
+      <li><a href="#info">Info</a></li>
+      <li><a href="#lectures">Lectures</a></li>
+      <li><a href="#assignments">Assignments</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#references">References</a></li>
+    </ul>
+  </nav>
+
+  <!-- ════════════════════════════════════
+       COURSE HEADER
+       Edit course name, term, etc. here.
+  ════════════════════════════════════ -->
+  <div class="course-header">
+    <div class="course-code-label">University of British Columbia &nbsp;&middot;&nbsp; Department of Statistics</div>
+    <h1>STAT 547E &mdash; <em>Scalable Sampling</em></h1>
+    <p class="course-term">Graduate Course &nbsp;&middot;&nbsp; Winter 2025</p>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+       COURSE INFO
+       Edit times, location, office hours here.
+  ════════════════════════════════════ -->
+  <section id="info">
+    <div class="section-label">Course Information</div>
+
+    <div class="info-grid">
+      <div>
+        <div class="info-label">Instructor</div>
+        <div><a href="/">Saifuddin Syed</a></div>
+      </div>
+      <div>
+        <div class="info-label">Email</div>
+        <div><a href="mailto:saif.syed@stat.ubc.ca">saif.syed@stat.ubc.ca</a></div>
+      </div>
+      <div>
+        <div class="info-label">Lectures</div>
+        <div>TBD</div>
+      </div>
+      <div>
+        <div class="info-label">Office Hours</div>
+        <div>TBD</div>
+      </div>
+      <div>
+        <div class="info-label">Location</div>
+        <div>TBD</div>
+      </div>
+      <div>
+        <div class="info-label">Credits</div>
+        <div>3</div>
+      </div>
+    </div>
+
+    <p class="course-desc">
+      This course studies modern methods for sampling from complex, multi-modal distributions
+      at scale. Topics include parallel tempering, annealed importance sampling, non-reversible
+      MCMC, sequential Monte Carlo, and their connections to generative modelling. Emphasis is
+      placed on both theoretical foundations and practical implementations in Julia.
+    </p>
+
+    <a class="syllabus-btn" href="#">&darr; Syllabus (PDF)</a>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       LECTURES
+       To add slides: change <span class="slides-tbd">— upcoming</span>
+       to <a class="slides-link" href="PATH_TO_PDF">PDF</a>
+
+       To add a lecture: copy a <tr> block.
+  ════════════════════════════════════ -->
+  <section id="lectures">
+    <div class="section-label">Lecture Slides</div>
+
+    <table class="lecture-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Topic</th>
+          <th class="col-right">Slides</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td class="lec-date">Jan 7</td>
+          <td>
+            Introduction &amp; Motivation
+            <div class="lec-sub">Multi-modal distributions, challenges of MCMC at scale</div>
+          </td>
+          <td class="col-right"><a class="slides-link" href="#">PDF</a></td>
+        </tr>
+
+        <tr>
+          <td class="lec-date">Jan 14</td>
+          <td>
+            MCMC Foundations
+            <div class="lec-sub">Detailed balance, ergodicity, mixing times</div>
+          </td>
+          <td class="col-right"><a class="slides-link" href="#">PDF</a></td>
+        </tr>
+
+        <tr>
+          <td class="lec-date">Jan 21</td>
+          <td>
+            Parallel Tempering
+            <div class="lec-sub">Replica exchange, swap acceptance, temperature schedules</div>
+          </td>
+          <td class="col-right"><a class="slides-link" href="#">PDF</a></td>
+        </tr>
+
+        <tr>
+          <td class="lec-date">Jan 28</td>
+          <td>
+            Non-Reversible Parallel Tempering
+            <div class="lec-sub">NRPT, DEO scheme, round trip rates</div>
+          </td>
+          <td class="col-right"><a class="slides-link" href="#">PDF</a></td>
+        </tr>
+
+        <tr>
+          <td class="lec-date">Feb 4</td>
+          <td>
+            Annealed Importance Sampling
+            <div class="lec-sub">AIS, normalizing constants, path sampling</div>
+          </td>
+          <td class="col-right"><a class="slides-link" href="#">PDF</a></td>
+        </tr>
+
+        <tr>
+          <td class="lec-date">Feb 11</td>
+          <td>
+            Sequential Monte Carlo
+            <div class="lec-sub">SMC samplers, particle filters, resampling</div>
+          </td>
+          <td class="col-right"><a class="slides-link" href="#">PDF</a></td>
+        </tr>
+
+        <tr>
+          <td class="lec-date">Feb 25</td>
+          <td>
+            Optimal Annealing Schedules
+            <div class="lec-sub">Geometric paths, optimal transport, variational methods</div>
+          </td>
+          <td class="col-right"><span class="slides-tbd">&mdash; upcoming</span></td>
+        </tr>
+
+        <tr>
+          <td class="lec-date">Mar 4</td>
+          <td>
+            Connections to Diffusion Models
+            <div class="lec-sub">Score matching, denoising, generative sampling</div>
+          </td>
+          <td class="col-right"><span class="slides-tbd">&mdash; upcoming</span></td>
+        </tr>
+
+        <tr>
+          <td class="lec-date">Mar 11</td>
+          <td>
+            Langevin &amp; HMC Methods
+            <div class="lec-sub">MALA, NUTS, annealed Langevin dynamics</div>
+          </td>
+          <td class="col-right"><span class="slides-tbd">&mdash; upcoming</span></td>
+        </tr>
+
+        <tr>
+          <td class="lec-date">Mar 18</td>
+          <td>
+            Applications in Scientific Computing
+            <div class="lec-sub">Molecular dynamics, astrophysics, cancer genomics</div>
+          </td>
+          <td class="col-right"><span class="slides-tbd">&mdash; upcoming</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       ASSIGNMENTS
+       To add: copy a <div class="assign-card"> block.
+       To link a file: replace href="#" with the path to your PDF.
+  ════════════════════════════════════ -->
+  <section id="assignments">
+    <div class="section-label">Assignments</div>
+
+    <div class="assign-card">
+      <div class="assign-meta">
+        <div class="assign-title">Assignment 1 &mdash; MCMC Foundations</div>
+        <div class="assign-desc">Metropolis-Hastings, Gibbs sampling, convergence diagnostics</div>
+      </div>
+      <div class="assign-right">
+        <div class="assign-due">Due Jan 21</div>
+        <a class="pub-link" href="#">PDF</a>
+        <a class="pub-link" href="#">Notebook</a>
+      </div>
+    </div>
+
+    <div class="assign-card">
+      <div class="assign-meta">
+        <div class="assign-title">Assignment 2 &mdash; Parallel Tempering</div>
+        <div class="assign-desc">Implementing PT and NRPT, tuning temperature ladders</div>
+      </div>
+      <div class="assign-right">
+        <div class="assign-due">Due Feb 11</div>
+        <a class="pub-link" href="#">PDF</a>
+        <a class="pub-link" href="#">Notebook</a>
+      </div>
+    </div>
+
+    <div class="assign-card">
+      <div class="assign-meta">
+        <div class="assign-title">Assignment 3 &mdash; Annealed SMC</div>
+        <div class="assign-desc">Sequential Monte Carlo samplers, normalizing constant estimation</div>
+      </div>
+      <div class="assign-right">
+        <div class="assign-due">Due Mar 4</div>
+        <a class="pub-link" href="#">PDF</a>
+        <a class="pub-link" href="#">Notebook</a>
+      </div>
+    </div>
+
+    <div class="assign-card">
+      <div class="assign-meta">
+        <div class="assign-title">Assignment 4 &mdash; Annealed Langevin</div>
+        <div class="assign-desc">Langevin dynamics, score functions, annealed sampling</div>
+      </div>
+      <div class="assign-right">
+        <div class="assign-due">Due Mar 25</div>
+        <a class="pub-link" href="#">PDF</a>
+        <a class="pub-link" href="#">Notebook</a>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       PROJECT TOPICS
+       To add/edit: copy a <div class="project-card"> block.
+  ════════════════════════════════════ -->
+  <section id="projects">
+    <div class="section-label">Project Topics</div>
+
+    <p class="project-intro">
+      Students will complete a research project related to the course. Suggested topics are
+      listed below; students may also propose their own in consultation with the instructor.
+    </p>
+
+    <div class="project-grid">
+
+      <div class="project-card">
+        <div class="project-num">01</div>
+        <div class="project-name">Neural Transport for PT</div>
+        <div class="project-desc">Learning transport maps to accelerate parallel tempering swaps</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">02</div>
+        <div class="project-name">Optimal Annealing Paths</div>
+        <div class="project-desc">Variational and optimal transport perspectives on path design</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">03</div>
+        <div class="project-name">Diffusion Samplers</div>
+        <div class="project-desc">Connections between diffusion models and MCMC; DDS and DAPS</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">04</div>
+        <div class="project-name">Normalizing Flows &amp; SMC</div>
+        <div class="project-desc">Flow-based proposals in sequential Monte Carlo</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">05</div>
+        <div class="project-name">MCMC for Bayesian Neural Networks</div>
+        <div class="project-desc">Scalable sampling in high-dimensional posterior landscapes</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">06</div>
+        <div class="project-name">Applications in Astrophysics</div>
+        <div class="project-desc">Black hole imaging, gravitational wave inference, EHT pipelines</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">07</div>
+        <div class="project-name">Sampling for Protein Folding</div>
+        <div class="project-desc">Multi-modal energy landscapes in molecular dynamics</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">08</div>
+        <div class="project-name">Non-Reversible MCMC</div>
+        <div class="project-desc">Piecewise deterministic processes, ZZS, BPS</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       REFERENCES
+       To add: copy a <div class="ref-item"> block.
+  ════════════════════════════════════ -->
+  <section id="references">
+    <div class="section-label">References &amp; Reading List</div>
+
+    <div class="ref-category">
+      <div class="ref-cat-label">Textbooks</div>
+      <div class="ref-item">
+        <span class="ref-tag">Book</span>
+        <div>
+          <div><a href="#">Monte Carlo Statistical Methods</a></div>
+          <div class="ref-sub">Robert &amp; Casella (2004)</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <span class="ref-tag">Book</span>
+        <div>
+          <div><a href="#">An Introduction to Sequential Monte Carlo</a></div>
+          <div class="ref-sub">Chopin &amp; Papaspiliopoulos (2020)</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <span class="ref-tag">Book</span>
+        <div>
+          <div><a href="#">Pattern Recognition and Machine Learning</a></div>
+          <div class="ref-sub">Bishop (2006) &mdash; Ch. 11</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ref-category">
+      <div class="ref-cat-label">Key Papers</div>
+      <div class="ref-item">
+        <span class="ref-tag">Paper</span>
+        <div>
+          <div><a href="#">Optimised Annealed Sequential Monte Carlo Samplers</a></div>
+          <div class="ref-sub">Syed et al. (2024), JRSS-B</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <span class="ref-tag">Paper</span>
+        <div>
+          <div><a href="#">Non-Reversible Parallel Tempering: a Scalable Highly Parallel MCMC Scheme</a></div>
+          <div class="ref-sub">Syed, Bouchard-C&ocirc;t&eacute;, Deligiannidis &amp; Doucet (2022)</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <span class="ref-tag">Paper</span>
+        <div>
+          <div><a href="#">Annealed Importance Sampling</a></div>
+          <div class="ref-sub">Neal (2001)</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <span class="ref-tag">Paper</span>
+        <div>
+          <div><a href="#">Sequential Monte Carlo Samplers</a></div>
+          <div class="ref-sub">Del Moral, Doucet &amp; Jasra (2006)</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <span class="ref-tag">Paper</span>
+        <div>
+          <div><a href="#">Denoising Diffusion Probabilistic Models</a></div>
+          <div class="ref-sub">Ho, Jain &amp; Abbeel (2020)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ref-category">
+      <div class="ref-cat-label">Software</div>
+      <div class="ref-item">
+        <span class="ref-tag">Julia</span>
+        <div>
+          <div><a href="https://pigeons.run" target="_blank">Pigeons.jl</a></div>
+          <div class="ref-sub">Distributed PT and NRPT in Julia</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <span class="ref-tag">Julia</span>
+        <div>
+          <div><a href="https://turing.ml" target="_blank">Turing.jl</a></div>
+          <div class="ref-sub">Probabilistic programming in Julia</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <span class="ref-tag">Python</span>
+        <div>
+          <div><a href="https://blackjax-devs.github.io/blackjax/" target="_blank">BlackJAX</a></div>
+          <div class="ref-sub">JAX-based MCMC library</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="site-footer">
+    <span>STAT 547E &nbsp;&middot;&nbsp; UBC Statistics &nbsp;&middot;&nbsp; 2025</span>
+    <a href="/" style="color:var(--muted);">&larr; saifsyed.com</a>
+  </footer>
+
+</div><!-- end page-wrap -->
+</body>
+</html>
