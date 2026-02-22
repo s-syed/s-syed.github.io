@@ -582,3 +582,40 @@ section:last-of-type { border-bottom: none; }
   .assign-card { flex-direction: column; align-items: flex-start; }
   .interests-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Project numbered list ── */
+.project-list {
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0;
+}
+
+.project-list li {
+  font-size: 0.95rem;
+  color: var(--ink);
+  font-weight: 300;
+  padding: 0.1rem 0;
+}
+
+.project-list li a { color: var(--accent); }
+
+/* ── Lecture inline references ── */
+.lec-refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.lec-refs a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--tag-text);
+  background: var(--tag-bg);
+  padding: 0.1rem 0.45rem;
+  text-decoration: none;
+}
+
+.lec-refs a:hover { background: #ede9fe; text-decoration: none; }
