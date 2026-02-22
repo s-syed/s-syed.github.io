@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Saifuddin Syed</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
@@ -18,18 +18,19 @@
   <nav class="site-nav">
     <a class="nav-name" href="/">Saifuddin Syed</a>
     <ul class="nav-links">
-      <li><a href="#publications">Publications</a></li>
+      <li><a href="#research">Research</a></li>
       <li><a href="#teaching">Teaching</a></li>
-      <li><a href="#students">Students</a></li>
+      <li><a href="#group">Group</a></li>
+      <li><a href="#publications">Papers</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="uploads/cv.pdf">CV</a></li>
     </ul>
   </nav>
 
+
   <!-- ════════════════════════════════════
        HERO
-       - Edit your bio text here
-       - Replace assets/photo.jpg with your photo
+       Edit bio text and replace assets/photo.jpg with your photo.
   ════════════════════════════════════ -->
   <div class="hero">
     <div class="hero-text">
@@ -65,14 +66,79 @@
         <a class="hero-link" href="mailto:saif.syed@stat.ubc.ca">Email</a>
       </div>
     </div>
-    <!-- Replace assets/photo.jpg with your actual photo file -->
+    <!-- Replace assets/photo.jpg with your actual photo -->
     <img class="hero-photo" src="assets/photo.jpg" alt="Saifuddin Syed" />
   </div>
 
 
   <!-- ════════════════════════════════════
+       RESEARCH INTERESTS
+       Edit the interest items below.
+       To add one: copy an <div class="interest-item"> block.
+  ════════════════════════════════════ -->
+  <section id="research">
+    <div class="section-label">Research</div>
+
+    <div class="interests-grid">
+      <div class="interest-item">Monte Carlo methods</div>
+      <div class="interest-item">Annealing algorithms</div>
+      <div class="interest-item">Scalable Bayesian inference</div>
+      <div class="interest-item">Neural samplers</div>
+      <div class="interest-item">Generative AI</div>
+      <div class="interest-item">AI for science</div>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       TEACHING
+       To add a course: copy a <div class="teaching-item"> block.
+  ════════════════════════════════════ -->
+  <section id="teaching">
+    <div class="section-label">Teaching</div>
+
+    <div class="teaching-item">
+      <div>
+        <span class="teaching-code">STAT 547E</span>
+        <a href="teaching/stat547e.html">Scalable Sampling</a>
+      </div>
+      <div class="teaching-right">
+        <span class="teaching-term">UBC &middot; Winter 2025</span>
+      </div>
+    </div>
+
+    <!-- Add more courses here following the same pattern -->
+
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       RESEARCH GROUP
+       To add a student: uncomment and fill in a <div class="student-item"> block.
+  ════════════════════════════════════ -->
+  <section id="group">
+    <div class="section-label">Research Group</div>
+
+    <!--
+    <div class="student-item">
+      <div><a href="STUDENT_WEBSITE">Student Name</a></div>
+      <div class="student-degree">PhD &middot; UBC Statistics</div>
+    </div>
+    -->
+
+    <p class="recruit-note">
+      I am actively recruiting PhD students interested in Monte Carlo methods, annealing
+      algorithms, and their applications to scientific problems. Please email me with your
+      CV and a brief description of your research interests.
+    </p>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════
        NEWS
-       To add: copy a <div class="news-item"> block and edit it.
+       To add: copy a <div class="news-item"> block.
   ════════════════════════════════════ -->
   <section id="news">
     <div class="section-label">News</div>
@@ -102,15 +168,27 @@
 
   <!-- ════════════════════════════════════
        PUBLICATIONS
-       To add: copy a <div class="pub-item"> block, fill in details.
+       Currently showing an "under construction" note.
+       When ready: delete the .under-construction block and
+       uncomment + fill in the .pub-item blocks below.
+
+       To add a paper: copy a <div class="pub-item"> block.
        Use <strong>Saifuddin Syed</strong> to bold your name.
   ════════════════════════════════════ -->
   <section id="publications">
     <div class="section-label">Publications</div>
 
+    <div class="under-construction">
+      <p>Publications list coming soon</p>
+      <p>In the meantime, see my full list on Google Scholar &rarr; <a href="https://scholar.google.co.uk/citations?user=R8ULnXoAAAAJ&hl=en" target="_blank">scholar.google.com</a></p>
+    </div>
+
+    <!--
+    UNCOMMENT BELOW WHEN READY
+
     <div class="pub-item">
       <div class="pub-title">Optimised Annealed Sequential Monte Carlo Samplers</div>
-      <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, Kevin Chern, Arnaud Doucet</div>
+      <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-Côté, Kevin Chern, Arnaud Doucet</div>
       <div class="pub-venue">Journal of the Royal Statistical Society Series B, 2024</div>
       <div class="pub-links">
         <a class="pub-link" href="#">arXiv</a>
@@ -120,7 +198,7 @@
 
     <div class="pub-item">
       <div class="pub-title">Non-Reversible Parallel Tempering: a Scalable Highly Parallel MCMC Scheme</div>
-      <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, George Deligiannidis, Arnaud Doucet</div>
+      <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-Côté, George Deligiannidis, Arnaud Doucet</div>
       <div class="pub-venue">Journal of the Royal Statistical Society Series B, 2022 <span class="pub-award">Savage Award HM</span></div>
       <div class="pub-links">
         <a class="pub-link" href="#">arXiv</a>
@@ -131,7 +209,7 @@
 
     <div class="pub-item">
       <div class="pub-title">Parallel Tempering With a Variational Reference</div>
-      <div class="pub-authors">Nikola Surjanovic, <strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, Trevor Campbell</div>
+      <div class="pub-authors">Nikola Surjanovic, <strong>Saifuddin Syed</strong>, Alexandre Bouchard-Côté, Trevor Campbell</div>
       <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2022</div>
       <div class="pub-links">
         <a class="pub-link" href="#">arXiv</a>
@@ -139,60 +217,13 @@
       </div>
     </div>
 
-    <!-- Add more publications above this line, following the same pattern -->
-
-  </section>
-
-
-  <!-- ════════════════════════════════════
-       TEACHING
-       To add: copy a <div class="teaching-item"> block.
-  ════════════════════════════════════ -->
-  <section id="teaching">
-    <div class="section-label">Teaching</div>
-
-    <div class="teaching-item">
-      <div>
-        <span class="teaching-code">STAT 547E</span>
-        <a href="teaching/stat547e.html">Scalable Sampling</a>
-      </div>
-      <div class="teaching-right">
-        <span class="teaching-term">UBC &middot; Winter 2025</span>
-      </div>
-    </div>
-
-    <!-- Add more courses above this line -->
-
-  </section>
-
-
-  <!-- ════════════════════════════════════
-       STUDENTS
-       To add a student: copy a <div class="student-item"> block.
-       Remove the comment tags when you have students.
-  ════════════════════════════════════ -->
-  <section id="students">
-    <div class="section-label">Students</div>
-
-    <!--
-    <div class="student-item">
-      <div><a href="STUDENT_WEBSITE">Student Name</a></div>
-      <div class="student-degree">PhD &middot; UBC Statistics</div>
-    </div>
     -->
-
-    <p class="recruit-note">
-      I am actively recruiting PhD students interested in Monte Carlo methods, annealing
-      algorithms, and their applications to scientific problems. Please email me with your
-      CV and a brief description of your research interests.
-    </p>
 
   </section>
 
 
   <!-- ════════════════════════════════════
        CONTACT
-       Edit your details here.
   ════════════════════════════════════ -->
   <section id="contact">
     <div class="section-label">Contact</div>
@@ -223,6 +254,6 @@
     <span>Updated Feb 2026</span>
   </footer>
 
-</div><!-- end page-wrap -->
+</div>
 </body>
 </html>
