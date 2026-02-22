@@ -1,0 +1,203 @@
+---
+title: ""
+page-layout: full
+---
+
+<div class="page-wrap">
+
+<!-- ══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-text">
+    <h1>Saifuddin Syed</h1>
+    <p class="hero-role">Assistant Professor &nbsp;·&nbsp; UBC Statistics</p>
+    <div class="hero-bio">
+      <p>
+        I am an Assistant Professor in the
+        <a href="https://www.stat.ubc.ca/">Department of Statistics</a>
+        at the University of British Columbia, and an inaugural member of the
+        <a href="https://caida.ubc.ca/aim-si">AI Methods for Scientific Impact (AIM-SI)</a>
+        cluster within <a href="https://caida.ubc.ca/">CAIDA</a>.
+      </p>
+      <p>
+        My research focuses on the design and analysis of <strong>annealing algorithms</strong>
+        for scalable Bayesian inference and generative AI. I collaborate with scientists across
+        astronomy, chemistry, and biotechnology, and am a member of the Algorithms and Inference
+        Working Group for the
+        <a href="https://www.ngeht.org/">Next Generation Event Horizon Telescope (ngEHT)</a>.
+      </p>
+      <p>
+        Previously, I was a Florence Nightingale Bicentenary Fellow at Oxford's Department of
+        Statistics, and completed a postdoc under
+        <a href="https://www.stats.ox.ac.uk/~doucet/">Arnaud Doucet</a>
+        and a PhD under
+        <a href="https://www.stat.ubc.ca/~bouchard/">Alexandre Bouchard-Côté</a>.
+      </p>
+    </div>
+    <div class="hero-links">
+      <a class="hero-link" href="https://scholar.google.co.uk/citations?user=R8ULnXoAAAAJ&hl=en" target="_blank">Google Scholar</a>
+      <a class="hero-link" href="https://github.com/s-syed" target="_blank">GitHub</a>
+      <a class="hero-link" href="uploads/cv.pdf">CV</a>
+      <a class="hero-link" href="mailto:saif.syed@stat.ubc.ca">Email</a>
+    </div>
+  </div>
+  <!-- Replace assets/photo.jpg with your actual photo -->
+  <img class="hero-photo" src="assets/photo.jpg" alt="Saifuddin Syed" />
+</div>
+
+
+<!-- ══════════════════════════════════════
+     NEWS
+     To add a news item: copy one .news-item block and edit the date and text.
+═══════════════════════════════════════ -->
+<div class="section" id="news">
+  <div class="section-label">News</div>
+
+  <div class="news-item">
+    <div class="news-date">Feb 2026</div>
+    <div>Started teaching <a href="teaching/stat547e.html">STAT 547E: Scalable Sampling</a> at UBC.</div>
+  </div>
+
+  <div class="news-item">
+    <div class="news-date">Jan 2025</div>
+    <div>Joined the Department of Statistics at UBC as Assistant Professor.</div>
+  </div>
+
+  <div class="news-item">
+    <div class="news-date">2024</div>
+    <div>Paper accepted at <em>Journal of the Royal Statistical Society Series B</em>: "Optimised Annealed Sequential Monte Carlo Samplers".</div>
+  </div>
+
+  <div class="news-item">
+    <div class="news-date">2022</div>
+    <div>Received the <strong>Pierre Robillard Award</strong>, <strong>Cecil Graham Award</strong>, and <strong>Savage Award</strong> (honourable mention).</div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PUBLICATIONS
+     To add a paper: copy one .pub-item block and fill in the details.
+     Use <strong>Saifuddin Syed</strong> to bold your name in the author list.
+═══════════════════════════════════════ -->
+<div class="section" id="publications">
+  <div class="section-label">Publications</div>
+
+  <div class="pub-item">
+    <div class="pub-title">Optimised Annealed Sequential Monte Carlo Samplers</div>
+    <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-Côté, Kevin Chern, Arnaud Doucet</div>
+    <div class="pub-venue">Journal of the Royal Statistical Society Series B, 2024</div>
+    <div class="pub-links">
+      <a class="pub-link" href="#">arXiv</a>
+      <a class="pub-link" href="#">PDF</a>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-title">Non-Reversible Parallel Tempering: a Scalable Highly Parallel MCMC Scheme</div>
+    <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-Côté, George Deligiannidis, Arnaud Doucet</div>
+    <div class="pub-venue">Journal of the Royal Statistical Society Series B, 2022 <span class="pub-award">Savage Award HM</span></div>
+    <div class="pub-links">
+      <a class="pub-link" href="#">arXiv</a>
+      <a class="pub-link" href="#">PDF</a>
+      <a class="pub-link" href="https://github.com/Julia-Tempering/Pigeons.jl">Code</a>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-title">Parallel Tempering With a Variational Reference</div>
+    <div class="pub-authors">Nikola Surjanovic, <strong>Saifuddin Syed</strong>, Alexandre Bouchard-Côté, Trevor Campbell</div>
+    <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2022</div>
+    <div class="pub-links">
+      <a class="pub-link" href="#">arXiv</a>
+      <a class="pub-link" href="#">PDF</a>
+    </div>
+  </div>
+
+  <!-- Add more papers here following the same pattern -->
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     TEACHING
+     To add a course: copy one .teaching-item block.
+═══════════════════════════════════════ -->
+<div class="section" id="teaching">
+  <div class="section-label">Teaching</div>
+
+  <div class="teaching-item">
+    <div>
+      <span class="teaching-code">STAT 547E</span>
+      <a href="teaching/stat547e.html">Scalable Sampling</a>
+    </div>
+    <div class="teaching-right">
+      <span class="teaching-term">UBC · Winter 2025</span>
+    </div>
+  </div>
+
+  <!-- Add past or future courses here -->
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     STUDENTS
+     To add a student: copy one .student-item block.
+═══════════════════════════════════════ -->
+<div class="section" id="students">
+  <div class="section-label">Students</div>
+
+  <!-- Uncomment and fill in when you have students:
+
+  <div class="student-item">
+    <div><a href="#">Student Name</a></div>
+    <div class="student-degree">PhD · UBC Statistics</div>
+  </div>
+
+  -->
+
+  <div class="recruit-note">
+    I am actively recruiting PhD students interested in Monte Carlo methods, annealing algorithms,
+    and their applications to scientific problems. Please email me with your CV and a brief
+    description of your research interests.
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════ -->
+<div class="section" id="contact">
+  <div class="section-label">Contact</div>
+
+  <div class="contact-grid">
+    <div>
+      <div class="contact-label">Email</div>
+      <div><a href="mailto:saif.syed@stat.ubc.ca">saif.syed@stat.ubc.ca</a></div>
+    </div>
+    <div>
+      <div class="contact-label">Phone</div>
+      <div>+1 604 822 4673</div>
+    </div>
+    <div>
+      <div class="contact-label">Office</div>
+      <div>3182 Earth Sciences Building<br>2207 Main Mall, Vancouver, BC</div>
+    </div>
+    <div>
+      <div class="contact-label">Office Hours</div>
+      <div>By appointment</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="site-footer">
+  <span>Saifuddin Syed &nbsp;·&nbsp; UBC Statistics</span>
+  <span>Updated Feb 2026</span>
+</div>
+
+</div>

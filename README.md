@@ -1,31 +1,126 @@
-A Github Pages template for academic websites. This was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License. See LICENSE.md.
+# saifsyed.com — Quarto Website
 
-I think I've got things running smoothly and fixed some major bugs, but feel free to file issues or make pull requests if you want to improve the generic template / theme.
+## How to get this live (one-time setup, ~30 min)
 
-### Note: if you are using this repo and now get a notification about a security vulnerability, delete the Gemfile.lock file. 
+### Step 1 — Install Quarto
+Download and install from: https://quarto.org/docs/get-started/
+(Pick the installer for your OS — it's a standard .pkg / .exe)
 
-# Instructions
+### Step 2 — Create your GitHub repo
+1. Go to https://github.com/new
+2. Name the repo exactly: `s-syed.github.io`
+3. Set it to Public
+4. Click "Create repository"
 
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Fork [this repository](https://github.com/academicpages/academicpages.github.io) by clicking the "fork" button in the top right. 
-1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and create content & metadata (see below -- also see [this set of diffs](http://archive.is/3TPas) showing what files were changed to set up [an example site](https://getorg-testacct.github.io) for a user with the username "getorg-testacct")
-1. Upload any files (like PDFs, .zip files, etc.) to the files/ directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.  
-1. Check status by going to the repository settings, in the "GitHub pages" section
-1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
+### Step 3 — Put these files in the repo
+Option A (easiest): Use GitHub Desktop — drag the contents of this folder into the repo.
+Option B: In Terminal, from this folder:
+```
+git init
+git remote add origin https://github.com/s-syed/s-syed.github.io.git
+git add .
+git commit -m "initial site"
+git push -u origin main
+```
 
-See more info at https://academicpages.github.io/
+### Step 4 — Add your photo
+Drop your photo into `assets/` and name it `photo.jpg`.
+If you want a different filename, edit the `<img src=...>` line in `index.qmd`.
 
-## To run locally (not on GitHub Pages, to serve on your own computer)
+### Step 5 — Publish
+In Terminal, from the site folder:
+```
+quarto publish gh-pages
+```
+That's it. Your site will be live at https://s-syed.github.io in ~2 minutes.
 
-1. Clone the repository and made updates as detailed above
-1. Make sure you have ruby-dev, bundler, and nodejs installed: `sudo apt install ruby-dev ruby-bundler nodejs`
-1. Run `bundle clean` to clean up the directory (no need to run `--force`)
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
-1. Run `bundle exec jekyll liveserve` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change.
+### Step 6 — Point your domain (optional)
+In your domain registrar (wherever saifsyed.com is registered):
+- Add a CNAME record: `www` → `s-syed.github.io`
+- Or follow GitHub's custom domain guide: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
 
-# Changelog -- bugfixes and enhancements
+---
 
-There is one logistical issue with a ready-to-fork template theme like academic pages that makes it a little tricky to get bug fixes and updates to the core theme. If you fork this repository, customize it, then pull again, you'll probably get merge conflicts. If you want to save your various .yml configuration files and markdown files, you can delete the repository and fork it again. Or you can manually patch. 
+## How to update the site (day-to-day)
 
-To support this, all changes to the underlying code appear as a closed issue with the tag 'code change' -- get the list [here](https://github.com/academicpages/academicpages.github.io/issues?q=is%3Aclosed%20is%3Aissue%20label%3A%22code%20change%22%20). Each issue thread includes a comment linking to the single commit or a diff across multiple commits, so those with forked repositories can easily identify what they need to patch.
+Every update is the same 2-step process:
+
+**1. Edit the file**
+- Homepage content: edit `index.qmd`
+- Course page: edit `teaching/stat547e.qmd`
+- Styles: edit `assets/style.css`
+
+These are plain text files. Open them in any text editor (TextEdit, VS Code, etc).
+
+**2. Republish**
+```
+quarto publish gh-pages
+```
+
+That's the only command you ever need to run.
+
+---
+
+## Common tasks
+
+### Add a new publication
+Open `index.qmd`, find the `PUBLICATIONS` section, and copy this block:
+
+```html
+<div class="pub-item">
+  <div class="pub-title">Your Paper Title</div>
+  <div class="pub-authors"><strong>Saifuddin Syed</strong>, Co-author Name</div>
+  <div class="pub-venue">Journal Name, Year</div>
+  <div class="pub-links">
+    <a class="pub-link" href="YOUR_ARXIV_LINK">arXiv</a>
+    <a class="pub-link" href="YOUR_PDF_LINK">PDF</a>
+  </div>
+</div>
+```
+
+### Add a news item
+Open `index.qmd`, find the `NEWS` section, copy this block:
+
+```html
+<div class="news-item">
+  <div class="news-date">Month Year</div>
+  <div>Your news text here.</div>
+</div>
+```
+
+### Add lecture slides
+Open `teaching/stat547e.qmd`, find the row for that lecture, and change:
+```html
+<span class="slides-tbd">— upcoming</span>
+```
+to:
+```html
+<a class="slides-link" href="PATH_TO_YOUR_PDF">PDF</a>
+```
+Upload the PDF to the `teaching/` folder first.
+
+### Add a student
+Open `index.qmd`, find the `STUDENTS` section, copy this block:
+
+```html
+<div class="student-item">
+  <div><a href="STUDENT_WEBSITE">Student Name</a></div>
+  <div class="student-degree">PhD · UBC Statistics</div>
+</div>
+```
+
+---
+
+## File structure
+```
+s-syed.github.io/
+├── _quarto.yml          ← site config (nav, theme)
+├── index.qmd            ← homepage
+├── assets/
+│   ├── style.css        ← all styles
+│   └── photo.jpg        ← your photo (add this)
+├── teaching/
+│   └── stat547e.qmd     ← STAT 547E course page
+└── uploads/
+    └── cv.pdf           ← your CV (add this)
+```
