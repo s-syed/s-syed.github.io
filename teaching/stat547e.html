@@ -73,9 +73,7 @@
 
     <p class="course-desc">
       This course studies modern methods for sampling from complex, multi-modal distributions
-      at scale. Topics include parallel tempering, annealed importance sampling, non-reversible
-      MCMC, sequential Monte Carlo, and their connections to generative modelling. Emphasis is
-      placed on both theoretical foundations and practical implementations.
+      at scale. Emphasis is placed on both theoretical foundations and practical implementations.
     </p>
 
     <a class="syllabus-btn" href="#">&darr; Syllabus (PDF)</a>
@@ -88,7 +86,9 @@
        To add slides: replace
          <span class="slides-tbd">&mdash;</span>
        with
-         <a class="slides-link" href="PATH">PDF</a>
+         <a class="slides-link" href="PATH">Slides</a>
+         and/or
+         <a class="pub-link" href="PATH">PDF</a>
 
        To add references under a lecture, uncomment and fill in:
          <div class="lec-refs">
@@ -117,7 +117,11 @@
             Introduction &amp; Motivation
             <!-- <div class="lec-refs"><a href="#">Author et al. (Year)</a></div> -->
           </td>
-          <td class="col-right"><span class="slides-tbd">&mdash;</span></td>
+          <td class="col-right">
+            <a class="slides-link" href="lectures/lecture1/index.html">Slides</a>
+            &nbsp;
+            <a class="pub-link" href="lectures/lecture1/lecture1.pdf">PDF</a>
+          </td>
         </tr>
 
         <tr>
@@ -126,7 +130,11 @@
             MCMC Foundations
             <!-- <div class="lec-refs"><a href="#">Author et al. (Year)</a></div> -->
           </td>
-          <td class="col-right"><span class="slides-tbd">&mdash;</span></td>
+          <td class="col-right">
+            <a class="slides-link" href="lectures/lecture2/index.html">Slides</a>
+            &nbsp;
+            <a class="pub-link" href="lectures/lecture2/lecture2.pdf">PDF</a>
+          </td>
         </tr>
 
         <tr>
@@ -199,7 +207,9 @@
 
   <!-- ════════════════════════════════════
        ASSIGNMENTS
-       To link a PDF: replace href="#" with the file path.
+       To link files: replace href="#" with the file path.
+       Pattern: assignments/assignment_N/assignment_N.pdf
+                assignments/assignment_N/assignment_N_template.ipynb
   ════════════════════════════════════ -->
   <section id="assignments">
     <div class="section-label">Assignments</div>
@@ -210,7 +220,8 @@
       </div>
       <div class="assign-right">
         <div class="assign-due">Due Mar 11</div>
-        <a class="pub-link" href="#">PDF</a>
+        <a class="pub-link" href="assignments/assignment_1/assignment1.pdf">PDF</a>
+        <a class="pub-link" href="assignments/assignment_1/assignment1_template.ipynb">Template</a>
       </div>
     </div>
 
@@ -251,7 +262,6 @@
            <div class="topic-name">Topic Name</div>
            <div class="topic-refs">
              <a href="URL">Author et al. (Year)</a>
-             <a href="URL">Author et al. (Year)</a>
            </div>
          </div>
   ════════════════════════════════════ -->
@@ -281,6 +291,11 @@
     <div class="topic-list">
 
       <div class="topic-card">
+        <div class="topic-name">Molecular dynamics</div>
+        <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
+      </div>
+
+      <div class="topic-card">
         <div class="topic-name">Optimal transport</div>
         <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
       </div>
@@ -296,7 +311,7 @@
       </div>
 
       <div class="topic-card">
-        <div class="topic-name">Flow annealed importance sampling bootstrap </div>
+        <div class="topic-name">Flow annealed importance sampling bootstrap</div>
         <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
       </div>
 
@@ -306,7 +321,7 @@
       </div>
 
       <div class="topic-card">
-        <div class="topic-name">Metadymamics</div>
+        <div class="topic-name">Metadynamics</div>
         <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
       </div>
 
@@ -326,14 +341,15 @@
       </div>
 
       <div class="topic-card">
-        <div class="topic-name"> Nested sampling </div>
+        <div class="topic-name">Nested sampling</div>
         <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
       </div>
 
-            <div class="topic-card">
-        <div class="topic-name"> Annealed Langevin </div>
+      <div class="topic-card">
+        <div class="topic-name">Annealed Langevin</div>
         <!-- <div class="topic-refs"><a href="#">Author et al. (Year)</a></div> -->
       </div>
+
     </div>
 
   </section>
