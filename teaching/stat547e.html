@@ -60,7 +60,7 @@
       </div>
       <div>
         <div class="info-label">Email</div>
-        <div><a href="mailto:saif.syed@stat.ubc.ca">saif.syed@stat.ubc.ca</a></div>
+        <div><a href="/cdn-cgi/l/email-protection#4b382a222d6538322e2f0b383f2a3f653e292865282a"><span class="__cf_email__" data-cfemail="0477656d622a777d616044777065702a7166672a6765">[email&#160;protected]</span></a></div>
       </div>
       <div>
         <div class="info-label">Lectures</div>
@@ -149,8 +149,8 @@
           <td>
             MCMC Foundations
             <div class="lec-refs">
-              <div><a href="https://www.stat.umn.edu/geyer/f05/8931/n1998.pdf">Geyer (1998)</a> &mdash; See Chapter 2 for further reading on Markov Kernels.</div>
-              <div><a href="https://arxiv.org/pdf/math/0404033">Roberts &amp; Rosenthal (2004)</a> &mdash; Rigorous treatment of ergodicity and CLTs for Markov chains relevant for MCMC.</div>
+              <div><a href="https://www.stat.umn.edu/geyer/f05/8931/n1998.pdf">Geyer (1998)</a> &mdash; Foundational lecture notes on MCMC; clear and self-contained introduction to the fundamentals.</div>
+              <div><a href="https://arxiv.org/pdf/math/0404033">Roberts &amp; Rosenthal (2004)</a> &mdash; Rigorous treatment of ergodicity and CLTs for Markov chains used throughout the course.</div>
             </div>
           </td>
           <td class="col-right">
@@ -281,6 +281,57 @@
   <section id="assignments">
     <div class="section-label">Assignments</div>
 
+    <!-- ── Julia setup note ──────────────────────────────────────────
+         HOW TO UPDATE THIS BLOCK:
+         - The links below point to stable, long-lived documentation pages.
+           They should rarely need changing.
+         - If you add a new assignment in a different language, duplicate
+           this block and adjust the text accordingly.
+    ─────────────────────────────────────────────────────────────── -->
+    <p class="course-desc" style="margin-top:0; margin-bottom:0.5rem;">
+      Assignment notebooks are written in
+      <a href="https://julialang.org/" target="_blank">Julia</a>.
+      To get started, install Julia and open the template notebook in VS&thinsp;Code:
+    </p>
+    <ol class="course-desc" style="margin-top:0.4rem; margin-bottom:1rem; padding-left:1.4rem; line-height:2;">
+      <li>
+        <strong>Install Julia</strong> &mdash;
+        download the current stable release from
+        <a href="https://julialang.org/downloads/" target="_blank">julialang.org/downloads</a>.
+        The recommended way is via
+        <a href="https://github.com/JuliaLang/juliaup" target="_blank">juliaup</a>
+        (run <code>curl -fsSL https://install.julialang.org | sh</code> on macOS/Linux,
+        or follow the Windows instructions on that page).
+      </li>
+      <li>
+        <strong>Install VS&thinsp;Code</strong> &mdash;
+        download from <a href="https://code.visualstudio.com/" target="_blank">code.visualstudio.com</a>,
+        then install the
+        <a href="https://marketplace.visualstudio.com/items?itemName=julialang.language-julia" target="_blank">Julia extension</a>
+        and the
+        <a href="https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter" target="_blank">Jupyter extension</a>
+        from the Extensions panel.
+      </li>
+      <li>
+        <strong>Open the notebook</strong> &mdash;
+        download the template <code>.ipynb</code> file, open it in VS&thinsp;Code,
+        and select your Julia kernel when prompted.
+      </li>
+    </ol>
+    <p class="course-desc" style="margin-top:0; margin-bottom:1.5rem;">
+      <strong>New to Julia?</strong>
+      The
+      <a href="https://docs.julialang.org/en/v1/manual/getting-started/" target="_blank">official Getting Started guide</a>
+      is the best first stop.
+      For a gentler introduction aimed at scientists,
+      <a href="https://juliaacademy.com/p/intro-to-julia" target="_blank">Introduction to Julia</a>
+      (Julia Academy, free) and the community
+      <a href="https://github.com/mitmath/julia-mit" target="_blank">MIT Julia tutorials</a>
+      are both excellent. The
+      <a href="https://docs.julialang.org/en/v1/" target="_blank">full documentation</a>
+      is also very readable.
+    </p>
+
     <div class="assign-card">
       <div class="assign-meta">
         <div class="assign-title">Assignment 1</div>
@@ -288,7 +339,7 @@
       <div class="assign-right">
         <div class="assign-due">Due Mar 11</div>
         <a class="pub-link" href="assignments/assignment_1/assignment1.pdf">PDF</a>
-        <a class="pub-link" href="assignments/assignment_1/assignment1_template.ipynb">Notebook</a>
+        <a class="pub-link" href="assignments/assignment_1/assignment1_template.ipynb">Julia Notebook</a>
       </div>
     </div>
 
@@ -351,7 +402,7 @@
     <p class="course-desc" style="margin-top:0; margin-bottom:1.8rem;">
       The project involves an in-depth review of a method related to the course, and is
       expected to take approximately one week of effort. Deliverables are a
-      <strong>5-page write-up</strong> (excluding appendix and code) and a
+      <strong>5-page write-up</strong> (excluding code) and a
       <strong>30-minute presentation</strong> during the week of April&nbsp;13 (date TBD).
     </p>
 
@@ -366,7 +417,7 @@
     </div>
 
     <div class="section-label" style="margin-top:0;">Suggested Topics</div>
-    <p class="project-intro">You are encouraged to find topics of interest to you and your research. Here are some examples of topics if you want inspirations.</p>
+    <p class="project-intro">Students may also propose their own topic in consultation with the instructor.</p>
 
     <div class="topic-list">
 
@@ -374,6 +425,7 @@
         <div class="topic-name">Molecular dynamics</div>
         <div class="topic-refs">
           <a href="https://www.sciencedirect.com/book/9780122673511/understanding-molecular-simulation">Frenkel &amp; Smit (2002)</a>
+          <a href="https://arxiv.org/abs/1206.1901">Neal (2011)</a>
         </div>
       </div>
 
@@ -420,6 +472,7 @@
         <div class="topic-name">Schr&ouml;dinger bridge samplers</div>
         <div class="topic-refs">
           <a href="https://arxiv.org/abs/2106.01357">De Bortoli et al. (2021)</a>
+          <a href="https://arxiv.org/abs/2307.01050">Vargas et al. (2024)</a>
         </div>
       </div>
 
@@ -493,10 +546,4 @@
 
 
   <footer class="site-footer">
-    <span>STAT 547E &nbsp;&middot;&nbsp; UBC Statistics &nbsp;&middot;&nbsp; 2025</span>
-    <a href="/" style="color:var(--muted);">&larr; saifsyed.com</a>
-  </footer>
-
-</div>
-</body>
-</html>
+    <span>STAT 547E &nbsp;&middot;&nbsp; UBC Statistic
