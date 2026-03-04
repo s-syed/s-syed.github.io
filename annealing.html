@@ -1079,9 +1079,8 @@ function drawHist(cv,s){
   // True density — cached
   const trueCurve=getTrueCurve(beta);
   const maxTrue=Math.max(...trueCurve.map(e=>e.pn));
-  const maxHist=Math.max(...histD,1e-10);
-  // For ST/PT fix scale to true density so axis never jitters; bars may overflow
-  const maxY=(s.algo==='st'||s.algo==='pt')?maxTrue*1.4:Math.max(maxTrue,maxHist,1e-10);
+  // Fix scale to true density peak + 40% headroom for all algos — bars may overflow but curve is stable
+  const maxY=maxTrue*1.4;
 
   const xC2=x=>PAD.l+((x-XLO)/span)*PW;
   const yC=v=>PAD.t+PH-(v/maxY)*PH;
