@@ -62,7 +62,12 @@ input[type=number]{background:#fff;border:1px solid rgba(0,0,0,.18);
 <h1>Annealing Algorithms</h1>
 <p class="sub"><a href="https://saifsyed.com" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.2)">saifsyed.com</a></p>
 <div style="margin-bottom:12px;width:100%;max-width:840px">
-  <div style="font-size:9px;color:rgba(0,0,0,.4);letter-spacing:.14em;margin-bottom:6px">TARGET DISTRIBUTION</div>
+  <div style="font-size:9px;color:rgba(0,0,0,.4);letter-spacing:.14em;margin-bottom:8px">TARGET DISTRIBUTION</div>
+  <div style="font-size:10.5px;color:rgba(0,0,0,.55);font-family:'IBM Plex Mono',monospace;line-height:1.8;margin-bottom:10px;padding:10px 12px;background:rgba(0,0,0,.03);border-radius:6px;border:1px solid rgba(0,0,0,.07)">
+    <div><strong style="color:rgba(0,0,0,.7)">Target π(x)</strong> — mixture of Gaussians: π(x) ∝ Σ<sub>k</sub> w<sub>k</sub> · N(x; μ<sub>k</sub>, σ<sub>k</sub>²)</div>
+    <div style="margin-top:4px"><strong style="color:rgba(0,0,0,.7)">Reference η(x)</strong> — standard Gaussian: η(x) = N(x; 0, 1)</div>
+    <div style="margin-top:4px"><strong style="color:rgba(0,0,0,.7)">Annealing path</strong> — geometric: π<sub>β</sub>(x) ∝ π(x)<sup>β</sup> · η(x)<sup>1−β</sup>,  β ∈ [0, 1]</div>
+  </div>
   <div class="ctrls" id="tctrls" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))"></div>
 </div>
 <div style="margin-bottom:8px;width:100%;max-width:840px">
@@ -727,7 +732,7 @@ function drawMain(cv,prev,cur,t){
   /* ── PT ───────────────────────────────────────────────────────── */
   if(cur.algo==='pt'){
     ctx.save();
-    const L=cur.lad.length; // number of temperature levels
+    const L=cur.lad.length; // number of annealing levels
     // Lane guide lines + β labels
     for(let l=0;l<L;l++){
       ctx.globalAlpha=1;
@@ -1191,8 +1196,8 @@ const DEF={
 let animSpeed=3;
 function getIV(){const base={ais:480,smc:480,st:70,pt:70};return Math.round(base[algo]/animSpeed);}
 function getAD(){const base={ais:380,smc:380,st:230,pt:230};return Math.round(base[algo]/animSpeed);}
-const SUB_LABELS={ais:['REWEIGHT','MCMC'],smc:['REWEIGHT','RESAMPLE','MCMC'],st:['MCMC','TEMP MOVE'],pt:['MCMC','SWAP']};
-const SUB_COL={REWEIGHT:'#cc8800',RESAMPLE:'#e03030',MCMC:'#1a6eff','TEMP MOVE':'#8833cc',SWAP:'#00aa88','ODD SWAP':'#00aa88','EVEN SWAP':'#e07020'};
+const SUB_LABELS={ais:['REWEIGHT','MCMC'],smc:['REWEIGHT','RESAMPLE','MCMC'],st:['MCMC','ANNEAL MOVE'],pt:['MCMC','SWAP']};
+const SUB_COL={REWEIGHT:'#cc8800',RESAMPLE:'#e03030',MCMC:'#1a6eff','ANNEAL MOVE':'#8833cc',SWAP:'#00aa88','ODD SWAP':'#00aa88','EVEN SWAP':'#e07020'};
 const ACC_CSS={ais:'#1a6eff',smc:'#00aa88',st:'#8833cc',pt:'#cc8800'};
 const ACC_BG={ais:'rgba(26,110,255,.1)',smc:'rgba(0,170,136,.1)',st:'rgba(136,51,204,.1)',pt:'rgba(204,136,0,.1)'};
 function pCol(col){return showHistColour?col:ACC_CSS[algo];}
@@ -1387,12 +1392,12 @@ function renderCtrls(){
       style="accent-color:#888" oninput="onSpeed(+this.value)">
   </div>`;
   const mcmcTog=tg('KERNEL','mcmcType',['rwmh','mala'],c.mcmcType||'rwmh');
-  const stepSl=sl('STEP SIZE h','stepSize',0.05,3.0,0.05,c.stepSize);
+  const stepSl=sl('STEP SIZE h','stepSize',0.01,3.0,0.01,c.stepSize);
   let h='';
-  if(algo==='ais')h=sl('PARTICLES','N',20,300,10,c.N)+ni('TEMP STEPS','nSteps',5,200,c.nSteps)+sl('MCMC/STEP','nMCMC',1,12,1,c.nMCMC)+stepSl+mcmcTog+speedSlider;
-  if(algo==='smc')h=sl('PARTICLES','N',10,300,5,c.N)+ni('TEMP STEPS','nSteps',5,200,c.nSteps)+sl('MCMC/STEP','nMCMC',1,12,1,c.nMCMC)+stepSl+mcmcTog+tg('RESAMPLING','resType',['systematic','multinomial'],c.resType)+speedSlider;
-  if(algo==='st') h=sl('PARTICLES','N',2,20,1,c.N)+sl('MCMC/MOVE','nMCMC',1,20,1,c.nMCMC)+sl('TEMP LEVELS','nLvl',5,25,2,c.nLvl)+stepSl+mcmcTog+tg('TYPE','stType',['reversible','nonreversible'],c.stType)+speedSlider;
-  if(algo==='pt') h=sl('CHAINS (= LEVELS)','N',2,20,1,c.N)+sl('MCMC/SWAP','nMCMC',1,20,1,c.nMCMC)+stepSl+mcmcTog+tg('TYPE','ptType',['reversible','nonreversible'],c.ptType)+speedSlider;
+  if(algo==='ais')h=ni('PARTICLES','N',1,500,c.N)+ni('ANNEAL STEPS','nSteps',5,500,c.nSteps)+sl('MCMC/STEP','nMCMC',1,12,1,c.nMCMC)+stepSl+mcmcTog+speedSlider;
+  if(algo==='smc')h=ni('PARTICLES','N',1,500,c.N)+ni('ANNEAL STEPS','nSteps',5,500,c.nSteps)+sl('MCMC/STEP','nMCMC',1,12,1,c.nMCMC)+stepSl+mcmcTog+tg('RESAMPLING','resType',['systematic','multinomial'],c.resType)+speedSlider;
+  if(algo==='st') h=ni('PARTICLES','N',2,500,c.N)+ni('ANNEAL LEVELS','nLvl',2,500,c.nLvl)+sl('MCMC/MOVE','nMCMC',1,20,1,c.nMCMC)+stepSl+mcmcTog+tg('TYPE','stType',['reversible','nonreversible'],c.stType)+speedSlider;
+  if(algo==='pt') h=ni('ANNEALING LEVELS','N',2,500,c.N)+sl('MCMC/SWAP','nMCMC',1,20,1,c.nMCMC)+stepSl+mcmcTog+tg('TYPE','ptType',['reversible','nonreversible'],c.ptType)+speedSlider;
   document.getElementById('ctrls').innerHTML=h;
 }
 function onSpeed(v){
