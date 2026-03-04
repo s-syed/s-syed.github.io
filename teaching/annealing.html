@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tempering Algorithms</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--acc:#1a6eff;--acc-bg:rgba(26,110,255,.1)}
+body{background:#f5f6fa;color:#1a1e2e;font-family:'IBM Plex Mono',monospace;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:18px 14px 32px}
+h1{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:clamp(22px,4vw,40px);letter-spacing:-.02em;margin-bottom:4px;white-space:nowrap;color:rgba(0,0,0,0.75)}
+.sub{font-size:9px;color:rgba(0,0,0,.35);letter-spacing:.14em;margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tab{padding:5px 20px;border:1px solid rgba(0,0,0,.15);background:#fff;
+  color:rgba(0,0,0,.4);cursor:pointer;font:11px 'IBM Plex Mono',monospace;
+  letter-spacing:.07em;border-radius:3px;transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.tab:hover{border-color:rgba(0,0,0,.3);color:rgba(0,0,0,.7)}
+.tab.on{border-color:var(--acc);background:var(--acc-bg);color:var(--acc);box-shadow:none}
+.subs{display:flex;align-items:center;gap:5px;margin-bottom:10px;min-height:26px}
+.sp{display:flex;align-items:center;gap:4px;padding:3px 10px;
+  border:1px solid rgba(0,0,0,.1);border-radius:3px;opacity:.3;transition:all .2s;background:#fff}
+.sp.on{opacity:1}
+.sp .dot{width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,.2)}
+.sp .lbl{font-size:9px;letter-spacing:.09em;color:rgba(0,0,0,.5)}
+.sp-sep{width:18px;height:1px;background:rgba(0,0,0,.1)}
+.cvs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+canvas{border-radius:8px;border:1px solid rgba(0,0,0,.1);display:block;
+  background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.stats{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:center}
+.sbox{background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:4px;padding:5px 12px;
+  box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.slbl{font-size:8px;color:rgba(0,0,0,.4);letter-spacing:.13em;text-transform:uppercase}
+.sval{font-size:16px;font-weight:500;color:var(--acc)}
+.btns{display:flex;gap:7px;margin-top:10px}
+.btn{padding:6px 18px;border:1px solid rgba(0,0,0,.15);background:#fff;color:#1a1e2e;
+  cursor:pointer;font:11.5px 'IBM Plex Mono',monospace;border-radius:3px;
+  transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.btn:hover{border-color:rgba(0,0,0,.3)}
+.btn.p{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);box-shadow:none}
+.ctrls{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));
+  gap:10px;width:100%;max-width:840px}
+.ctl{display:flex;flex-direction:column;gap:3px}
+.clbl{font-size:9px;color:rgba(0,0,0,.45);letter-spacing:.1em}
+.cv{color:rgba(0,0,0,.75);font-weight:500}
+input[type=range]{-webkit-appearance:none;height:3px;border-radius:2px;
+  background:rgba(0,0,0,.12);cursor:pointer;width:100%}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;
+  border-radius:50%;background:var(--acc);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+input[type=number]{background:#fff;border:1px solid rgba(0,0,0,.18);
+  color:#1a1e2e;font:11px 'IBM Plex Mono',monospace;padding:4px 8px;border-radius:3px;width:82px}
+.togs{display:flex;gap:5px;flex-wrap:wrap}
+.tog{padding:3px 9px;border:1px solid rgba(0,0,0,.12);background:#fff;
+  color:rgba(0,0,0,.45);cursor:pointer;font:10px 'IBM Plex Mono',monospace;
+  border-radius:3px;transition:all .15s}
+.tog:hover{border-color:rgba(0,0,0,.3)}
+.tog.on{border-color:var(--acc);background:var(--acc-bg);color:var(--acc)}
+</style>
+</head>
+<body>
+<h1>Annealing Algorithms</h1>
+<p class="sub"><a href="https://saifsyed.com" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.2)">saifsyed.com</a></p>
+<div style="margin-bottom:12px;width:100%;max-width:840px">
+  <div style="font-size:9px;color:rgba(0,0,0,.4);letter-spacing:.14em;margin-bottom:6px">TARGET DISTRIBUTION</div>
+  <div class="ctrls" id="tctrls" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))"></div>
+</div>
+<div style="margin-bottom:8px;width:100%;max-width:840px">
+  <div style="font-size:9px;color:rgba(0,0,0,.4);letter-spacing:.14em;margin-bottom:8px">ANNEALING ALGORITHM</div>
+  <div class="tabs" id="tabs"></div>
+  <div id="algoref" style="font-size:9.5px;color:rgba(0,0,0,.4);margin-top:6px;font-family:'IBM Plex Mono',monospace;line-height:1.5"></div>
+</div>
+<div class="subs" id="subs"></div>
+<div class="cvs">
+  <canvas id="mc" width="510" height="450"></canvas>
+  <canvas id="dc" width="316" height="450"></canvas>
+</div>
+<canvas id="hc" width="840" height="155" style="border-radius:8px;border:1px solid rgba(0,0,0,.1);display:block;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-top:8px"></canvas>
+<div class="stats" id="stats"></div>
+<div class="btns">
+  <button class="btn p" id="bp">▶ Run</button>
+  <button class="btn"   id="bs">⟩ Step</button>
+  <button class="btn"   id="br">↺ Reset</button>
+  <button class="btn"   id="bl" onclick="showLineage=!showLineage;this.classList.toggle('p',showLineage);this.textContent=showLineage?'⚇ Lineage On':'⚇ Lineage Off'" style="display:none">⚇ Lineage On</button>
+  <button class="btn" id="bh" onclick="showHistColour=!showHistColour;this.classList.toggle('p',showHistColour);this.textContent=showHistColour?'◼ Colours On':'◼ Colours Off';updateTitleColour()">◼ Colours Off</button>
+</div>
+<div class="ctrls" id="ctrls"></div>
+
+<script>
+'use strict';
+
+/* ═══════════════════════════ TARGET CONFIG ══════════════════════════════════ */
+let targetCfg={
+  nModes:3,
+  modes:[
+    {w:0.45,mu:-2.8,s:0.55},
+    {w:0.35,mu:2.6, s:0.65},
+    {w:0.20,mu:0.2, s:0.45}
+  ]
+};
+
+function getMDS(){
+  const sub=targetCfg.modes.slice(0,targetCfg.nModes);
+  const wSum=sub.reduce((a,m)=>a+m.w,0)||1;
+  return sub.map(m=>({w:m.w/wSum,mu:m.mu,s:Math.max(0.05,m.s)}));
+}
+
+let XLO=-7,XHI=7;
+function computeXRange(){
+  const M=getMDS();
+  const lo=Math.min(...M.map(m=>m.mu-4.5*m.s));
+  const hi=Math.max(...M.map(m=>m.mu+4.5*m.s));
+  const span=hi-lo,pad=Math.max(1.5,span*0.18);
+  XLO=Math.floor(lo-pad); XHI=Math.ceil(hi+pad);
+}
+computeXRange();
+
+/* ═══════════════════════════ MATH ══════════════════════════════════════════ */
+function randn(){let u=0;while(!u)u=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*Math.random());}
+const rn=(mu,s)=>mu+s*randn();
+const lgN=(x,mu,s)=>-0.5*((x-mu)/s)**2-Math.log(s)-0.9189;
+const lgR=x=>lgN(x,0,1.8);
+function lgT(x){const M=getMDS();const l=M.map(m=>Math.log(m.w)+lgN(x,m.mu,m.s));const mx=Math.max(...l);return mx+Math.log(l.reduce((s,v)=>s+Math.exp(v-mx),0));}
+const lgP=(x,b)=>(1-b)*lgR(x)+b*lgT(x);
+const refSamp=()=>rn(0,1.8);
+
+// Gradient of log π_β(x)
+function gradLgP(x,b){
+  const gR=-x/(1.8*1.8);
+  const M=getMDS();
+  const lws=M.map(m=>Math.log(m.w)+lgN(x,m.mu,m.s));
+  const lmx=Math.max(...lws),ws2=lws.map(v=>Math.exp(v-lmx)),S=ws2.reduce((a,c)=>a+c,0);
+  const gT=M.reduce((acc,m,k)=>acc+ws2[k]/S*(-(x-m.mu)/(m.s*m.s)),0);
+  return(1-b)*gR+b*gT;
+}
+
+// Random-walk MH kernel
+function rwmh(x,b,h){const xp=x+h*randn();return Math.log(Math.random())<lgP(xp,b)-lgP(x,b)?xp:x;}
+
+// MALA kernel (Metropolis-adjusted Langevin)
+function mala(x,b,h){
+  const h2=h*h;
+  const g=gradLgP(x,b);
+  const xp=x+(h2/2)*g+h*randn();
+  // log q(x|x') - log q(x'|x)
+  const gp=gradLgP(xp,b);
+  const logQfwd=-Math.pow(xp-(x+(h2/2)*g),2)/(2*h2);
+  const logQrev=-Math.pow(x-(xp+(h2/2)*gp),2)/(2*h2);
+  return Math.log(Math.random())<lgP(xp,b)-lgP(x,b)+logQrev-logQfwd?xp:x;
+}
+
+function mcmcKernel(x,b,h,useMALA){return useMALA?mala(x,b,h):rwmh(x,b,h);}
+
+function rESS(lw){if(!lw||!lw.length)return 1;const mx=Math.max(...lw),ws=lw.map(v=>Math.exp(v-mx)),S=ws.reduce((a,b)=>a+b,0);return(S*S)/(lw.length*ws.reduce((a,w)=>a+w*w,0));}
+function resSys(N,lw){const mx=Math.max(...lw),ws=lw.map(v=>Math.exp(v-mx)),S=ws.reduce((a,b)=>a+b,0);const cd=[];let a=0;ws.forEach(w=>{a+=w/S;cd.push(a);});const u0=Math.random()/N,idx=[];let j=0;for(let i=0;i<N;i++){const u=u0+i/N;while(j<N-1&&cd[j]<u)j++;idx.push(j);}return idx;}
+function resM(N,lw){const mx=Math.max(...lw),ws=lw.map(v=>Math.exp(v-mx)),S=ws.reduce((a,b)=>a+b,0);const cd=[];let a=0;ws.forEach(w=>{a+=w/S;cd.push(a);});return Array.from({length:N},()=>{const u=Math.random();const i=cd.findIndex(c=>c>=u);return i>=0?i:N-1;});}
+const mkLad=n=>Array.from({length:n},(_,i)=>i/(n-1));
+
+// Log Z estimators
+function logZfromW(logW){const mx=Math.max(...logW);return mx+Math.log(logW.reduce((s,lw)=>s+Math.exp(lw-mx),0))-Math.log(logW.length);}
+
+// Weight → radius/alpha. wr=1 at uniform → mid-size; wr>1 → grows; wr<1 → shrinks
+// Range: wr=0.01 → r≈2,  wr=1 → r≈7,  wr=N → r≈14
+function wToR(wr){return Math.max(1.5,Math.min(15,1.5+5.5*Math.log(1+Math.max(0,wr))));}
+function wToAlpha(wr){return Math.max(0.06,Math.min(1,0.1+0.7*Math.pow(Math.min(wr/1,3)/3,0.35)));}
+
+// Returns solid hex colors spread across hue range (avoids hsl+hex-suffix CSS bug)
+function hslToHex(h,s,l){
+  s/=100;l/=100;const a=s*Math.min(l,1-l);
+  const f=n=>{const k=(n+h/30)%12;const c=l-a*Math.max(-1,Math.min(k-3,9-k,1));
+    return Math.round(255*c).toString(16).padStart(2,'0');};
+  return`#${f(0)}${f(8)}${f(4)}`;
+}
+function hslPal(n){return Array.from({length:n},(_,i)=>hslToHex(Math.round(i*300/Math.max(n-1,1)),80,42));}
+const PT_COL=['#1a6eff','#00aa88','#5a9e00','#cc8800','#e03030','#8833cc','#cc3388','#0099cc'];
+
+/* ═══════════════════════════ HEATMAP ════════════════════════════════════════ */
+let _hm=null,_hmW=0,_hmH=0,_hmTarget='';
+function hmKey(){return XLO+'|'+XHI+'|'+JSON.stringify(targetCfg);}
+function getHM(W,H){
+  const k=hmKey();
+  if(_hm&&_hmW===W&&_hmH===H&&_hmTarget===k)return _hm;
+  _hmTarget=k;
+  const oc=document.createElement('canvas');oc.width=W;oc.height=H;
+  const ctx=oc.getContext('2d'),id=ctx.createImageData(W,H);
+  const span=XHI-XLO;
+  for(let r=0;r<H;r++){
+    const b=1-r/(H-1);const v=new Float32Array(W);let mx=1e-12;
+    for(let c=0;c<W;c++){v[c]=Math.exp(lgP(XLO+(c/(W-1))*span,b));if(v[c]>mx)mx=v[c];}
+    for(let c=0;c<W;c++){
+      const t=Math.pow(v[c]/mx,.6),i=(r*W+c)*4;
+      const g=Math.round(255-t*155);
+      id.data[i]=g;id.data[i+1]=g;id.data[i+2]=g;
+      id.data[i+3]=Math.round(12+t*200);
+    }
+  }
+  ctx.putImageData(id,0,0);_hm=oc;_hmW=W;_hmH=H;return oc;
+}
+
+/* ═══════════════════════════ INIT ══════════════════════════════════════════ */
+function mkAIS(c){
+  const pos=Array.from({length:c.N},refSamp);
+  const order=pos.map((x,i)=>({x,i})).sort((a,b)=>a.x-b.x);
+  const pal=hslPal(c.N);const cols=new Array(c.N);
+  order.forEach((o,rank)=>{cols[o.i]=pal[rank];});
+  return{algo:'ais',...c,sched:mkLad(c.nSteps+1),step:0,sub:0,done:false,
+    pos,cols,logW:new Array(c.N).fill(0),logZ:0,
+    essHist:[{t:0,v:1}],ghostLevels:[],treeEdges:[],pendingEdges:[]};
+}
+function mkSMC(c){
+  const pos=Array.from({length:c.N},refSamp);
+  const order=pos.map((x,i)=>({x,i})).sort((a,b)=>a.x-b.x);
+  const pal=hslPal(c.N);const cols=new Array(c.N);
+  order.forEach((o,rank)=>{cols[o.i]=pal[rank];});
+  return{algo:'smc',...c,sched:mkLad(c.nSteps+1),step:0,sub:0,done:false,
+    pos,logW:new Array(c.N).fill(0),ancCol:cols,linHist:[{t:0,v:c.N}],logZ:0,
+    ghostLevels:[],treeEdges:[],pendingEdges:[]};
+}
+function mkST(c){
+  const L=c.nLvl,cols=hslPal(c.N);
+  return{algo:'st',...c,lad:mkLad(L),iter:0,sub:0,
+    par:Array.from({length:c.N},(_,i)=>({
+      x:refSamp(),lvl:Math.floor(i*(L-1)/(Math.max(c.N-1,1))),
+      dir:1,col:cols[i],dots:[],rt:0,tb:false,tt:false,
+    })),
+    idxHist:Array.from({length:c.N},(_,i)=>[Math.floor(i*(c.nLvl-1)/(Math.max(c.N-1,1)))]),
+    swapAcc:0,swapProp:0,totalRT:0,evts:[],
+    swapAccLvl:new Array(c.nLvl-1).fill(0),swapPropLvl:new Array(c.nLvl-1).fill(0),
+    logZsums:new Array(c.nLvl-1).fill(-Infinity),logZcnts:new Array(c.nLvl-1).fill(0)};
+}
+function mkPT(c){
+  const N=c.N;
+  const cols=hslPal(N);
+  return{algo:'pt',...c,lad:mkLad(N),iter:0,sub:0,deoPhase:0,swapPhase:0,
+    sams:Array.from({length:N},(_,i)=>({
+      id:i,col:cols[i],lvl:i,
+      x:i===0?refSamp():rn(0,1.8),
+      dots:[],tb:i===0,tt:i===N-1,rt:0,dir:1,
+    })),
+    idxHist:Array.from({length:N},(_,i)=>[i]),
+    swapAcc:0,swapProp:0,totalRT:0,evts:[],curPhase:0,
+    swapAccLvl:new Array(N-1).fill(0),swapPropLvl:new Array(N-1).fill(0),
+    logZsums:new Array(N-1).fill(-Infinity),logZcnts:new Array(N-1).fill(0)};
+}
+const mkState=(algo,c)=>({ais:mkAIS,smc:mkSMC,st:mkST,pt:mkPT}[algo])(c);
+
+/* ═══════════════════════════ ROUND-TRIP CHECK ══════════════════════════════ */
+// A round trip = visited level 0 (β=0) → reached level L-1 (β=1) → returned to level 0
+// tb is unused now; tt=true means "has visited top since last time at bottom"
+function rtChk(tb,tt,lvl,L){
+  let ntb=tb,ntt=tt,rt=0;
+  if(lvl===L-1){ntt=true;}                    // touched top
+  if(lvl===0&&ntt){rt++;ntt=false;}            // back at bottom after visiting top = 1 round trip
+  return{tb:ntb,tt:ntt,rt};
+}
+
+/* ═══════════════════════════ LOG Z HELPERS ══════════════════════════════════ */
+// Accumulate log Z for ST/PT via TI: Z = ∏_k E_{β_{k-1}}[γ_{β_k}/γ_{β_{k-1}}]
+// Maintain running log-sum-exp for each adjacent pair
+function lsAdd(logSum,v){if(!isFinite(logSum))return v;const mx=Math.max(logSum,v);return mx+Math.log(Math.exp(logSum-mx)+Math.exp(v-mx));}
+function stptLogZ(lad,logZsums,logZcnts){
+  let lz=0;
+  for(let k=0;k<lad.length-1;k++){
+    if(logZcnts[k]===0)return null;
+    lz+=logZsums[k]-Math.log(logZcnts[k]); // log(mean exp(log-ratio))
+  }
+  return lz;
+}
+
+/* ═══════════════════════════ STEP ══════════════════════════════════════════ */
+function stepAIS(s){
+  if(s.done)return s;
+  const h=s.stepSize||0.5,useMALA=s.mcmcType==='mala';
+  if(s.sub===0){// REWEIGHT
+    const b0=s.sched[s.step],b1=s.sched[s.step+1];
+    const incW=s.pos.map(x=>lgP(x,b1)-lgP(x,b0));
+    const logW=s.logW.map((lw,i)=>lw+incW[i]);
+    // Incremental log Z contribution: log(1/N Σ exp(incW))
+    const incMx=Math.max(...incW),logZinc=incMx+Math.log(incW.reduce((a,v)=>a+Math.exp(v-incMx),0))-Math.log(s.N);
+    const logZ=s.logZ+logZinc;
+    const gl=[...s.ghostLevels,{beta:b0,pos:[...s.pos],cols:[...s.cols],logW:[...s.logW]}]; // pre-reweight weights at b0
+    if(gl.length>s.nSteps+2)gl.shift();
+    const pendingEdges=s.pos.map((xp,i)=>({xPar:xp,betaPar:b0,col:s.cols[i]}));
+    const ess=rESS(logW);
+    return{...s,logW,logZ,sub:1,essHist:[...s.essHist,{t:s.step+1,v:ess}],ghostLevels:gl,pendingEdges};
+  }else{// MCMC
+    const b=s.sched[s.step+1],pos=s.pos.slice();
+    for(let k=0;k<s.nMCMC;k++)for(let i=0;i<s.N;i++)pos[i]=mcmcKernel(pos[i],b,h,useMALA);
+    const betaChi=s.sched[s.step+1];
+    const newEdges=(s.pendingEdges||[]).map((e,i)=>({...e,xChi:pos[i],betaChi}));
+    const treeEdges=[...s.treeEdges,...newEdges];
+    const ns=s.step+1;return{...s,pos,sub:0,step:ns,done:ns>=s.nSteps,treeEdges,pendingEdges:[]};
+  }
+}
+function stepSMC(s){
+  if(s.done)return s;
+  const h=s.stepSize||0.5,useMALA=s.mcmcType==='mala';
+  if(s.sub===0){// REWEIGHT
+    const b0=s.sched[s.step],b1=s.sched[s.step+1];
+    const incW=s.pos.map(x=>lgP(x,b1)-lgP(x,b0));
+    const logW=s.logW.map((lw,i)=>lw+incW[i]);
+    const incMx=Math.max(...incW),logZinc=incMx+Math.log(incW.reduce((a,v)=>a+Math.exp(v-incMx),0))-Math.log(s.N);
+    const logZ=s.logZ+logZinc;
+    const ess=rESS(logW);
+    const gl=[...s.ghostLevels,{beta:b0,pos:[...s.pos],cols:[...s.ancCol]}];if(gl.length>s.nSteps+2)gl.shift();
+    return{...s,logW,logZ,sub:1,ghostLevels:gl,curESS:ess};
+  }else if(s.sub===1){// RESAMPLE
+    const fn=s.resType==='multinomial'?resM:resSys;
+    const par=fn(s.N,s.logW);
+    const pos=par.map(p=>s.pos[p]),ancCol=par.map(p=>s.ancCol[p]);
+    const pendingEdges=par.map((p,i)=>({xPar:s.pos[p],betaPar:s.sched[s.step],col:s.ancCol[p]}));
+    return{...s,pos,logW:new Array(s.N).fill(0),ancCol,sub:2,pendingEdges,
+      linHist:[...s.linHist,{t:s.step+1,v:new Set(ancCol).size}]};
+  }else{// MCMC
+    const b=s.sched[s.step+1],pos=s.pos.slice();
+    for(let k=0;k<s.nMCMC;k++)for(let i=0;i<s.N;i++)pos[i]=mcmcKernel(pos[i],b,h,useMALA);
+    const betaChi=s.sched[s.step+1];
+    const newEdges=s.pendingEdges.map((e,i)=>({...e,xChi:pos[i],betaChi}));
+    const treeEdges=[...s.treeEdges,...newEdges];
+    const ns=s.step+1;
+    return{...s,pos,sub:0,step:ns,done:ns>=s.nSteps,treeEdges,pendingEdges:[]};
+  }
+}
+function stepST(s){
+  const L=s.lad.length,h=s.stepSize||0.5,useMALA=s.mcmcType==='mala';
+  if(s.sub===0){// MCMC
+    let totalRT=s.totalRT,mcmcAcc=0,mcmcProp=0;
+    const logZsums=[...s.logZsums],logZcnts=[...s.logZcnts];
+    const par=s.par.map(p=>{
+      const b=s.lad[p.lvl];
+      let x=p.x;
+      if(b===0){x=refSamp();}
+      else{for(let k=0;k<s.nMCMC;k++){const xp=mcmcKernel(x,b,h,useMALA);if(xp!==x)mcmcAcc++;mcmcProp++;x=xp;}}
+      // Accumulate TI ratio for this level
+      if(p.lvl<L-1){const v=lgP(x,s.lad[p.lvl+1])-lgP(x,s.lad[p.lvl]);logZsums[p.lvl]=lsAdd(logZsums[p.lvl],v);logZcnts[p.lvl]++;}
+      if(p.lvl>0){const v=lgP(x,s.lad[p.lvl])-lgP(x,s.lad[p.lvl-1]);logZsums[p.lvl-1]=lsAdd(logZsums[p.lvl-1],v);logZcnts[p.lvl-1]++;}
+      const dots=[...p.dots,{x,lvl:p.lvl}];if(dots.length>800)dots.shift();
+      const {tb,tt,rt}=rtChk(p.tb,p.tt,p.lvl,L);
+      totalRT+=rt;
+      return{...p,x,dots,tb,tt,rt:p.rt+rt};
+    });
+    const rejRate=mcmcProp>0?1-mcmcAcc/mcmcProp:0;
+    return{...s,par,sub:1,evts:[],totalRT,rejRate,logZsums,logZcnts};
+  }else{// TEMP MOVE
+    let sa=s.swapAcc,sp=s.swapProp,totalRT=s.totalRT;
+    const swapAccLvl=[...s.swapAccLvl],swapPropLvl=[...s.swapPropLvl];
+    const evts=[];
+    const par=s.par.map(p=>{
+      let{x,lvl,dir,tb,tt,rt,dots}=p;
+      const d=s.stType==='reversible'?(Math.random()<.5?1:-1):dir;
+      const nLvl=lvl+d;
+      if(nLvl<0||nLvl>=L)return{...p,dir:s.stType==='nonreversible'?-d:d};
+      sp++;
+      const pairLvl=Math.min(lvl,nLvl);
+      swapPropLvl[pairLvl]++;
+      const logA=lgP(x,s.lad[nLvl])-lgP(x,s.lad[lvl]);
+      const ok=Math.log(Math.random())<logA;
+      evts.push({x,fLvl:lvl,tLvl:nLvl,ok});
+      if(ok){
+        sa++;swapAccLvl[pairLvl]++;
+        const nDots=[...dots,{x,lvl:nLvl}];if(nDots.length>800)nDots.shift();
+        const {tb:ntb,tt:ntt,rt:nrt}=rtChk(tb,tt,nLvl,L);
+        totalRT+=nrt;
+        return{...p,lvl:nLvl,dir:d,tb:ntb,tt:ntt,rt:rt+nrt,dots:nDots};
+      }else{
+        return{...p,dir:s.stType==='nonreversible'?-d:d};
+      }
+    });
+    const ni=s.iter+1;
+    const idxHist=par.map((p,i)=>{const h=[...s.idxHist[i],p.lvl];return h.length>50?h.slice(-50):h;});
+    return{...s,par,iter:ni,sub:0,swapAcc:sa,swapProp:sp,swapAccLvl,swapPropLvl,idxHist,totalRT,evts};
+  }
+}
+function stepPT(s){
+  const N=s.N,L=N,h=s.stepSize||0.5,useMALA=s.mcmcType==='mala';
+  if(s.sub===0){// MCMC
+    let totalRT=s.totalRT,mcmcAcc=0,mcmcProp=0;
+    const logZsums=[...s.logZsums],logZcnts=[...s.logZcnts];
+    const sams=s.sams.map(sam=>{
+      const b=s.lad[sam.lvl];
+      let x=sam.x;
+      if(b===0){x=refSamp();}
+      else{for(let k=0;k<s.nMCMC;k++){const xp=mcmcKernel(x,b,h,useMALA);if(xp!==x)mcmcAcc++;mcmcProp++;x=xp;}}
+      // Accumulate TI ratio for this level (both directions for lower variance)
+      if(sam.lvl<L-1){const v=lgP(x,s.lad[sam.lvl+1])-lgP(x,s.lad[sam.lvl]);logZsums[sam.lvl]=lsAdd(logZsums[sam.lvl],v);logZcnts[sam.lvl]++;}
+      if(sam.lvl>0){const v=lgP(x,s.lad[sam.lvl])-lgP(x,s.lad[sam.lvl-1]);logZsums[sam.lvl-1]=lsAdd(logZsums[sam.lvl-1],v);logZcnts[sam.lvl-1]++;}
+      const dots=[...sam.dots,{x,lvl:sam.lvl}];if(dots.length>800)dots.shift();
+      const {tb,tt,rt}=rtChk(sam.tb,sam.tt,sam.lvl,L);
+      if(rt>0)totalRT+=rt;
+      return{...sam,x,dots,tb,tt,rt:sam.rt+rt};
+    });
+    const rejRate=mcmcProp>0?1-mcmcAcc/mcmcProp:0;
+    const nextPhase=s.ptType==='nonreversible'?1-s.curPhase:(Math.random()<0.5?0:1);
+    return{...s,sams,sub:1,evts:[],totalRT,curPhase:nextPhase,rejRate,logZsums,logZcnts};
+  }else{// SWAP
+    let sa=s.swapAcc,sp=s.swapProp,totalRT=s.totalRT;
+    const swapAccLvl=[...s.swapAccLvl],swapPropLvl=[...s.swapPropLvl];
+    // Build level→sample-index map
+    const l2s={};s.sams.forEach((sam,i)=>{l2s[sam.lvl]=i;});
+    // Only attempt pairs of the chosen phase (0=even pairs 0-1,2-3,…; 1=odd pairs 1-2,3-4,…)
+    const phase=s.curPhase;
+    const pairs=[];for(let l=phase;l<N-1;l+=2)pairs.push(l);
+    const sams=s.sams.map(sam=>({...sam}));
+    const evts=[];
+    for(const l of pairs){
+      const i=l2s[l],j=l2s[l+1];if(i==null||j==null)continue;
+      const si=sams[i],sj=sams[j];
+      const bl=s.lad[l],bl1=s.lad[l+1];
+      const logA=lgP(sj.x,bl)+lgP(si.x,bl1)-lgP(si.x,bl)-lgP(sj.x,bl1);
+      sp++;swapPropLvl[l]++;
+      const ok=Math.log(Math.random())<logA;
+      evts.push({lvl:l,xi:si.x,xj:sj.x,ok,
+        // colours of the two replicas for ghost display
+        coli:si.col,colj:sj.col});
+      if(ok){
+        sa++;swapAccLvl[l]++;
+        const tl=sams[i].lvl;sams[i]={...sams[i],lvl:sams[j].lvl,dir:sams[j].lvl>sams[i].lvl?1:-1};sams[j]={...sams[j],lvl:tl,dir:tl>sams[j].lvl?1:-1};
+        l2s[sams[i].lvl]=i;l2s[sams[j].lvl]=j;
+        [i,j].forEach(idx=>{
+          const {tb,tt,rt}=rtChk(sams[idx].tb,sams[idx].tt,sams[idx].lvl,L);
+          if(rt>0){totalRT+=rt;sams[idx]={...sams[idx],tb,tt,rt:sams[idx].rt+rt};}
+          else sams[idx]={...sams[idx],tb,tt};
+        });
+      }
+    }
+    const ni=s.iter+1;
+    const idxHist=sams.map((sam,i)=>{const h=[...s.idxHist[i],sam.lvl];return h.length>50?h.slice(-50):h;});
+    return{...s,sams,iter:ni,sub:0,swapAcc:sa,swapProp:sp,swapAccLvl,swapPropLvl,idxHist,totalRT,evts,curPhase:s.curPhase};
+  }
+}
+function doStep(s){try{return({ais:stepAIS,smc:stepSMC,st:stepST,pt:stepPT}[s.algo])(s);}catch(e){console.error(e);return s;}}
+
+/* ═══════════════════════════ LERP HELPERS ══════════════════════════════════ */
+const lerp=(a,b,t)=>a+(b-a)*t;
+const ease=t=>t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2; // ease in-out quad
+
+/* make a "drawable" snapshot for interpolation */
+function snapshot(s){
+  if(!s)return null;
+  if(s.algo==='ais'||s.algo==='smc'){
+    return{...s,_pos:[...s.pos],_beta:s.sched[Math.min(s.step+(s.sub>=1?1:0),s.nSteps)],_cols:s.cols?[...s.cols]:null};
+  }
+  if(s.algo==='st'){
+    return{...s,_par:s.par.map(p=>({x:p.x,lvl:p.lvl,col:p.col,dir:p.dir,rt:p.rt,dots:p.dots,tb:p.tb,tt:p.tt}))};
+  }
+  if(s.algo==='pt'){
+    return{...s,_sams:s.sams.map(s=>({...s}))};  // dir included via spread
+  }
+  return s;
+}
+
+/* ═══════════════════════════ DRAW MAIN ═════════════════════════════════════ */
+const MP={l:54,r:28,t:18,b:48};
+function drawMain(cv,prev,cur,t){
+  if(!cv||!cur)return;
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  const PW=W-MP.l-MP.r,PH=H-MP.t-MP.b;
+  const et=ease(t);
+  const span=XHI-XLO;
+  const xC=x=>MP.l+((x-XLO)/span)*PW;
+  const bC=b=>MP.t+PH-b*PH;
+  const lvC=(l,L)=>bC(l/Math.max(L-1,1));
+  const paused=!playing;
+
+  // Background
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  ctx.drawImage(getHM(PW,PH),MP.l,MP.t);
+
+  // Grid
+  for(let x=XLO+1;x<XHI;x+=1){if(x%2!==0)continue;ctx.strokeStyle='rgba(0,0,0,.05)';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(xC(x),MP.t);ctx.lineTo(xC(x),MP.t+PH);ctx.stroke();}
+  for(let b=.2;b<1;b+=.2){ctx.strokeStyle='rgba(0,0,0,.06)';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(MP.l,bC(b));ctx.lineTo(MP.l+PW,bC(b));ctx.stroke();}
+  // Axes
+  ctx.strokeStyle='rgba(0,0,0,.3)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(MP.l,MP.t);ctx.lineTo(MP.l,MP.t+PH);ctx.lineTo(MP.l+PW,MP.t+PH);ctx.stroke();
+  ctx.font='10px IBM Plex Mono,monospace';ctx.fillStyle='rgba(0,0,0,.45)';ctx.textAlign='center';
+  // Dynamic x ticks: step by 2 if range <=16, else by 5
+  const xStep=span<=20?2:5;
+  const xFirst=Math.ceil(XLO/xStep)*xStep;
+  for(let x=xFirst;x<=XHI;x+=xStep){const cx=xC(x);if(cx<MP.l-4||cx>MP.l+PW+4)continue;ctx.fillText(x,cx,MP.t+PH+16);}
+  ctx.textAlign='right';
+  if(cur.algo==='ais'||cur.algo==='smc'){
+    for(let b=0;b<=1.01;b+=.25)ctx.fillText(b.toFixed(2),MP.l-6,bC(b)+4);
+  }
+  ctx.save();ctx.translate(14,MP.t+PH/2);ctx.rotate(-Math.PI/2);
+  ctx.fillStyle='rgba(0,0,0,.4)';ctx.textAlign='center';ctx.fillText('β (annealing parameter)',0,0);ctx.restore();
+  ctx.fillStyle='rgba(0,0,0,.4)';ctx.textAlign='center';ctx.fillText('x (position)',MP.l+PW/2,H-8);
+
+  const p=prev&&prev.algo===cur.algo?prev:null;
+
+  /* ── AIS ──────────────────────────────────────────────────────── */
+  if(cur.algo==='ais'){
+    // Ghost previous levels — weight-scaled dots (show density estimate at each past β)
+    for(const g of cur.ghostLevels){
+      const by=bC(g.beta);if(!g.cols)continue;
+      const gN=g.pos.length;
+      const gLW=g.logW||new Array(gN).fill(0);
+      const gMx=Math.max(...gLW);
+      const gWs=gLW.map(lw=>Math.exp(lw-gMx));
+      const gS=gWs.reduce((a,v)=>a+v,0)||1;
+      const gNw=gWs.map(w=>w/gS);
+      for(let i=0;i<gN;i++){
+        const px=g.pos[i];if(px<XLO||px>XHI)continue;
+        const wr=gNw[i]*gN;
+        const r=Math.max(1,wToR(wr)*0.65);
+        const al=wToAlpha(wr)*0.35;
+        ctx.save();ctx.globalAlpha=al;
+        ctx.beginPath();ctx.arc(xC(px),by,r,0,6.28);
+        ctx.fillStyle=pCol(g.cols[i]);ctx.fill();ctx.restore();
+      }
+    }
+    // Lineage tree edges (toggle)
+    if(showLineage){
+      ctx.save();ctx.lineWidth=0.8;
+      for(const e of(cur.treeEdges||[])){
+        if(e.xPar<XLO||e.xPar>XHI||e.xChi<XLO||e.xChi>XHI)continue;
+        ctx.strokeStyle=pCol(e.col);ctx.globalAlpha=.25;
+        ctx.beginPath();ctx.moveTo(xC(e.xPar),bC(e.betaPar));ctx.lineTo(xC(e.xChi),bC(e.betaChi));ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    const curB=cur._beta??cur.sched[Math.min(cur.step+(cur.sub>=1?1:0),cur.nSteps)];
+    const prevB=p?(p._beta??curB):curB;
+    const dispB=lerp(prevB,curB,et);
+    ctx.strokeStyle='rgba(80,80,80,.25)';ctx.lineWidth=1;ctx.setLineDash([4,5]);
+    ctx.beginPath();ctx.moveTo(MP.l,bC(dispB));ctx.lineTo(MP.l+PW,bC(dispB));ctx.stroke();ctx.setLineDash([]);
+
+    // Normalised weights relative to 1/N: wr=1 at uniform
+    const N=cur.N,logW=cur.logW;
+    const mx=Math.max(...logW),ws=logW.map(lw=>Math.exp(lw-mx)),S=ws.reduce((a,b)=>a+b,0)||1;
+    const nw=ws.map(w=>w/S);
+    const cols=cur.cols||[];
+
+    for(let i=0;i<N;i++){
+      const cx0=p&&p._pos?p._pos[i]:cur._pos[i],cx1=cur._pos[i];
+      const px=lerp(cx0,cx1,et);
+      if(px<XLO||px>XHI)continue;
+      const col=pCol(cols[i]||'#555');
+      const wr=nw[i]*N;
+      const r=wToR(wr),al=wToAlpha(wr);
+      // Small halo
+      ctx.save();ctx.globalAlpha=al*0.15;
+      ctx.beginPath();ctx.arc(xC(px),bC(dispB),r+5,0,6.28);
+      ctx.fillStyle=col;ctx.fill();ctx.restore();
+      // Dot
+      ctx.save();ctx.globalAlpha=Math.max(0.12,al);
+      ctx.beginPath();ctx.arc(xC(px),bC(dispB),r,0,6.28);
+      ctx.fillStyle=col;ctx.fill();
+      ctx.strokeStyle='rgba(0,0,0,0.55)';ctx.lineWidth=1;ctx.globalAlpha=Math.min(1,al+0.15);ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  /* ── SMC ──────────────────────────────────────────────────────── */
+  if(cur.algo==='smc'){
+    // Ghost previous levels — small fixed dots
+    for(const g of cur.ghostLevels){
+      const by=bC(g.beta);
+      for(let i=0;i<g.pos.length;i++){
+        const px=g.pos[i];if(px<XLO||px>XHI)continue;
+        ctx.save();ctx.globalAlpha=0.18;
+        ctx.beginPath();ctx.arc(xC(px),by,3,0,6.28);
+        ctx.fillStyle=pCol(g.cols[i]);ctx.fill();ctx.restore();
+      }
+    }
+    // Lineage tree edges (toggle)
+    if(showLineage){
+      ctx.save();ctx.lineWidth=0.8;
+      for(const e of cur.treeEdges){
+        if(e.xPar<XLO||e.xPar>XHI||e.xChi<XLO||e.xChi>XHI)continue;
+        ctx.strokeStyle=pCol(e.col);ctx.globalAlpha=.3;
+        ctx.beginPath();ctx.moveTo(xC(e.xPar),bC(e.betaPar));ctx.lineTo(xC(e.xChi),bC(e.betaChi));ctx.stroke();
+      }
+      for(const e of(cur.pendingEdges||[])){
+        if(e.xPar<XLO||e.xPar>XHI)continue;
+        ctx.strokeStyle=pCol(e.col);ctx.globalAlpha=.18;ctx.setLineDash([2,3]);
+        ctx.beginPath();
+        const curB2=cur.sched[Math.min(cur.step+(cur.sub>=1?1:0),cur.nSteps)];
+        ctx.moveTo(xC(e.xPar),bC(e.betaPar));ctx.lineTo(xC(e.xPar),bC(curB2));
+        ctx.stroke();ctx.setLineDash([]);
+      }
+      ctx.restore();
+    }
+
+    const curB=cur._beta??cur.sched[Math.min(cur.step+(cur.sub>=1?1:0),cur.nSteps)];
+    const prevB=p?(p._beta??curB):curB;
+    const dispB=lerp(prevB,curB,et);
+    ctx.strokeStyle='rgba(0,160,120,.22)';ctx.lineWidth=1;ctx.setLineDash([4,5]);
+    ctx.beginPath();ctx.moveTo(MP.l,bC(dispB));ctx.lineTo(MP.l+PW,bC(dispB));ctx.stroke();ctx.setLineDash([]);
+
+    // Weights: relative to 1/N, only visible during REWEIGHT sub-step
+    const smcN=cur.N;
+    const smcMx=Math.max(...cur.logW),smcWs=cur.logW.map(lw=>Math.exp(lw-smcMx));
+    const smcS=smcWs.reduce((a,b)=>a+b,0)||1;
+    const smcNw=smcWs.map(w=>w/smcS);
+    const showW=cur.sub===1;
+
+    for(let i=0;i<smcN;i++){
+      const cx0=p&&p._pos?p._pos[i]:cur._pos[i],cx1=cur._pos[i];
+      const px=lerp(cx0,cx1,et);
+      if(px<XLO||px>XHI)continue;
+      const col=pCol(cur.ancCol[i]);
+      const wr=showW?smcNw[i]*smcN:1;
+      const r=wToR(wr);
+      // Halo
+      ctx.save();ctx.globalAlpha=0.09;
+      ctx.beginPath();ctx.arc(xC(px),bC(dispB),r+5,0,6.28);
+      ctx.fillStyle=col;ctx.fill();ctx.restore();
+      // Dot
+      ctx.save();ctx.globalAlpha=showW?wToAlpha(wr):1;
+      ctx.beginPath();ctx.arc(xC(px),bC(dispB),r,0,6.28);
+      ctx.fillStyle=col;ctx.fill();
+      ctx.strokeStyle='rgba(0,0,0,0.55)';ctx.lineWidth=2;ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  /* ── ST ───────────────────────────────────────────────────────── */
+  if(cur.algo==='st'){
+    ctx.save();
+    const L=cur.lad.length;
+    // Level guide lines
+    for(let l=0;l<L;l++){
+      ctx.globalAlpha=1;
+      ctx.strokeStyle=l===0||l===L-1?'rgba(0,0,0,.2)':'rgba(0,0,0,.07)';
+      ctx.lineWidth=l===0||l===L-1?1:.5;
+      ctx.beginPath();ctx.moveTo(MP.l,lvC(l,L));ctx.lineTo(MP.l+PW,lvC(l,L));ctx.stroke();
+    }
+    // β labels on left
+    ctx.globalAlpha=1;
+    ctx.font='9px IBM Plex Mono,monospace';ctx.fillStyle='rgba(0,0,0,.4)';ctx.textAlign='right';
+    const lstep=Math.max(1,Math.ceil(L/6));
+    for(let l=0;l<L;l+=lstep)ctx.fillText(cur.lad[l].toFixed(2),MP.l-6,lvC(l,L)+3.5);
+
+    // Ghost dots — last 100 per level, bigger & more visible
+    ctx.save();
+    // Bucket dots by level for each particle, show last 100 per level
+    const lvlDots={}; // key: `${particleIdx}_${lvl}` → array of x
+    for(let pi=0;pi<cur.par.length;pi++){
+      const pp=cur.par[pi];
+      for(const d of pp.dots){
+        const key=`${pi}_${d.lvl}`;
+        if(!lvlDots[key])lvlDots[key]=[];
+        lvlDots[key].push({x:d.x,col:pp.col});
+      }
+    }
+    for(const key of Object.keys(lvlDots)){
+      const arr=lvlDots[key];
+      const lvl=parseInt(key.split('_')[1]);
+      const recent=arr.slice(-100);
+      for(const d of recent){
+        if(d.x<XLO||d.x>XHI)continue;
+        ctx.fillStyle=pCol(d.col);ctx.globalAlpha=0.16;
+        ctx.beginPath();ctx.arc(xC(d.x),lvC(lvl,L),3.5,0,6.28);ctx.fill();
+      }
+    }
+    ctx.restore();
+
+    // Swap event arrows — stay visible when paused
+    const stPaused=!playing&&animFrac>=1;
+    const evAl=stPaused?0.85:Math.min(1,et*4)*(1-Math.max(0,(et-.65)/.35));
+    ctx.save();
+    for(const ev of(cur.evts||[])){
+      if(ev.fLvl===ev.tLvl)continue;
+      const arrCol=ev.ok?'#009933':'#cc0000';
+      const y1=lvC(ev.fLvl,L),y2=lvC(ev.tLvl,L),cx=xC(ev.x);
+      const tip=y2+(y2<y1?3:-3);
+      ctx.save();ctx.globalAlpha=evAl*0.95;
+      ctx.strokeStyle=arrCol;ctx.fillStyle=arrCol;ctx.lineWidth=2.5;
+      ctx.beginPath();ctx.moveTo(cx,y1);ctx.lineTo(cx,y2);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(cx-5,tip+(y2<y1?9:-9));ctx.lineTo(cx,tip);ctx.lineTo(cx+5,tip+(y2<y1?9:-9));ctx.fill();
+      ctx.restore();
+    }
+    ctx.restore();
+
+    // Particles — solid opaque dots, always visible
+    const pPar=p&&p._par?p._par:cur._par;
+    for(let i=0;i<cur._par.length;i++){
+      const cp=cur._par[i];
+      const pp2=(pPar&&pPar[i])||cp;
+      const px=lerp(pp2.x,cp.x,et);
+      if(px<XLO||px>XHI)continue;
+      const pl=lerp(pp2.lvl,cp.lvl,et);
+      const cx=xC(px),cy=lvC(pl,L);
+      const col=pCol(cp.col);
+      const R=wToR(1); // uniform-weight radius, matches AIS/SMC baseline
+
+      // Halo
+      ctx.save();ctx.globalAlpha=0.06;ctx.fillStyle=col;
+      ctx.beginPath();ctx.arc(cx,cy,R+5,0,6.28);ctx.fill();ctx.restore();
+
+      // Dot
+      ctx.save();ctx.globalAlpha=1;
+      ctx.beginPath();ctx.arc(cx,cy,R,0,6.28);
+      ctx.fillStyle=col;ctx.fill();
+      ctx.strokeStyle='rgba(0,0,0,0.55)';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.restore();
+
+      // Direction arrow
+      ctx.save();ctx.globalAlpha=0.82;ctx.fillStyle=col;
+      const up2=cp.dir>0;
+      const aBase=R+4,aTip=R+11;
+      ctx.beginPath();
+      if(up2){ctx.moveTo(cx-5,cy-aBase);ctx.lineTo(cx+5,cy-aBase);ctx.lineTo(cx,cy-aTip);}
+      else   {ctx.moveTo(cx-5,cy+aBase);ctx.lineTo(cx+5,cy+aBase);ctx.lineTo(cx,cy+aTip);}
+      ctx.fill();ctx.restore();
+
+      // Round trip badge
+      if(cp.rt>0){
+        ctx.save();ctx.globalAlpha=1;
+        ctx.font='bold 10px IBM Plex Mono,monospace';
+        ctx.fillStyle=col;ctx.textAlign='center';
+        ctx.fillText('∮'+cp.rt,cx,cy-aTip-3);
+        ctx.restore();
+      }
+    }
+    // Total RT
+    if(cur.totalRT>0){
+      ctx.save();ctx.globalAlpha=1;
+      ctx.font='bold 11px IBM Plex Mono,monospace';ctx.fillStyle='#8833cc';ctx.textAlign='left';
+      ctx.fillText('Total round trips: '+cur.totalRT,MP.l+4,MP.t+14);
+      ctx.restore();
+    }
+    ctx.restore(); // outer save
+  }
+
+  /* ── PT ───────────────────────────────────────────────────────── */
+  if(cur.algo==='pt'){
+    ctx.save();
+    const L=cur.lad.length; // number of temperature levels
+    // Lane guide lines + β labels
+    for(let l=0;l<L;l++){
+      ctx.globalAlpha=1;
+      ctx.strokeStyle=l===0||l===L-1?'rgba(0,0,0,.2)':'rgba(0,0,0,.07)';
+      ctx.lineWidth=l===0||l===L-1?1:.5;
+      ctx.beginPath();ctx.moveTo(MP.l,lvC(l,L));ctx.lineTo(MP.l+PW,lvC(l,L));ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+    ctx.font='9px IBM Plex Mono,monospace';ctx.fillStyle='rgba(0,0,0,.4)';ctx.textAlign='right';
+    for(let l=0;l<L;l++)ctx.fillText(cur.lad[l].toFixed(2),MP.l-6,lvC(l,L)+3.5);
+
+    // Ghost dots — last 100 per level, bigger & more visible
+    ctx.save();
+    const ptLvlDots={};
+    for(const sam of cur.sams){
+      for(const d of sam.dots){
+        const key=`${sam.id}_${d.lvl}`;
+        if(!ptLvlDots[key])ptLvlDots[key]=[];
+        ptLvlDots[key].push({x:d.x,col:sam.col});
+      }
+    }
+    for(const key of Object.keys(ptLvlDots)){
+      const arr=ptLvlDots[key];
+      const lvl=parseInt(key.split('_')[1]);
+      const recent=arr.slice(-100);
+      for(const d of recent){
+        if(d.x<XLO||d.x>XHI)continue;
+        ctx.fillStyle=pCol(d.col);ctx.globalAlpha=0.16;
+        ctx.beginPath();ctx.arc(xC(d.x),lvC(lvl,L),3.5,0,6.28);ctx.fill();
+      }
+    }
+    ctx.restore();
+
+    // Swap animation: ghost circles at pre-swap positions (stay if paused) + arrows
+    const isPaused=!playing&&animFrac>=1;
+    const evAl=isPaused?0.9:Math.min(1,et*4)*(1-Math.max(0,(et-.65)/.35));
+    const ghostAl=isPaused?0.7:Math.max(0,1-et*2.5);
+    ctx.save();
+    for(const ev of(cur.evts||[])){
+      const colOk=ev.ok?'#22bb55':'#dd3322';
+      const yi=lvC(ev.lvl,L),yj=lvC(ev.lvl+1,L);
+      const xi=xC(ev.xi),xj=xC(ev.xj);
+      const GR=wToR(1);
+
+      // Pre-swap: filled ghost circles at both old positions, in replica colours
+      if(ghostAl>0.01){
+        ctx.globalAlpha=ghostAl*0.65;
+        ctx.beginPath();ctx.arc(xi,yi,GR,0,6.28);
+        ctx.strokeStyle=pCol(ev.coli)||'#888';ctx.lineWidth=2;ctx.stroke();
+        ctx.fillStyle=pCol(ev.coli)||'#888';ctx.globalAlpha=ghostAl*0.25;ctx.fill();
+        ctx.globalAlpha=ghostAl*0.65;
+        ctx.beginPath();ctx.arc(xj,yj,GR,0,6.28);
+        ctx.strokeStyle=pCol(ev.colj)||'#888';ctx.lineWidth=2;ctx.stroke();
+        ctx.fillStyle=pCol(ev.colj)||'#888';ctx.globalAlpha=ghostAl*0.25;ctx.fill();
+        // Dashed line connecting them to show they're paired
+        // Connecting line: dashed in accept/reject colour
+        ctx.setLineDash([5,4]);ctx.strokeStyle=ev.ok?'#009933':'#cc0000';ctx.lineWidth=2;ctx.globalAlpha=ghostAl*0.8;
+        ctx.beginPath();ctx.moveTo(xi,yi);ctx.lineTo(xj,yj);ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Swap arrows — no white outline, darker colors
+      const arrCol=ev.ok?'#009933':'#cc0000';
+
+      ctx.save();ctx.globalAlpha=evAl*0.95;
+      // Arrow at xi
+      const tip_i=yj+(yj<yi?3:-3);
+      ctx.strokeStyle=arrCol;ctx.fillStyle=arrCol;ctx.lineWidth=2.5;
+      ctx.beginPath();ctx.moveTo(xi,yi);ctx.lineTo(xi,yj);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(xi-5,tip_i+(yj<yi?9:-9));ctx.lineTo(xi,tip_i);ctx.lineTo(xi+5,tip_i+(yj<yi?9:-9));ctx.fill();
+      // Arrow at xj
+      const tip_j=yi+(yi<yj?3:-3);
+      ctx.beginPath();ctx.moveTo(xj,yj);ctx.lineTo(xj,yi);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(xj-5,tip_j+(yi<yj?9:-9));ctx.lineTo(xj,tip_j);ctx.lineTo(xj+5,tip_j+(yi<yj?9:-9));ctx.fill();
+      // Accepted label
+      if(ev.ok&&evAl>0.3){
+        ctx.font='bold 12px IBM Plex Mono,monospace';ctx.textAlign='center';
+        ctx.fillStyle=arrCol;ctx.fillText('✓',(xi+xj)/2,(yi+yj)/2-6);
+      }
+      ctx.restore();
+    }
+    ctx.restore();
+
+    // Samples — interpolate x and level
+    const pSams=p&&p._sams?p._sams:cur._sams;
+    for(let i=0;i<cur._sams.length;i++){
+      const cs=cur._sams[i],ps=pSams[i]||cs;
+      const px=lerp(ps.x,cs.x,et);
+      const pl=lerp(ps.lvl,cs.lvl,et);
+      if(px<XLO||px>XHI)continue;
+      const cx=xC(px),cy=lvC(pl,L),col=pCol(cs.col);
+      const R=wToR(1);
+
+      // Halo
+      ctx.save();ctx.globalAlpha=0.06;ctx.fillStyle=col;
+      ctx.beginPath();ctx.arc(cx,cy,R+5,0,6.28);ctx.fill();ctx.restore();
+
+      // Dot
+      ctx.save();ctx.globalAlpha=1;
+      ctx.beginPath();ctx.arc(cx,cy,R,0,6.28);
+      ctx.fillStyle=col;ctx.fill();
+      ctx.strokeStyle='rgba(0,0,0,0.55)';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.restore();
+
+      // Direction arrow (same style as ST)
+      ctx.save();ctx.globalAlpha=0.82;ctx.fillStyle=col;
+      const ptUp=cs.dir>0;
+      const aBase=R+4,aTip=R+11;
+      ctx.beginPath();
+      if(ptUp){ctx.moveTo(cx-5,cy-aBase);ctx.lineTo(cx+5,cy-aBase);ctx.lineTo(cx,cy-aTip);}
+      else    {ctx.moveTo(cx-5,cy+aBase);ctx.lineTo(cx+5,cy+aBase);ctx.lineTo(cx,cy+aTip);}
+      ctx.fill();ctx.restore();
+
+      // Round-trip badge
+      if(cs.rt>0){
+        ctx.save();ctx.globalAlpha=1;
+        ctx.font='bold 10px IBM Plex Mono,monospace';ctx.fillStyle=col;ctx.textAlign='center';
+        ctx.fillText('∮'+cs.rt,cx,cy-(aTip+3));
+        ctx.restore();
+      }
+    }
+    // Total RT
+    if(cur.totalRT>0){
+      ctx.save();ctx.globalAlpha=1;
+      ctx.font='bold 11px IBM Plex Mono,monospace';ctx.fillStyle='#cc8800';ctx.textAlign='left';
+      ctx.fillText('Total round trips: '+cur.totalRT,MP.l+4,MP.t+14);
+      ctx.restore();
+    }
+    ctx.restore(); // outer
+  }
+}
+
+/* ═══════════════════════════ DRAW DIAGNOSTIC ═══════════════════════════════ */
+const DP={l:46,r:14,t:32,b:42};
+function diagAxes(ctx,W,H,title,tcol,xTks,yTks,xL,yL){
+  const PW=W-DP.l-DP.r,PH=H-DP.t-DP.b;
+  ctx.fillStyle=tcol;ctx.font='9.5px IBM Plex Mono,monospace';ctx.textAlign='left';ctx.fillText(title,DP.l,DP.t-12);
+  ctx.strokeStyle='rgba(0,0,0,.25)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(DP.l,DP.t);ctx.lineTo(DP.l,DP.t+PH);ctx.lineTo(DP.l+PW,DP.t+PH);ctx.stroke();
+  yTks.forEach(({f,l})=>{
+    const y=DP.t+PH-f*PH;
+    ctx.fillStyle='rgba(0,0,0,.4)';ctx.font='9px IBM Plex Mono,monospace';ctx.textAlign='right';ctx.fillText(l,DP.l-5,y+3.5);
+    ctx.strokeStyle='rgba(0,0,0,.06)';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(DP.l,y);ctx.lineTo(DP.l+PW,y);ctx.stroke();
+  });
+  xTks.forEach(({f,l})=>{ctx.fillStyle='rgba(0,0,0,.4)';ctx.textAlign='center';ctx.fillText(l,DP.l+f*PW,DP.t+PH+14);});
+  ctx.fillStyle='rgba(0,0,0,.35)';ctx.textAlign='center';ctx.fillText(xL,DP.l+PW/2,H-6);
+  ctx.save();ctx.translate(12,DP.t+PH/2);ctx.rotate(-Math.PI/2);ctx.fillStyle='rgba(0,0,0,.35)';ctx.fillText(yL,0,0);ctx.restore();
+}
+
+function drawDiag(cv,s){
+  if(!cv||!s)return;
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  const PW=W-DP.l-DP.r,PH=H-DP.t-DP.b;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=1;ctx.strokeRect(DP.l,DP.t,PW,PH);
+
+  /* AIS: rESS */
+  if(s.algo==='ais'){
+    const T=s.nSteps,h=s.essHist;
+    diagAxes(ctx,W,H,'Relative ESS','#1a6eff',
+      [{f:0,l:'0'},{f:.5,l:Math.round(T/2)},{f:1,l:T}],
+      [{f:0,l:'0'},{f:.5,l:'.50'},{f:1,l:'1.0'}],'iteration','rESS');
+    if(h.length>1){
+      ctx.beginPath();ctx.strokeStyle='#1a6eff';ctx.lineWidth=2;
+      h.forEach((p,i)=>{const x=DP.l+(p.t/T)*PW,y=DP.t+PH-p.v*PH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});ctx.stroke();
+      ctx.beginPath();h.forEach((p,i)=>{const x=DP.l+(p.t/T)*PW,y=DP.t+PH-p.v*PH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+      const lp=h[h.length-1];ctx.lineTo(DP.l+(lp.t/T)*PW,DP.t+PH);ctx.lineTo(DP.l,DP.t+PH);ctx.closePath();
+      ctx.fillStyle='rgba(26,110,255,.08)';ctx.fill();
+      ctx.beginPath();ctx.arc(DP.l+(lp.t/T)*PW,DP.t+PH-lp.v*PH,4,0,6.28);ctx.fillStyle='#1a6eff';ctx.fill();
+    }
+  }
+
+  /* SMC: lineages */
+  if(s.algo==='smc'){
+    const T=s.nSteps,N=s.N,h=s.linHist;
+    diagAxes(ctx,W,H,'Unique lineages','#00aa88',
+      [{f:0,l:'0'},{f:.5,l:Math.round(T/2)},{f:1,l:T}],
+      [{f:0,l:'0'},{f:.5,l:Math.round(N/2)},{f:1,l:N}],'iteration','lineages');
+    ctx.strokeStyle='rgba(0,0,0,.1)';ctx.lineWidth=1;ctx.setLineDash([3,4]);
+    ctx.beginPath();ctx.moveTo(DP.l,DP.t);ctx.lineTo(DP.l+PW,DP.t);ctx.stroke();ctx.setLineDash([]);
+    if(h.length>1){
+      ctx.beginPath();ctx.strokeStyle='#00aa88';ctx.lineWidth=2;
+      h.forEach((p,i)=>{const x=DP.l+(p.t/T)*PW,y=DP.t+PH-(p.v/N)*PH;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});ctx.stroke();
+      const lp=h[h.length-1];ctx.beginPath();ctx.arc(DP.l+(lp.t/T)*PW,DP.t+PH-(lp.v/N)*PH,4,0,6.28);ctx.fillStyle='#00aa88';ctx.fill();
+    }
+  }
+
+  /* ST / PT: index process — last 10 iterations */
+  if(s.algo==='st'||s.algo==='pt'){
+    const isPT=s.algo==='pt';
+    const items=isPT?s.sams:s.par;
+    const L=isPT?s.lad.length:s.lad.length;
+    const WIN=10;
+    diagAxes(ctx,W,H,'Index process (last '+WIN+' iters)','rgba(0,0,0,.7)',
+      [{f:0,l:Math.max(0,s.iter-WIN)},{f:1,l:s.iter}],
+      [{f:0,l:'0'},{f:(L-1)/2/(L-1),l:Math.floor((L-1)/2)},{f:1,l:L-1}],
+      'iteration','level');
+
+    items.forEach((item,ci)=>{
+      const hist=s.idxHist[ci];if(!hist||hist.length<2)return;
+      const col=item.col;
+      const show=Math.min(WIN+1,hist.length);
+      const sl=hist.slice(-show);
+
+      if(showHistColour){
+        // Single-colour line per chain
+        ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=2.2;
+        sl.forEach((lvl,i)=>{
+          const px=DP.l+(i/(Math.max(show-1,1)))*PW;
+          const py=DP.t+PH-(lvl/Math.max(L-1,1))*PH;
+          i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+        });ctx.stroke();
+      } else {
+        // Segment-by-segment: green = level changed (accepted swap), red = no change (rejected/no proposal)
+        for(let i=1;i<sl.length;i++){
+          const x0=DP.l+((i-1)/(Math.max(show-1,1)))*PW;
+          const y0=DP.t+PH-(sl[i-1]/Math.max(L-1,1))*PH;
+          const x1=DP.l+(i/(Math.max(show-1,1)))*PW;
+          const y1=DP.t+PH-(sl[i]/Math.max(L-1,1))*PH;
+          ctx.beginPath();ctx.strokeStyle=sl[i]!==sl[i-1]?'#009933':'#cc0000';ctx.lineWidth=2.2;
+          ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke();
+        }
+      }
+      // endpoint dot
+      const last=sl[sl.length-1];
+      ctx.beginPath();ctx.arc(DP.l+PW,DP.t+PH-(last/Math.max(L-1,1))*PH,5,0,6.28);
+      ctx.fillStyle=showHistColour?col:(sl[sl.length-1]!==sl[sl.length-2]?'#009933':'#cc0000');
+      ctx.fill();ctx.strokeStyle='rgba(0,0,0,.3)';ctx.lineWidth=1;ctx.stroke();
+    });
+
+    // legend
+    ctx.font='8.5px IBM Plex Mono,monospace';
+    if(showHistColour){
+      items.forEach((item,i)=>{
+        const y=DP.t+4+i*13;
+        ctx.fillStyle=item.col;ctx.fillRect(DP.l+2,y,8,8);
+        ctx.fillStyle='rgba(0,0,0,.5)';ctx.textAlign='left';
+        ctx.fillText(isPT?'β='+s.lad[item.lvl].toFixed(2):'p'+i,DP.l+13,y+7);
+      });
+    } else {
+      ctx.fillStyle='#009933';ctx.fillRect(DP.l+2,DP.t+4,8,8);
+      ctx.fillStyle='rgba(0,0,0,.5)';ctx.textAlign='left';ctx.fillText('swap accepted',DP.l+13,DP.t+11);
+      ctx.fillStyle='#cc0000';ctx.fillRect(DP.l+2,DP.t+18,8,8);
+      ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillText('swap rejected',DP.l+13,DP.t+25);
+    }
+  }
+}
+
+/* ═══════════════════════════ TRUE LOG Z ════════════════════════════════════ */
+let _tlz=null,_tlzKey='';
+function trueLogZ(){
+  const k=hmKey();
+  if(_tlz!==null&&_tlzKey===k)return _tlz;
+  _tlzKey=k;
+  const Nx=1500,dx=(XHI-XLO)/Nx;
+  let st=0,sr=0;
+  for(let i=0;i<Nx;i++){const x=XLO+(i+.5)*dx;st+=Math.exp(lgT(x));sr+=Math.exp(lgR(x));}
+  return(_tlz=Math.log(st*dx)-Math.log(sr*dx));
+}
+
+/* ═══════════════════════════ HISTOGRAM ═════════════════════════════════════ */
+// Cache true density curve (only changes when target config changes)
+let _trueCurve=null,_trueCurveKey='',_trueCurveBeta=-1;
+function getTrueCurve(beta){
+  const k=hmKey()+'|'+beta.toFixed(4);
+  if(_trueCurve&&_trueCurveKey===k)return _trueCurve;
+  _trueCurveKey=k;
+  const nPts=400,dx=(XHI-XLO)/nPts;
+  const v=[];let S=0;
+  for(let i=0;i<nPts;i++){const x=XLO+(i+.5)*dx;const p=Math.exp(lgP(x,beta));v.push({x:XLO+(i+.5)*dx,p});S+=p*dx;}
+  return(_trueCurve=v.map(e=>({...e,pn:e.p/Math.max(S,1e-12)})));
+}
+// Lag-1 autocorrelation ESS estimate
+function lag1ESS(xs){
+  if(xs.length<4)return xs.length;
+  const n=xs.length,mu=xs.reduce((a,b)=>a+b,0)/n;
+  let num=0,den=0;
+  for(let i=0;i<n;i++){const d=xs[i]-mu;den+=d*d;if(i<n-1)num+=(xs[i]-mu)*(xs[i+1]-mu);}
+  const rho=num/Math.max(den,1e-12);
+  return Math.max(1,Math.round(n*(1-rho)/Math.max(1e-6,(1+rho))));
+}
+
+function drawHist(cv,s){
+  if(!cv||!s)return;
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  const PAD={l:54,r:22,t:28,b:30};
+  const PW=W-PAD.l-PAD.r,PH=H-PAD.t-PAD.b;
+  const nBins=120;
+  const span=XHI-XLO,bW=span/nBins;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+
+  // Per-bin color stacks: bins[i] = array of {weight, color}
+  const bins=Array.from({length:nBins},()=>[]);
+  let beta=1,hasData=false,essVal=null;
+
+  if(s.algo==='ais'||s.algo==='smc'){
+    beta=s.sched?s.sched[Math.min(s.step+(s.sub>=1?1:0),s.nSteps)]:1;
+    const logW=s.logW;
+    const mx=Math.max(...logW);
+    const ws=logW.map(lw=>Math.exp(lw-mx));
+    const S=ws.reduce((a,b)=>a+b,0)||1;
+    const cols=s.algo==='ais'?s.cols:s.ancCol;
+    for(let i=0;i<s.N;i++){
+      const bi=Math.floor((s.pos[i]-XLO)/bW);
+      if(bi>=0&&bi<nBins){bins[bi].push({w:ws[i]/S,col:cols[i]||'#888'});hasData=true;}
+    }
+  } else if(s.algo==='st'){
+    beta=1;const L=s.lad.length;
+    const allTopXs=[];
+    for(const p of s.par){
+      const topDots=[...p.dots.filter(d=>d.lvl===L-1).map(d=>d.x)];
+      if(p.lvl===L-1)topDots.push(p.x);
+      for(const x of topDots){
+        const bi=Math.floor((x-XLO)/bW);
+        if(bi>=0&&bi<nBins){bins[bi].push({w:1,col:p.col});hasData=true;}
+        allTopXs.push(x);
+      }
+    }
+    // Normalise
+    const total=allTopXs.length||1;
+    for(const bin of bins)for(const e of bin)e.w/=total;
+    if(allTopXs.length>=4)essVal=lag1ESS(allTopXs);
+  } else if(s.algo==='pt'){
+    beta=1;const L=s.lad.length;
+    const allTopXs=[];
+    for(const sam of s.sams){
+      const topDots=[...sam.dots.filter(d=>d.lvl===L-1).map(d=>d.x)];
+      if(sam.lvl===L-1)topDots.push(sam.x);
+      for(const x of topDots){
+        const bi=Math.floor((x-XLO)/bW);
+        if(bi>=0&&bi<nBins){bins[bi].push({w:1,col:sam.col});hasData=true;}
+        allTopXs.push(x);
+      }
+    }
+    const total=allTopXs.length||1;
+    for(const bin of bins)for(const e of bin)e.w/=total;
+    if(allTopXs.length>=4)essVal=lag1ESS(allTopXs);
+  }
+
+  // Aggregate per bin for height, keep per-entry for coloring
+  const binTotals=bins.map(b=>b.reduce((s,e)=>s+e.w,0));
+  const histD=binTotals.map(b=>b/bW); // density
+
+  // True density — cached
+  const trueCurve=getTrueCurve(beta);
+  const maxTrue=Math.max(...trueCurve.map(e=>e.pn));
+  const maxHist=Math.max(...histD,1e-10);
+  // For ST/PT fix scale to true density so axis never jitters; bars may overflow
+  const maxY=(s.algo==='st'||s.algo==='pt')?maxTrue*1.4:Math.max(maxTrue,maxHist,1e-10);
+
+  const xC2=x=>PAD.l+((x-XLO)/span)*PW;
+  const yC=v=>PAD.t+PH-(v/maxY)*PH;
+
+  // Grid
+  ctx.strokeStyle='rgba(0,0,0,.05)';ctx.lineWidth=.5;
+  const xStep=span<=20?2:5,xF=Math.ceil(XLO/xStep)*xStep;
+  for(let x=xF;x<=XHI;x+=xStep){
+    const cx=xC2(x);ctx.beginPath();ctx.moveTo(cx,PAD.t);ctx.lineTo(cx,PAD.t+PH);ctx.stroke();
+  }
+
+  // Clip bars to plot area (bars may overflow top for ST/PT)
+  ctx.save();
+  ctx.beginPath();ctx.rect(PAD.l,PAD.t,PW,PH);ctx.clip();
+  const bwPx=Math.max(1,PW/nBins-0.5);
+  for(let i=0;i<nBins;i++){
+    if(!binTotals[i])continue;
+    const bx=PAD.l+(i/nBins)*PW;
+    const totalH=(binTotals[i]/bW/maxY)*PH;
+    let yOff=0;
+    // Sort by color so same-color segments stay together visually
+    const sorted=[...bins[i]].sort((a,b)=>a.col.localeCompare(b.col));
+    for(const e of sorted){
+      const frac=e.w/Math.max(binTotals[i],1e-12);
+      const segH=frac*totalH;
+      ctx.fillStyle=showHistColour?e.col:ACC_CSS[s.algo];ctx.globalAlpha=0.65;
+      ctx.fillRect(bx,PAD.t+PH-totalH+yOff,bwPx,segH);
+      yOff+=segH;
+    }
+    ctx.globalAlpha=1;
+  }
+  ctx.restore(); // end clip
+  ctx.beginPath();ctx.strokeStyle='rgba(0,0,0,.8)';ctx.lineWidth=2;
+  trueCurve.forEach((e,i)=>{
+    const cx=xC2(e.x),cy=yC(e.pn);
+    i===0?ctx.moveTo(cx,cy):ctx.lineTo(cx,cy);
+  });ctx.stroke();
+
+  // Axes
+  ctx.strokeStyle='rgba(0,0,0,.25)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(PAD.l,PAD.t);ctx.lineTo(PAD.l,PAD.t+PH);ctx.lineTo(PAD.l+PW,PAD.t+PH);ctx.stroke();
+  ctx.font='9px IBM Plex Mono,monospace';ctx.fillStyle='rgba(0,0,0,.5)';ctx.textAlign='center';
+  for(let x=xF;x<=XHI;x+=xStep){
+    const cx=xC2(x);if(cx<PAD.l-4||cx>PAD.l+PW+4)continue;
+    ctx.fillText(x,cx,PAD.t+PH+14);
+  }
+
+  // Current top-level particle dots on x-axis (ST / PT only)
+  if(s.algo==='st'||s.algo==='pt'){
+    const L=s.lad.length;
+    const items=s.algo==='st'?s.par:s.sams;
+    const topItems=items.filter(p=>p.lvl===L-1);
+    const R=5;
+    for(const p of topItems){
+      const cx=xC2(p.x);
+      if(cx<PAD.l-R||cx>PAD.l+PW+R)continue;
+      const cy=PAD.t+PH;
+      // White outline
+      ctx.beginPath();ctx.arc(cx,cy,R+1.5,0,6.28);
+      ctx.fillStyle='white';ctx.globalAlpha=1;ctx.fill();
+      // Colored fill
+      ctx.beginPath();ctx.arc(cx,cy,R,0,6.28);
+      ctx.fillStyle=p.col;ctx.globalAlpha=0.9;ctx.fill();
+      ctx.strokeStyle='rgba(0,0,0,0.5)';ctx.lineWidth=1;ctx.globalAlpha=1;ctx.stroke();
+    }
+  }
+
+  // Title
+  const bLabel=(s.algo==='st'||s.algo==='pt')?'β=1 (top level)':'β='+beta.toFixed(3);
+  const essStr=essVal!=null?'  ·  ESS≈'+essVal:'';
+  ctx.textAlign='left';ctx.fillStyle='rgba(0,0,0,.45)';
+  ctx.fillText('DENSITY ESTIMATE  ·  '+bLabel+essStr,PAD.l,PAD.t-10);
+
+  // Legend
+  const lx=PAD.l+PW-160;
+  ctx.globalAlpha=0.65;ctx.fillStyle=ACC_CSS[s.algo];ctx.fillRect(lx,PAD.t-17,10,8);ctx.globalAlpha=1;
+  ctx.fillStyle='rgba(0,0,0,.4)';ctx.fillText('particles',lx+13,PAD.t-10);
+  ctx.beginPath();ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=2;
+  ctx.moveTo(lx+75,PAD.t-13);ctx.lineTo(lx+87,PAD.t-13);ctx.stroke();
+  ctx.fillStyle='rgba(0,0,0,.4)';ctx.fillText('true π_β',lx+90,PAD.t-10);
+
+  if(!hasData){
+    ctx.fillStyle='rgba(0,0,0,.2)';ctx.textAlign='center';ctx.font='10px IBM Plex Mono,monospace';
+    ctx.fillText('(waiting for samples at β=1)',PAD.l+PW/2,PAD.t+PH/2);
+  }
+
+  // Dots on x-axis: current particle positions at β=1 (ST/PT only)
+  if(s.algo==='st'||s.algo==='pt'){
+    const L=s.lad.length;
+    const items=s.algo==='st'?s.par:s.sams;
+    const axisY=PAD.t+PH;
+    for(const item of items){
+      if(item.lvl!==L-1)continue;
+      const x=item.x;
+      if(x<XLO||x>XHI)continue;
+      const cx=xC2(x);
+      ctx.save();
+      ctx.beginPath();ctx.arc(cx,axisY,5,0,6.28);
+      ctx.fillStyle=showHistColour?item.col:ACC_CSS[s.algo];ctx.globalAlpha=1;ctx.fill();
+      ctx.strokeStyle='rgba(0,0,0,0.55)';ctx.lineWidth=1.2;ctx.stroke();
+      ctx.restore();
+    }
+  }
+} // end drawHist
+const DEF={
+  ais:{N:120,nSteps:20,nMCMC:3,stepSize:0.5,mcmcType:'rwmh'},
+  smc:{N:40,nSteps:20,nMCMC:3,resType:'systematic',stepSize:0.5,mcmcType:'rwmh'},
+  st: {N:5,nMCMC:5,nLvl:11,stType:'reversible',stepSize:0.5,mcmcType:'rwmh'},
+  pt: {N:6,nMCMC:3,ptType:'reversible',stepSize:0.5,mcmcType:'rwmh'},
+};
+// animSpeed: 1=slow, 5=fastest
+let animSpeed=3;
+function getIV(){const base={ais:480,smc:480,st:70,pt:70};return Math.round(base[algo]/animSpeed);}
+function getAD(){const base={ais:380,smc:380,st:230,pt:230};return Math.round(base[algo]/animSpeed);}
+const SUB_LABELS={ais:['REWEIGHT','MCMC'],smc:['REWEIGHT','RESAMPLE','MCMC'],st:['MCMC','TEMP MOVE'],pt:['MCMC','SWAP']};
+const SUB_COL={REWEIGHT:'#cc8800',RESAMPLE:'#e03030',MCMC:'#1a6eff','TEMP MOVE':'#8833cc',SWAP:'#00aa88','ODD SWAP':'#00aa88','EVEN SWAP':'#e07020'};
+const ACC_CSS={ais:'#1a6eff',smc:'#00aa88',st:'#8833cc',pt:'#cc8800'};
+const ACC_BG={ais:'rgba(26,110,255,.1)',smc:'rgba(0,170,136,.1)',st:'rgba(136,51,204,.1)',pt:'rgba(204,136,0,.1)'};
+function pCol(col){return showHistColour?col:ACC_CSS[algo];}
+
+let algo='ais',playing=false,cfg=JSON.parse(JSON.stringify(DEF));
+let curState=null,prevSnap=null;
+let animStart=0,animFrac=1;
+let lastStep=0;
+let showLineage=true; // toggle for AIS/SMC lineage tree
+let showHistColour=false; // toggle for particle colours
+
+const mc=document.getElementById('mc'),dc=document.getElementById('dc'),hc=document.getElementById('hc');
+
+function cssAcc(){
+  document.documentElement.style.setProperty('--acc',ACC_CSS[algo]);
+  document.documentElement.style.setProperty('--acc-bg',ACC_BG[algo]);
+}
+
+function renderAll(){
+  renderTabs();renderSubs();renderCtrls();renderStats();renderTargetCtrls();
+  const bl=document.getElementById('bl');
+  if(bl)bl.style.display=(algo==='ais'||algo==='smc')?'':'none';
+}
+
+function resetState(){
+  _hm=null;_tlz=null;_trueCurve=null;
+  curState=mkState(algo,cfg[algo]);
+  prevSnap=snapshot(curState);
+  animFrac=1;playing=false;
+  document.getElementById('bp').textContent='▶ Run';
+  renderAll();
+}
+
+function advanceState(){
+  prevSnap=snapshot(curState);
+  curState=doStep(curState);
+  animStart=performance.now();animFrac=0;
+  if((curState.algo==='ais'||curState.algo==='smc')&&curState.done){playing=false;document.getElementById('bp').textContent='▶ Run';}
+  renderStats();renderSubs();
+}
+
+// RAF
+function loop(ts){
+  const animDur=getAD(),iv=getIV();
+  if(animFrac<1){
+    animFrac=Math.min(1,(ts-animStart)/Math.max(animDur,1));
+  }
+  try{
+    const cSnap=snapshot(curState);
+    drawMain(mc,prevSnap,cSnap,animFrac);
+    drawDiag(dc,curState);
+    drawHist(hc,curState);
+    renderSubs();
+  }catch(e){}
+  if(playing&&animFrac>=0.95&&ts-lastStep>iv){
+    advanceState();lastStep=ts;
+  }
+  requestAnimationFrame(loop);
+}
+
+/* ═══════════════════════════ STATS / UI ════════════════════════════════════ */
+function globalBarrier(swapAccLvl,swapPropLvl){
+  // Λ = Σ_k rejRate_k = Σ_k (1 - acc_k/prop_k) for levels with proposals
+  let lambda=0;
+  for(let k=0;k<swapPropLvl.length;k++){
+    if(swapPropLvl[k]>0)lambda+=(1-swapAccLvl[k]/swapPropLvl[k]);
+  }
+  return lambda;
+}
+function lzFmt(est,showTrue){
+  const eStr=est!=null?(est>=0?'+':'')+est.toFixed(2):'—';
+  if(!showTrue)return eStr;
+  const t=trueLogZ();
+  const tStr=(t>=0?'+':'')+t.toFixed(2);
+  return eStr+' (true: '+tStr+')';
+}
+function getStats(){
+  const s=curState;if(!s)return{};
+  const tlz=trueLogZ();const tStr=(tlz>=0?'+':'')+tlz.toFixed(2);
+  if(s.algo==='ais'){
+    const ess=s.essHist[s.essHist.length-1]?.v??1;
+    const lz=s.logZ;const lzStr=lz!=null&&!(lz===0&&s.step===0)?(lz>=0?'+':'')+lz.toFixed(2):'—';
+    return{step:{l:'STEP',v:`${s.step}/${s.nSteps}`},beta:{l:'β',v:s.sched[Math.min(s.step,s.nSteps)]?.toFixed(3)},ress:{l:'rESS',v:ess.toFixed(3)},logZ:{l:'log Z est',v:lzStr},trueZ:{l:'log Z true',v:tStr}};
+  }
+  if(s.algo==='smc'){
+    const lin=s.linHist[s.linHist.length-1]?.v??s.N;
+    // Live ESS from current weights (= N after resample, <N during reweight)
+    const curEss=rESS(s.logW);
+    const survRate=(lin/s.N*100).toFixed(0)+'%';
+    const lz=s.logZ;const lzStr=lz!=null&&!(lz===0&&s.step===0)?(lz>=0?'+':'')+lz.toFixed(2):'—';
+    return{step:{l:'STEP',v:`${s.step}/${s.nSteps}`},beta:{l:'β',v:s.sched[Math.min(s.step,s.nSteps)]?.toFixed(3)},ess:{l:'rESS',v:curEss.toFixed(3)},survival:{l:'SURVIVAL',v:survRate},lin:{l:'LINEAGES',v:`${lin}/${s.N}`},logZ:{l:'log Z est',v:lzStr},trueZ:{l:'log Z true',v:tStr}};
+  }
+  if(s.algo==='st'){
+    const rej=s.rejRate!=null?(s.rejRate*100).toFixed(1)+'%':'—';
+    const swRej=s.swapProp>0?((1-s.swapAcc/s.swapProp)*100).toFixed(1)+'%':'—';
+    const lz=stptLogZ(s.lad,s.logZsums,s.logZcnts);
+    const lzStr=lz!=null?(lz>=0?'+':'')+lz.toFixed(2):'—';
+    const L=s.lad.length;
+    const topXs=[];for(const p of s.par){for(const d of p.dots)if(d.lvl===L-1)topXs.push(d.x);if(p.lvl===L-1)topXs.push(p.x);}
+    const ess1=topXs.length>=4?lag1ESS(topXs):null;
+    const lam=globalBarrier(s.swapAccLvl||[],s.swapPropLvl||[]);
+    return{iter:{l:'ITER',v:s.iter},mcmcRej:{l:'MCMC REJ',v:rej},swapRej:{l:'SWAP REJ',v:swRej},rt:{l:'ROUND TRIPS',v:s.totalRT},tp:{l:'TYPE',v:s.stType==='reversible'?'REV':'NR'},ess1:{l:'ESS (β=1)',v:ess1!=null?ess1:'—'},lambda:{l:'Λ (barrier)',v:s.swapProp>0?lam.toFixed(2):'—'},logZ:{l:'log Z est',v:lzStr},trueZ:{l:'log Z true',v:tStr}};
+  }
+  // PT
+  const rej=s.rejRate!=null?(s.rejRate*100).toFixed(1)+'%':'—';
+  const swRej=s.swapProp>0?((1-s.swapAcc/s.swapProp)*100).toFixed(1)+'%':'—';
+  const lz=stptLogZ(s.lad,s.logZsums,s.logZcnts);
+  const lzStr=lz!=null?(lz>=0?'+':'')+lz.toFixed(2):'—';
+  const L2=s.lad.length;
+  const topXs2=[];for(const sam of s.sams){for(const d of sam.dots)if(d.lvl===L2-1)topXs2.push(d.x);if(sam.lvl===L2-1)topXs2.push(sam.x);}
+  const ess1pt=topXs2.length>=4?lag1ESS(topXs2):null;
+  const lamPT=globalBarrier(s.swapAccLvl||[],s.swapPropLvl||[]);
+  return{iter:{l:'ITER',v:s.iter},mcmcRej:{l:'MCMC REJ',v:rej},swapRej:{l:'SWAP REJ',v:swRej},rt:{l:'ROUND TRIPS',v:s.totalRT},phase:{l:'PHASE',v:s.curPhase===1?'ODD':'EVEN'},ess1:{l:'ESS (β=1)',v:ess1pt!=null?ess1pt:'—'},lambda:{l:'Λ (barrier)',v:s.swapProp>0?lamPT.toFixed(2):'—'},logZ:{l:'log Z est',v:lzStr},trueZ:{l:'log Z true',v:tStr}};
+}
+function renderStats(){
+  const acc=ACC_CSS[algo];
+  document.getElementById('stats').innerHTML=Object.values(getStats()).map(({l,v})=>
+    `<div class="sbox"><div class="slbl">${l}</div><div class="sval" style="color:${acc}">${v}</div></div>`).join('');
+}
+function renderSubs(){
+  const s=curState;
+  let labels=SUB_LABELS[algo]||[];
+  if(algo==='pt'&&s){
+    const swapLbl=s.curPhase===1?'ODD SWAP':'EVEN SWAP';
+    labels=['MCMC',swapLbl];
+  }
+  // During animation show the sub that was active (prevSnap), not the next one
+  const displaySub=(animFrac<1&&prevSnap&&prevSnap.algo===algo)?prevSnap.sub:(s?.sub??0);
+  document.getElementById('subs').innerHTML=labels.map((l,i)=>`
+    ${i>0?'<div class="sp-sep"></div>':''}
+    <div class="sp${displaySub===i?' on':''}" style="${displaySub===i?`border-color:${SUB_COL[l]||'#00aa88'};background:${SUB_COL[l]||'#00aa88'}18`:''}">
+      <div class="dot" style="${displaySub===i?`background:${SUB_COL[l]||'#00aa88'}`:''};"></div>
+      <span class="lbl" style="${displaySub===i?`color:${SUB_COL[l]||'#00aa88'}`:''}">${l}</span>
+    </div>`).join('');
+}
+const ALGO_REFS={
+  ais:[
+    {authors:'R. M. Neal',year:2001,title:'Annealed Importance Sampling',journal:'Statistics and Computing',url:'https://doi.org/10.1023/A:1008923215028'}
+  ],
+  smc:[
+    {authors:'P. Del Moral, A. Doucet, A. Jasra',year:2006,title:'Sequential Monte Carlo Samplers',journal:'J. Royal Statistical Society B',url:'https://doi.org/10.1111/j.1467-9868.2006.00553.x'},
+    {authors:'A. Doucet, A. Lee, H. Sherlock',year:2022,title:'Waste-Free Sequential Monte Carlo',journal:'Journal of the American Statistical Association',url:'https://www.tandfonline.com/doi/abs/10.1080/01621459.2022.2087659'}
+  ],
+  st:[
+    {authors:'E. Marinari, G. Parisi',year:1992,title:'Simulated Tempering: A New Monte Carlo Scheme',journal:'Europhysics Letters',url:'https://doi.org/10.1209/0295-5075/19/6/002'},
+    {authors:'S. Power, J. Q. Smith',year:2024,title:'Automatic Regenerative Simulation via Non-Reversible Simulated Tempering',journal:'Journal of the American Statistical Association',url:'https://www.tandfonline.com/doi/full/10.1080/01621459.2024.2335587'}
+  ],
+  pt:[
+    {authors:'C. J. Geyer',year:1991,title:'Markov Chain Monte Carlo Maximum Likelihood',journal:'Computing Science and Statistics: Proc. 23rd Symp. Interface',url:'https://hdl.handle.net/11299/58440'},
+    {authors:'K. Hukushima, K. Nemoto',year:1996,title:'Exchange Monte Carlo Method and Application to Spin Glass Simulations',journal:'J. Physical Society of Japan',url:'https://doi.org/10.1143/JPSJ.65.1604'},
+    {authors:'S. Syed, A. Bouchard-Côté, G. Deligiannidis, A. Doucet',year:2022,title:'Non-Reversible Parallel Tempering: A Scalable Highly Parallel MCMC Scheme',journal:'J. Royal Statistical Society B',url:'https://doi.org/10.1111/rssb.12464'}
+  ]
+};
+function renderTabs(){
+  const TABS=[{k:'ais',l:'AIS'},{k:'smc',l:'SMC'},{k:'st',l:'ST'},{k:'pt',l:'PT'}];
+  document.getElementById('tabs').innerHTML=TABS.map(t=>
+    `<button class="tab${algo===t.k?' on':''}" style="--acc:${ACC_CSS[t.k]};--acc-bg:${ACC_BG[t.k]}"
+      onclick="setAlgo('${t.k}')">${t.l}</button>`).join('');
+  const refs=ALGO_REFS[algo]||[];
+  const acc=ACC_CSS[algo];
+  const el=document.getElementById('algoref');
+  if(el) el.innerHTML=refs.map(r=>
+    `<div style="margin-bottom:2px"><span style="color:rgba(0,0,0,.5)">${r.authors} (${r.year}). </span>`+
+    `<a href="${r.url}" target="_blank" style="color:${acc};text-decoration:none;border-bottom:1px solid ${acc}44">${r.title}</a>`+
+    `<span style="color:rgba(0,0,0,.32)">. <em>${r.journal}</em>.</span></div>`
+  ).join('');
+}
+function setAlgo(a){
+  algo=a;cssAcc();renderTabs();renderSubs();renderCtrls();resetState();renderTargetCtrls();updateTitleColour();
+  const bl=document.getElementById('bl');
+  if(bl)bl.style.display=(a==='ais'||a==='smc')?'':'none';
+}
+
+function renderCtrls(){
+  const c=cfg[algo],acc=ACC_CSS[algo];
+  const sl=(lbl,key,min,max,stp,val)=>`<div class="ctl">
+    <div class="clbl">${lbl}: <span class="cv" id="v_${key}">${val}</span></div>
+    <input type="range" min="${min}" max="${max}" step="${stp}" value="${val}"
+      style="accent-color:${acc}" oninput="onSl('${key}',+this.value)">
+  </div>`;
+  const ni=(lbl,key,min,max,val)=>`<div class="ctl">
+    <div class="clbl">${lbl}</div>
+    <input type="number" min="${min}" max="${max}" value="${val}" onchange="onNi('${key}',+this.value)">
+  </div>`;
+  const tg=(lbl,key,opts,val)=>`<div class="ctl">
+    <div class="clbl">${lbl}</div>
+    <div class="togs" style="--acc:${acc};--acc-bg:${ACC_BG[algo]}">${opts.map(o=>`<button class="tog${val===o?' on':''}" onclick="onTg('${key}','${o}')">${o}</button>`).join('')}</div>
+  </div>`;
+  const speedSlider=`<div class="ctl">
+    <div class="clbl">SPEED: <span class="cv" id="v_speed">${animSpeed}</span>×</div>
+    <input type="range" min="1" max="8" step="1" value="${animSpeed}"
+      style="accent-color:#888" oninput="onSpeed(+this.value)">
+  </div>`;
+  const mcmcTog=tg('KERNEL','mcmcType',['rwmh','mala'],c.mcmcType||'rwmh');
+  const stepSl=sl('STEP SIZE h','stepSize',0.05,3.0,0.05,c.stepSize);
+  let h='';
+  if(algo==='ais')h=sl('PARTICLES','N',20,300,10,c.N)+ni('TEMP STEPS','nSteps',5,200,c.nSteps)+sl('MCMC/STEP','nMCMC',1,12,1,c.nMCMC)+stepSl+mcmcTog+speedSlider;
+  if(algo==='smc')h=sl('PARTICLES','N',10,300,5,c.N)+ni('TEMP STEPS','nSteps',5,200,c.nSteps)+sl('MCMC/STEP','nMCMC',1,12,1,c.nMCMC)+stepSl+mcmcTog+tg('RESAMPLING','resType',['systematic','multinomial'],c.resType)+speedSlider;
+  if(algo==='st') h=sl('PARTICLES','N',2,20,1,c.N)+sl('MCMC/MOVE','nMCMC',1,20,1,c.nMCMC)+sl('TEMP LEVELS','nLvl',5,25,2,c.nLvl)+stepSl+mcmcTog+tg('TYPE','stType',['reversible','nonreversible'],c.stType)+speedSlider;
+  if(algo==='pt') h=sl('CHAINS (= LEVELS)','N',2,20,1,c.N)+sl('MCMC/SWAP','nMCMC',1,20,1,c.nMCMC)+stepSl+mcmcTog+tg('TYPE','ptType',['reversible','nonreversible'],c.ptType)+speedSlider;
+  document.getElementById('ctrls').innerHTML=h;
+}
+function onSpeed(v){
+  animSpeed=v;
+  const el=document.getElementById('v_speed');if(el)el.textContent=v;
+  // no reset needed — loop reads animSpeed dynamically
+}
+function onSl(k,v){
+  cfg[algo][k]=v;
+  const el=document.getElementById('v_'+k);if(el)el.textContent=v;
+  if(k==='stepSize'&&curState){curState={...curState,stepSize:v};return;}
+  resetState();
+}
+function onNi(k,v){if(isNaN(v)||v<1)return;cfg[algo][k]=Math.round(v);resetState();}
+function onTg(k,v){cfg[algo][k]=v;resetState();renderCtrls();}
+
+document.getElementById('bp').addEventListener('click',()=>{playing=!playing;document.getElementById('bp').textContent=playing?'⏸ Pause':'▶ Run';});
+document.getElementById('bs').addEventListener('click',()=>{advanceState();});
+document.getElementById('br').addEventListener('click',resetState);
+
+function renderTargetCtrls(){
+  const nM=targetCfg.nModes;
+  // nModes toggle
+  const nModeHtml=`<div class="ctl" style="grid-column:1/-1">
+    <div class="clbl">NUMBER OF MODES</div>
+    <div class="togs">${[1,2,3].map(n=>`<button class="tog${nM===n?' on':''}" onclick="onNModes(${n})">${n}</button>`).join('')}</div>
+  </div>`;
+
+  // Per-mode sliders
+  const modeColors=[ACC_CSS[algo],ACC_CSS[algo],ACC_CSS[algo]];
+  let modesHtml='';
+  for(let k=0;k<3;k++){
+    const m=targetCfg.modes[k];
+    const active=k<nM;
+    const c=modeColors[k];
+    const sl=(lbl,fld,min,max,stp)=>`<div class="ctl">
+      <div class="clbl" style="color:${active?c:'rgba(0,0,0,.25)'}">${lbl}: <span id="tm_${k}_${fld}">${m[fld].toFixed(fld==='mu'?1:2)}</span></div>
+      <input type="range" min="${min}" max="${max}" step="${stp}" value="${m[fld]}"
+        style="accent-color:${c};opacity:${active?1:0.3};pointer-events:${active?'auto':'none'}"
+        oninput="onMode(${k},'${fld}',+this.value)">
+    </div>`;
+    modesHtml+=`<div style="grid-column:1/-1;font-size:9px;color:${active?c:'rgba(0,0,0,.25)'};letter-spacing:.12em;margin-top:4px;font-weight:600">MODE ${k+1}</div>`;
+    modesHtml+=sl('WEIGHT w','w',0.05,1,0.05)+sl('LOCATION μ','mu',-8,8,0.1)+sl('WIDTH σ','s',0.05,2,0.05);
+  }
+  document.getElementById('tctrls').innerHTML=nModeHtml+modesHtml;
+}
+function onNModes(n){
+  targetCfg.nModes=n;
+  computeXRange();_hm=null;_tlz=null;_trueCurve=null;
+  resetState();renderTargetCtrls();
+}
+function onMode(k,fld,v){
+  targetCfg.modes[k][fld]=v;
+  const el=document.getElementById(`tm_${k}_${fld}`);
+  if(el)el.textContent=v.toFixed(fld==='mu'?1:2);
+  computeXRange();_hm=null;_tlz=null;_trueCurve=null;
+  resetState();
+}
+function updateTitleColour(){
+  const h1=document.querySelector('h1');
+  if(showHistColour){
+    h1.style.background='linear-gradient(90deg,#ff0000 0%,#ff8800 16%,#ffee00 33%,#00cc44 50%,#1a6eff 66%,#8833cc 83%,#ff0077 100%)';
+    h1.style.webkitBackgroundClip='text';h1.style.webkitTextFillColor='transparent';h1.style.backgroundClip='text';
+  } else {
+    h1.style.background='none';h1.style.backgroundClip='';
+    h1.style.webkitBackgroundClip='';h1.style.webkitTextFillColor=ACC_CSS[algo];h1.style.color=ACC_CSS[algo];
+  }
+}
+cssAcc();resetState();renderTargetCtrls();updateTitleColour();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
