@@ -697,30 +697,35 @@ section:last-of-type { border-bottom: none; }
 
 /* ── Prospective students ── */
 .recruit {
-  margin-top: 1.8rem;
-  padding: 1.4rem 1.5rem;
-  border: 1px solid var(--rule);
-  background: rgba(0, 0, 0, 0.015);
-}
-
-.recruit-head {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.7rem;
+  padding: 1.6rem 1.7rem;
+  background: var(--bg2);
+  border: 1px solid #e9e2fb;
+  border-left: 3px solid var(--accent);
 }
 
 .recruit p {
-  font-size: 0.88rem;
-  line-height: 1.62;
+  font-size: 0.9rem;
+  line-height: 1.65;
   font-weight: 300;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.8rem;
 }
 
-.recruit p:last-child {
-  margin-bottom: 0;
+.recruit-lead {
+  font-size: 1.02rem !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.recruit-note {
+  margin-bottom: 0 !important;
+  padding-top: 0.8rem;
+  border-top: 1px solid #e9e2fb;
+  font-size: 0.8rem !important;
   color: var(--muted);
-  font-size: 0.82rem;
+}
+
+@media (max-width: 640px) {
+  .recruit { padding: 1.2rem 1.1rem; }
 }
