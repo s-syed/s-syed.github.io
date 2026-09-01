@@ -38,6 +38,7 @@
       <li><a href="#students">Students</a></li>
       <li><a href="#teaching">Teaching</a></li>
       <li><a href="#group">Group</a></li>
+      <li><a href="#software">Software</a></li>
       <li><a href="#publications">Papers</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="uploads/cv.pdf">CV</a></li>
@@ -226,26 +227,59 @@
 
     <div class="student-item">
       <div><a href="https://www.chrisjwilliams.com/" target="_blank">Chris Williams</a></div>
-      <div class="student-degree">DPhil Year 3 &middot; Oxford &middot; co-sup. <a href="https://www.stats.ox.ac.uk/~doucet/">A. Doucet</a>, <a href="https://ziorzis.github.io/">G. Deligiannidis</a></div>
+      <div class="student-degree">DPhil &middot; Oxford &middot; co-sup. <a href="https://www.stats.ox.ac.uk/~doucet/">A. Doucet</a>, <a href="https://ziorzis.github.io/">G. Deligiannidis</a></div>
     </div>
 
     <div class="student-item">
       <div><a href="https://peterpotaptchik.github.io/" target="_blank">Peter Potaptchik</a></div>
-      <div class="student-degree">DPhil Year 3 &middot; Oxford &middot; co-sup. <a href="https://ziorzis.github.io/">G. Deligiannidis</a>, <a href="https://www.stats.ox.ac.uk/~teh/">Y. W. Teh</a></div>
+      <div class="student-degree">DPhil &middot; Oxford &middot; co-sup. <a href="https://ziorzis.github.io/">G. Deligiannidis</a>, <a href="https://www.stats.ox.ac.uk/~teh/">Y. W. Teh</a></div>
     </div>
 
     <div class="student-item">
       <div><a href="https://leozhangml.github.io/" target="_blank">Leo Zhang</a></div>
-      <div class="student-degree">DPhil Year 2 &middot; Oxford &middot; co-sup. <a href="https://jrmcornish.github.io/">R. Cornish</a>, <a href="https://www.stats.ox.ac.uk/~teh/">Y. W. Teh</a></div>
+      <div class="student-degree">DPhil &middot; Oxford &middot; co-sup. <a href="https://jrmcornish.github.io/">R. Cornish</a>, <a href="https://www.stats.ox.ac.uk/~teh/">Y. W. Teh</a></div>
     </div>
 
     <div class="student-item">
       <div><a href="https://1saacrankin.github.io/" target="_blank">Isaac Rankin</a></div>
-      <div class="student-degree">PhD Year 1 &middot; UBC &middot; co-sup. <a href="https://geoffpleiss.com/">G. Pleiss</a></div>
+      <div class="student-degree">PhD &middot; UBC &middot; co-sup. <a href="https://charlesm93.github.io/">C. Margossian</a></div>
     </div>
 
   </section>
 
+
+
+  <!-- ════════════════════════════════════
+       SOFTWARE
+  ════════════════════════════════════ -->
+  <section id="software">
+    <div class="section-label">Software</div>
+
+    <div class="software-item">
+      <div class="software-head">
+        <span class="software-name">Pigeons.jl</span>
+        <span class="software-lang">Julia</span>
+      </div>
+      <p class="software-desc">
+        A package for sampling from intractable distributions, built on non-reversible
+        parallel tempering. Pigeons runs unchanged from a single thread up to thousands of
+        MPI-communicating machines, and is designed around <em>parallelism invariance</em>:
+        the output for a given seed is identical no matter how many machines you run it on,
+        which makes distributed randomised algorithms reproducible and testable.
+      </p>
+      <p class="software-desc">
+        It implements the algorithms from much of the work below, including non-reversible
+        parallel tempering, variational PT, and autoMALA. Contributions and bug reports are
+        welcome, and it is a good place to start if you want to work with me.
+      </p>
+      <div class="pub-links">
+        <a class="pub-link" href="https://github.com/Julia-Tempering/Pigeons.jl" target="_blank">GitHub</a>
+        <a class="pub-link" href="https://pigeons.run/stable/" target="_blank">Docs</a>
+        <a class="pub-link" href="https://arxiv.org/abs/2308.09769" target="_blank">Paper</a>
+      </div>
+    </div>
+
+  </section>
 
 
   <!-- ════════════════════════════════════
@@ -261,7 +295,12 @@
       <div class="thesis-label">Doctoral thesis</div>
       <div class="thesis-title">Non-Reversible Parallel Tempering on Optimized Paths</div>
       <div class="thesis-meta">University of British Columbia, 2022 &nbsp;&middot;&nbsp; supervised by <a href="https://www.stat.ubc.ca/~bouchard/">Alexandre Bouchard-C&ocirc;t&eacute;</a></div>
-      <div class="thesis-awards">Marshall Prize &nbsp;&middot;&nbsp; SSC Pierre Robillard Award &nbsp;&middot;&nbsp; CAIMS Cecil Graham Dissertation Award &nbsp;&middot;&nbsp; ISBA Savage Award (Honourable Mention)</div>
+      <ul class="thesis-awards">
+        <li>Marshall Prize</li>
+        <li>SSC Pierre Robillard Award</li>
+        <li>CAIMS Cecil Graham Dissertation Award</li>
+        <li>ISBA Savage Award, Theory and Methods (Honourable Mention)</li>
+      </ul>
       <div class="pub-links">
         <a class="pub-link" href="https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0413120" target="_blank">Thesis</a>
       </div>
@@ -271,7 +310,7 @@
     <div class="pub-group">2026</div>
 
     <div class="pub-item" data-year="2026" data-status="peer-reviewed" data-kind="journal">
-      <div class="pub-num">18</div>
+      <div class="pub-num">[18]</div>
       <div class="pub-title">Optimized Annealed Sequential Monte Carlo Samplers</div>
       <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, Kevin Chern, Arnaud Doucet</div>
       <div class="pub-venue">Journal of the Royal Statistical Society Series B, 2026</div>
@@ -291,7 +330,7 @@
     </div>
 
     <div class="pub-item" data-year="2026" data-status="peer-reviewed" data-kind="conference">
-      <div class="pub-num">17</div>
+      <div class="pub-num">[17]</div>
       <div class="pub-title">Conditional Diffusion Sampling</div>
       <div class="pub-authors">Francisco M. Castro-Mac&iacute;as, Pablo Morales-&Aacute;lvarez, <strong>Saifuddin Syed</strong>, Daniel Hern&aacute;ndez-Lobato, Rafael Molina, Jos&eacute; Miguel Hern&aacute;ndez-Lobato</div>
       <div class="pub-venue">International Conference on Machine Learning (ICML), 2026</div>
@@ -313,7 +352,7 @@
     </div>
 
     <div class="pub-item" data-year="2026" data-status="peer-reviewed" data-kind="conference">
-      <div class="pub-num">16</div>
+      <div class="pub-num">[16]</div>
       <div class="pub-title">CREPE: Controlling Diffusion with Replica Exchange</div>
       <div class="pub-authors">Jiajun He, Paul Jeha<sup>*</sup>, Peter Potaptchik<sup>*</sup>, Leo Zhang<sup>*</sup>, Jos&eacute; Miguel Hern&aacute;ndez-Lobato, Yuanqi Du, <strong>Saifuddin Syed</strong><sup>*&dagger;</sup>, Francisco Vargas<sup>*&dagger;</sup></div>
       <div class="pub-venue">International Conference on Learning Representations (ICLR), 2026</div>
@@ -332,7 +371,7 @@
     </div>
 
     <div class="pub-item" data-year="2026" data-status="peer-reviewed" data-kind="conference">
-      <div class="pub-num">15</div>
+      <div class="pub-num">[15]</div>
       <div class="pub-title">Accelerated Parallel Tempering via Neural Transports</div>
       <div class="pub-authors">Leo Zhang<sup>*</sup>, Peter Potaptchik<sup>*</sup>, Jiajun He<sup>*</sup>, Yuanqi Du, Arnaud Doucet, Francisco Vargas, Hai-Dang Dau, <strong>Saifuddin Syed</strong></div>
       <div class="pub-venue">International Conference on Learning Representations (ICLR), 2026</div>
@@ -350,7 +389,7 @@
     </div>
 
     <div class="pub-item" data-year="2026" data-status="under-review" data-kind="preprint">
-      <div class="pub-num">14</div>
+      <div class="pub-num">[14]</div>
       <div class="pub-title">De Novo Design of Protein Switches with Diffusion-Based Ensemble Sampling</div>
       <div class="pub-authors">Ali Omidi, Jiajun He, Jennifer M. Bui, J&ouml;rg Gsponer, <strong>Saifuddin Syed</strong></div>
       <div class="pub-venue">Under review &nbsp;&middot;&nbsp; bioRxiv 2026.07.20.739027</div>
@@ -370,7 +409,7 @@
     <div class="pub-group">2025</div>
 
     <div class="pub-item" data-year="2025" data-status="peer-reviewed" data-kind="conference">
-      <div class="pub-num">13</div>
+      <div class="pub-num">[13]</div>
       <div class="pub-title">Amortized Sampling with Transferable Normalizing Flows</div>
       <div class="pub-authors">Charlie B. Tan<sup>*</sup>, Majdi Hassan<sup>*</sup>, Leon Klein, <strong>Saifuddin Syed</strong>, Dominique Beaini, Michael M. Bronstein, Alexander Tong, Kirill Neklyudov</div>
       <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2025</div>
@@ -390,7 +429,7 @@
     </div>
 
     <div class="pub-item" data-year="2025" data-status="peer-reviewed" data-kind="journal">
-      <div class="pub-num">12</div>
+      <div class="pub-num">[12]</div>
       <div class="pub-title">Pigeons.jl: Distributed Sampling from Intractable Distributions</div>
       <div class="pub-authors">Nikola Surjanovic, Miguel Biron-Lattes, Paul Tiede, <strong>Saifuddin Syed</strong>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
       <div class="pub-venue">Proceedings of the JuliaCon Conference, 7:1&ndash;13, 2025</div>
@@ -412,7 +451,7 @@
     </div>
 
     <div class="pub-item" data-year="2025" data-status="preprint" data-kind="preprint">
-      <div class="pub-num">11</div>
+      <div class="pub-num">[11]</div>
       <div class="pub-title">The Cosine Schedule is Fisher-Rao-Optimal for Masked Discrete Diffusion Models</div>
       <div class="pub-authors">Leo Zhang, <strong>Saifuddin Syed</strong></div>
       <div class="pub-venue">Preprint &nbsp;&middot;&nbsp; arXiv:2508.04884, 2025</div>
@@ -431,7 +470,7 @@
     </div>
 
     <div class="pub-item" data-year="2025" data-status="workshop" data-kind="workshop">
-      <div class="pub-num">10</div>
+      <div class="pub-num">[10]</div>
       <div class="pub-title">Reproducible Sampling from Intractable Distributions with Pigeons.jl</div>
       <div class="pub-authors">Nikola Surjanovic, Miguel Biron-Lattes, Paul Tiede, <strong>Saifuddin Syed</strong>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
       <div class="pub-venue">CODEML Workshop, International Conference on Machine Learning, 2025</div>
@@ -448,7 +487,7 @@
     </div>
 
     <div class="pub-item" data-year="2025" data-status="workshop" data-kind="workshop">
-      <div class="pub-num">9</div>
+      <div class="pub-num">[9]</div>
       <div class="pub-title">Generalised Parallel Tempering: Flexible Replica Exchange via Flows and Diffusions</div>
       <div class="pub-authors">Leo Zhang, Peter Potaptchik, Arnaud Doucet, Hai-Dang Dau, <strong>Saifuddin Syed</strong></div>
       <div class="pub-venue">Frontiers in Probabilistic Inference Workshop, International Conference on Learning Representations, 2025</div>
@@ -467,7 +506,7 @@
     <div class="pub-group">2024</div>
 
     <div class="pub-item" data-year="2024" data-status="peer-reviewed" data-kind="conference">
-      <div class="pub-num">8</div>
+      <div class="pub-num">[8]</div>
       <div class="pub-title">Score-Optimal Diffusion Schedules</div>
       <div class="pub-authors">Christopher Williams, Andrew Campbell, Arnaud Doucet, <strong>Saifuddin Syed</strong></div>
       <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2024</div>
@@ -485,7 +524,7 @@
     </div>
 
     <div class="pub-item" data-year="2024" data-status="peer-reviewed" data-kind="conference">
-      <div class="pub-num">7</div>
+      <div class="pub-num">[7]</div>
       <div class="pub-title">autoMALA: Locally Adaptive Metropolis-Adjusted Langevin Algorithm</div>
       <div class="pub-authors">Miguel Biron-Lattes<sup>*</sup>, Nikola Surjanovic<sup>*</sup>, <strong>Saifuddin Syed</strong>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
       <div class="pub-venue">International Conference on Artificial Intelligence and Statistics (AISTATS), 2024</div>
@@ -507,7 +546,7 @@
     </div>
 
     <div class="pub-item" data-year="2024" data-status="under-review" data-kind="preprint">
-      <div class="pub-num">6</div>
+      <div class="pub-num">[6]</div>
       <div class="pub-title">Uniform Ergodicity of Parallel Tempering with Efficient Local Exploration</div>
       <div class="pub-authors">Nikola Surjanovic, <strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, Trevor Campbell</div>
       <div class="pub-venue">Under review &nbsp;&middot;&nbsp; arXiv:2405.11384, 2024</div>
@@ -528,7 +567,7 @@
     <div class="pub-group">2023</div>
 
     <div class="pub-item" data-year="2023" data-status="peer-reviewed" data-kind="conference">
-      <div class="pub-num">5</div>
+      <div class="pub-num">[5]</div>
       <div class="pub-title">A Unified Framework for U-Net Design and Analysis</div>
       <div class="pub-authors">Fabian Falck<sup>*</sup>, Christopher Williams<sup>*</sup>, George Deligiannidis, Chris Holmes, Arnaud Doucet, <strong>Saifuddin Syed</strong></div>
       <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2023</div>
@@ -546,7 +585,7 @@
     </div>
 
     <div class="pub-item" data-year="2023" data-status="peer-reviewed" data-kind="journal">
-      <div class="pub-num">4</div>
+      <div class="pub-num">[4]</div>
       <div class="pub-title">Local Exchangeability</div>
       <div class="pub-authors">Trevor Campbell, <strong>Saifuddin Syed</strong>, Chiao-Yu Yang, Michael I. Jordan, Tamara Broderick</div>
       <div class="pub-venue">Bernoulli, 29(3):2084&ndash;2100, 2023</div>
@@ -569,7 +608,7 @@
     <div class="pub-group">2022</div>
 
     <div class="pub-item" data-year="2022" data-status="peer-reviewed" data-kind="conference">
-      <div class="pub-num">3</div>
+      <div class="pub-num">[3]</div>
       <div class="pub-title">Parallel Tempering with a Variational Reference</div>
       <div class="pub-authors">Nikola Surjanovic, <strong>Saifuddin Syed</strong>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
       <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2022</div>
@@ -589,7 +628,7 @@
     </div>
 
     <div class="pub-item" data-year="2022" data-status="peer-reviewed" data-kind="journal">
-      <div class="pub-num">2</div>
+      <div class="pub-num">[2]</div>
       <div class="pub-title">Non-Reversible Parallel Tempering: A Scalable Highly Parallel MCMC Scheme</div>
       <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, George Deligiannidis, Arnaud Doucet</div>
       <div class="pub-venue">Journal of the Royal Statistical Society Series B, 84(2):321&ndash;350, 2022</div>
@@ -615,7 +654,7 @@
     <div class="pub-group">2021</div>
 
     <div class="pub-item" data-year="2021" data-status="peer-reviewed" data-kind="conference">
-      <div class="pub-num">1</div>
+      <div class="pub-num">[1]</div>
       <div class="pub-title">Parallel Tempering on Optimized Paths</div>
       <div class="pub-authors"><strong>Saifuddin Syed</strong><sup>*</sup>, Vittorio Romaniello<sup>*</sup>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
       <div class="pub-venue">International Conference on Machine Learning (ICML), 2021</div>

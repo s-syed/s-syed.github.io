@@ -761,14 +761,14 @@ section:last-of-type { border-bottom: none; }
 
 .pub-item {
   position: relative;
-  padding-left: 2.4rem;
+  padding-left: 2.9rem;
 }
 
 .pub-num {
   position: absolute;
   left: 0;
   top: 1.15rem;
-  width: 1.7rem;
+  width: 2.2rem;
   text-align: right;
   font-family: 'DM Mono', monospace;
   font-size: 0.68rem;
@@ -780,7 +780,7 @@ section:last-of-type { border-bottom: none; }
 .pub-item::before {
   content: '';
   position: absolute;
-  left: 2.05rem;
+  left: 2.55rem;
   top: 0.9rem;
   bottom: 0.9rem;
   width: 2px;
@@ -794,7 +794,7 @@ section:last-of-type { border-bottom: none; }
 
 /* ── Doctoral thesis ── */
 .thesis {
-  padding: 0.2rem 0 1.3rem 2.4rem;
+  padding: 0.2rem 0 1.3rem 2.9rem;
   border-bottom: 1px solid var(--rule);
 }
 
@@ -835,8 +835,69 @@ section:last-of-type { border-bottom: none; }
 }
 
 @media (max-width: 640px) {
-  .pub-item { padding-left: 1.9rem; }
-  .pub-num { width: 1.3rem; }
-  .pub-item::before { left: 1.6rem; }
-  .thesis { padding-left: 1.9rem; }
+  .pub-item { padding-left: 2.3rem; }
+  .pub-num { width: 1.75rem; }
+  .pub-item::before { left: 2rem; }
+  .thesis { padding-left: 2.3rem; }
 }
+
+/* ── Thesis awards, one per line ── */
+ul.thesis-awards {
+  list-style: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  line-height: 1.95;
+  color: var(--soft);
+  margin: 0.3rem 0 0.7rem;
+  padding: 0;
+}
+
+ul.thesis-awards li { position: relative; padding-left: 0.85rem; }
+
+ul.thesis-awards li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 4px;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* ── Software ── */
+.software-item { padding: 0.4rem 0 0.2rem; }
+
+.software-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.software-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.software-lang {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tag-text);
+  background: var(--tag-bg);
+  padding: 0.15rem 0.45rem;
+}
+
+.software-desc {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 0.7rem;
+  max-width: 46rem;
+}
+
+.software-desc em { color: var(--ink); font-style: normal; font-weight: 400; }
