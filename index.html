@@ -35,9 +35,9 @@
     <a class="nav-name" href="/">Saifuddin Syed</a>
     <ul class="nav-links">
       <li><a href="#research">Research</a></li>
+      <li><a href="#students">Students</a></li>
       <li><a href="#teaching">Teaching</a></li>
       <li><a href="#group">Group</a></li>
-      <li><a href="#students">Students</a></li>
       <li><a href="#publications">Papers</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="uploads/cv.pdf">CV</a></li>
@@ -104,6 +104,34 @@
       <div class="interest-item">Scaling limits and optimal tuning</div>
       <div class="interest-item">Probabilistic programming</div>
       <div class="interest-item">AI for science</div>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       PROSPECTIVE STUDENTS
+  ════════════════════════════════════ -->
+  <section id="students">
+    <div class="section-label">Prospective Students</div>
+
+    <div class="recruit">
+      <p class="recruit-lead">
+        I am actively recruiting MSc and PhD students with very strong mathematical
+        and programming ability.
+      </p>
+      <p>
+        Admission is handled by the department, not by me individually, so the way to reach me is
+        through the application itself. Apply to the
+        <a href="https://www.stat.ubc.ca/graduate-programs" target="_blank">UBC Statistics graduate program</a>
+        and say in your statement that you are interested in working with me and why. Be specific:
+        naming the work of mine that drew you in, and what you would want to do next, tells me far
+        more than a general statement of interest.
+      </p>
+      <p class="recruit-note">
+        A separate email is not necessary and will not affect the outcome. I receive more enquiries
+        than I can answer, so I am usually unable to reply to them individually.
+      </p>
     </div>
 
   </section>
@@ -221,54 +249,29 @@
 
 
   <!-- ════════════════════════════════════
-       PROSPECTIVE STUDENTS
-  ════════════════════════════════════ -->
-  <section id="students">
-    <div class="section-label">Prospective Students</div>
-
-    <div class="recruit">
-      <p class="recruit-lead">
-        I am actively recruiting MSc and PhD students with very strong mathematical
-        and programming ability.
-      </p>
-      <p>
-        Admission is handled by the department, not by me individually, so the way to reach me is
-        through the application itself. Apply to the
-        <a href="https://www.stat.ubc.ca/graduate-programs" target="_blank">UBC Statistics graduate program</a>
-        and say in your statement that you are interested in working with me and why. Be specific:
-        naming the work of mine that drew you in, and what you would want to do next, tells me far
-        more than a general statement of interest.
-      </p>
-      <p class="recruit-note">
-        A separate email is not necessary and will not affect the outcome. I receive more enquiries
-        than I can answer, so I am usually unable to reply to them individually.
-      </p>
-    </div>
-
-  </section>
-
-
-  <!-- ════════════════════════════════════
        PUBLICATIONS
-       Each .pub-item carries data-year / data-status / data-kind.
-       The Type|Year toggle regroups them client-side; if JS is off
-       the static peer-reviewed / preprints / workshop order below stands.
+       Grouped by year, newest first, numbered from the top.
+       Unrefereed work carries a .pub-tag badge (Preprint / Under review /
+       Workshop). No JS needed: this is all static markup.
   ════════════════════════════════════ -->
   <section id="publications">
     <div class="section-label">Publications</div>
 
-    <div class="pub-toolbar">
-      <div class="pub-seg" role="group" aria-label="Group publications by">
-        <button type="button" class="pub-seg-btn is-on" data-group="status">Type</button>
-        <button type="button" class="pub-seg-btn" data-group="year">Year</button>
+    <div class="thesis">
+      <div class="thesis-label">Doctoral thesis</div>
+      <div class="thesis-title">Non-Reversible Parallel Tempering on Optimized Paths</div>
+      <div class="thesis-meta">University of British Columbia, 2022 &nbsp;&middot;&nbsp; supervised by <a href="https://www.stat.ubc.ca/~bouchard/">Alexandre Bouchard-C&ocirc;t&eacute;</a></div>
+      <div class="thesis-meta thesis-awards">Marshall Prize &nbsp;&middot;&nbsp; SSC Pierre Robillard Award &nbsp;&middot;&nbsp; CAIMS Cecil Graham Dissertation Award &nbsp;&middot;&nbsp; ISBA Savage Award (Honourable Mention)</div>
+      <div class="pub-links">
+        <a class="pub-link" href="https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0413120" target="_blank">Thesis</a>
       </div>
-      <div class="pub-total">18 papers</div>
     </div>
 
     <div class="pub-list" id="pub-list">
-    <div class="pub-group" data-count="13">Peer-reviewed</div>
+    <div class="pub-group">2026</div>
 
     <div class="pub-item" data-year="2026" data-status="peer-reviewed" data-kind="journal">
+      <div class="pub-num">18</div>
       <div class="pub-title">Optimized Annealed Sequential Monte Carlo Samplers</div>
       <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, Kevin Chern, Arnaud Doucet</div>
       <div class="pub-venue">Journal of the Royal Statistical Society Series B, 2026</div>
@@ -288,6 +291,7 @@
     </div>
 
     <div class="pub-item" data-year="2026" data-status="peer-reviewed" data-kind="conference">
+      <div class="pub-num">17</div>
       <div class="pub-title">Conditional Diffusion Sampling</div>
       <div class="pub-authors">Francisco M. Castro-Mac&iacute;as, Pablo Morales-&Aacute;lvarez, <strong>Saifuddin Syed</strong>, Daniel Hern&aacute;ndez-Lobato, Rafael Molina, Jos&eacute; Miguel Hern&aacute;ndez-Lobato</div>
       <div class="pub-venue">International Conference on Machine Learning (ICML), 2026</div>
@@ -309,6 +313,7 @@
     </div>
 
     <div class="pub-item" data-year="2026" data-status="peer-reviewed" data-kind="conference">
+      <div class="pub-num">16</div>
       <div class="pub-title">CREPE: Controlling Diffusion with Replica Exchange</div>
       <div class="pub-authors">Jiajun He, Paul Jeha<sup>*</sup>, Peter Potaptchik<sup>*</sup>, Leo Zhang<sup>*</sup>, Jos&eacute; Miguel Hern&aacute;ndez-Lobato, Yuanqi Du, <strong>Saifuddin Syed</strong><sup>*&dagger;</sup>, Francisco Vargas<sup>*&dagger;</sup></div>
       <div class="pub-venue">International Conference on Learning Representations (ICLR), 2026</div>
@@ -327,6 +332,7 @@
     </div>
 
     <div class="pub-item" data-year="2026" data-status="peer-reviewed" data-kind="conference">
+      <div class="pub-num">15</div>
       <div class="pub-title">Accelerated Parallel Tempering via Neural Transports</div>
       <div class="pub-authors">Leo Zhang<sup>*</sup>, Peter Potaptchik<sup>*</sup>, Jiajun He<sup>*</sup>, Yuanqi Du, Arnaud Doucet, Francisco Vargas, Hai-Dang Dau, <strong>Saifuddin Syed</strong></div>
       <div class="pub-venue">International Conference on Learning Representations (ICLR), 2026</div>
@@ -343,7 +349,28 @@
 }</code></pre>
     </div>
 
+    <div class="pub-item" data-year="2026" data-status="preprint" data-kind="preprint">
+      <div class="pub-num">14</div>
+      <div class="pub-title">De Novo Design of Protein Switches with Diffusion-Based Ensemble Sampling <span class="pub-tag pub-tag-preprint">Preprint</span></div>
+      <div class="pub-authors">Ali Omidi, Jiajun He, Jennifer M. Bui, J&ouml;rg Gsponer, <strong>Saifuddin Syed</strong></div>
+      <div class="pub-venue">Preprint, bioRxiv 2026.07.20.739027, 2026</div>
+      <div class="pub-links">
+        <a class="pub-link" href="https://doi.org/10.1101/2026.07.20.739027" target="_blank">bioRxiv</a>
+        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
+      </div>
+      <pre class="pub-bib" hidden><code>@article{omidi2026denovo,
+  title   = {De Novo Design of Protein Switches with Diffusion-Based Ensemble Sampling},
+  author  = {Omidi, Ali and He, Jiajun and Bui, Jennifer M. and Gsponer, J\&quot;org and Syed, Saifuddin},
+  journal = {bioRxiv},
+  year    = {2026},
+  doi     = {10.1101/2026.07.20.739027}
+}</code></pre>
+    </div>
+
+    <div class="pub-group">2025</div>
+
     <div class="pub-item" data-year="2025" data-status="peer-reviewed" data-kind="conference">
+      <div class="pub-num">13</div>
       <div class="pub-title">Amortized Sampling with Transferable Normalizing Flows</div>
       <div class="pub-authors">Charlie B. Tan<sup>*</sup>, Majdi Hassan<sup>*</sup>, Leon Klein, <strong>Saifuddin Syed</strong>, Dominique Beaini, Michael M. Bronstein, Alexander Tong, Kirill Neklyudov</div>
       <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2025</div>
@@ -363,6 +390,7 @@
     </div>
 
     <div class="pub-item" data-year="2025" data-status="peer-reviewed" data-kind="journal">
+      <div class="pub-num">12</div>
       <div class="pub-title">Pigeons.jl: Distributed Sampling from Intractable Distributions</div>
       <div class="pub-authors">Nikola Surjanovic, Miguel Biron-Lattes, Paul Tiede, <strong>Saifuddin Syed</strong>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
       <div class="pub-venue">Proceedings of the JuliaCon Conference, 7:1&ndash;13, 2025</div>
@@ -383,7 +411,63 @@
 }</code></pre>
     </div>
 
+    <div class="pub-item" data-year="2025" data-status="preprint" data-kind="preprint">
+      <div class="pub-num">11</div>
+      <div class="pub-title">The Cosine Schedule is Fisher-Rao-Optimal for Masked Discrete Diffusion Models <span class="pub-tag pub-tag-preprint">Preprint</span></div>
+      <div class="pub-authors">Leo Zhang, <strong>Saifuddin Syed</strong></div>
+      <div class="pub-venue">Preprint, 2025</div>
+      <div class="pub-links">
+        <a class="pub-link" href="https://arxiv.org/abs/2508.04884" target="_blank">arXiv</a>
+        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
+      </div>
+      <pre class="pub-bib" hidden><code>@misc{zhang2025cosine,
+  title         = {The Cosine Schedule is {F}isher-{R}ao-Optimal for Masked Discrete Diffusion Models},
+  author        = {Zhang, Leo and Syed, Saifuddin},
+  year          = {2025},
+  eprint        = {2508.04884},
+  archivePrefix = {arXiv},
+  primaryClass  = {stat.ML}
+}</code></pre>
+    </div>
+
+    <div class="pub-item" data-year="2025" data-status="workshop" data-kind="workshop">
+      <div class="pub-num">10</div>
+      <div class="pub-title">Reproducible Sampling from Intractable Distributions with Pigeons.jl <span class="pub-tag pub-tag-workshop">Workshop</span></div>
+      <div class="pub-authors">Nikola Surjanovic, Miguel Biron-Lattes, Paul Tiede, <strong>Saifuddin Syed</strong>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
+      <div class="pub-venue">CODEML Workshop, International Conference on Machine Learning, 2025</div>
+      <div class="pub-links">
+        <a class="pub-link" href="https://github.com/Julia-Tempering/Pigeons.jl" target="_blank">Code</a>
+        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
+      </div>
+      <pre class="pub-bib" hidden><code>@inproceedings{surjanovic2025reproducible,
+  title     = {Reproducible Sampling from Intractable Distributions with Pigeons.jl},
+  author    = {Surjanovic, Nikola and Biron-Lattes, Miguel and Tiede, Paul and Syed, Saifuddin and Campbell, Trevor and Bouchard-C\^ot\&#x27;e, Alexandre},
+  booktitle = {Championing Open-source Development in Machine Learning Workshop, International Conference on Machine Learning ({ICML})},
+  year      = {2025}
+}</code></pre>
+    </div>
+
+    <div class="pub-item" data-year="2025" data-status="workshop" data-kind="workshop">
+      <div class="pub-num">9</div>
+      <div class="pub-title">Generalised Parallel Tempering: Flexible Replica Exchange via Flows and Diffusions <span class="pub-tag pub-tag-workshop">Workshop</span></div>
+      <div class="pub-authors">Leo Zhang, Peter Potaptchik, Arnaud Doucet, Hai-Dang Dau, <strong>Saifuddin Syed</strong></div>
+      <div class="pub-venue">Frontiers in Probabilistic Inference Workshop, International Conference on Learning Representations, 2025</div>
+      <div class="pub-links">
+        <a class="pub-link" href="#" target="_blank">arXiv</a>
+        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
+      </div>
+      <pre class="pub-bib" hidden><code>@inproceedings{zhang2025generalised,
+  title     = {Generalised Parallel Tempering: Flexible Replica Exchange via Flows and Diffusions},
+  author    = {Zhang, Leo and Potaptchik, Peter and Doucet, Arnaud and Dau, Hai-Dang and Syed, Saifuddin},
+  booktitle = {Frontiers in Probabilistic Inference Workshop, International Conference on Learning Representations ({ICLR})},
+  year      = {2025}
+}</code></pre>
+    </div>
+
+    <div class="pub-group">2024</div>
+
     <div class="pub-item" data-year="2024" data-status="peer-reviewed" data-kind="conference">
+      <div class="pub-num">8</div>
       <div class="pub-title">Score-Optimal Diffusion Schedules</div>
       <div class="pub-authors">Christopher Williams, Andrew Campbell, Arnaud Doucet, <strong>Saifuddin Syed</strong></div>
       <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2024</div>
@@ -401,6 +485,7 @@
     </div>
 
     <div class="pub-item" data-year="2024" data-status="peer-reviewed" data-kind="conference">
+      <div class="pub-num">7</div>
       <div class="pub-title">autoMALA: Locally Adaptive Metropolis-Adjusted Langevin Algorithm</div>
       <div class="pub-authors">Miguel Biron-Lattes<sup>*</sup>, Nikola Surjanovic<sup>*</sup>, <strong>Saifuddin Syed</strong>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
       <div class="pub-venue">International Conference on Artificial Intelligence and Statistics (AISTATS), 2024</div>
@@ -421,7 +506,29 @@
 }</code></pre>
     </div>
 
+    <div class="pub-item" data-year="2024" data-status="under-review" data-kind="preprint">
+      <div class="pub-num">6</div>
+      <div class="pub-title">Uniform Ergodicity of Parallel Tempering with Efficient Local Exploration <span class="pub-tag pub-tag-under-review">Under review</span></div>
+      <div class="pub-authors">Nikola Surjanovic, <strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, Trevor Campbell</div>
+      <div class="pub-venue">Preprint, 2024</div>
+      <div class="pub-links">
+        <a class="pub-link" href="https://arxiv.org/abs/2405.11384" target="_blank">arXiv</a>
+        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
+      </div>
+      <pre class="pub-bib" hidden><code>@misc{surjanovic2024uniform,
+  title         = {Uniform Ergodicity of Parallel Tempering with Efficient Local Exploration},
+  author        = {Surjanovic, Nikola and Syed, Saifuddin and Bouchard-C\^ot\&#x27;e, Alexandre and Campbell, Trevor},
+  year          = {2024},
+  eprint        = {2405.11384},
+  archivePrefix = {arXiv},
+  primaryClass  = {stat.CO}
+}</code></pre>
+    </div>
+
+    <div class="pub-group">2023</div>
+
     <div class="pub-item" data-year="2023" data-status="peer-reviewed" data-kind="conference">
+      <div class="pub-num">5</div>
       <div class="pub-title">A Unified Framework for U-Net Design and Analysis</div>
       <div class="pub-authors">Fabian Falck<sup>*</sup>, Christopher Williams<sup>*</sup>, George Deligiannidis, Chris Holmes, Arnaud Doucet, <strong>Saifuddin Syed</strong></div>
       <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2023</div>
@@ -439,6 +546,7 @@
     </div>
 
     <div class="pub-item" data-year="2023" data-status="peer-reviewed" data-kind="journal">
+      <div class="pub-num">4</div>
       <div class="pub-title">Local Exchangeability</div>
       <div class="pub-authors">Trevor Campbell, <strong>Saifuddin Syed</strong>, Chiao-Yu Yang, Michael I. Jordan, Tamara Broderick</div>
       <div class="pub-venue">Bernoulli, 29(3):2084&ndash;2100, 2023</div>
@@ -458,7 +566,10 @@
 }</code></pre>
     </div>
 
+    <div class="pub-group">2022</div>
+
     <div class="pub-item" data-year="2022" data-status="peer-reviewed" data-kind="conference">
+      <div class="pub-num">3</div>
       <div class="pub-title">Parallel Tempering with a Variational Reference</div>
       <div class="pub-authors">Nikola Surjanovic, <strong>Saifuddin Syed</strong>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
       <div class="pub-venue">Advances in Neural Information Processing Systems (NeurIPS), 2022</div>
@@ -478,6 +589,7 @@
     </div>
 
     <div class="pub-item" data-year="2022" data-status="peer-reviewed" data-kind="journal">
+      <div class="pub-num">2</div>
       <div class="pub-title">Non-Reversible Parallel Tempering: A Scalable Highly Parallel MCMC Scheme</div>
       <div class="pub-authors"><strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, George Deligiannidis, Arnaud Doucet</div>
       <div class="pub-venue">Journal of the Royal Statistical Society Series B, 84(2):321&ndash;350, 2022 <span class="pub-award">Savage Award HM</span></div>
@@ -500,7 +612,10 @@
 }</code></pre>
     </div>
 
+    <div class="pub-group">2021</div>
+
     <div class="pub-item" data-year="2021" data-status="peer-reviewed" data-kind="conference">
+      <div class="pub-num">1</div>
       <div class="pub-title">Parallel Tempering on Optimized Paths</div>
       <div class="pub-authors"><strong>Saifuddin Syed</strong><sup>*</sup>, Vittorio Romaniello<sup>*</sup>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
       <div class="pub-venue">International Conference on Machine Learning (ICML), 2021</div>
@@ -519,97 +634,6 @@
   year      = {2021},
   publisher = {PMLR},
   note      = {arXiv:2102.07720}
-}</code></pre>
-    </div>
-
-    <div class="pub-group" data-count="2">Under review</div>
-
-    <div class="pub-item" data-year="2026" data-status="under-review" data-kind="preprint">
-      <div class="pub-title">De Novo Design of Protein Switches with Diffusion-Based Ensemble Sampling</div>
-      <div class="pub-authors">Ali Omidi, Jiajun He, Jennifer M. Bui, J&ouml;rg Gsponer, <strong>Saifuddin Syed</strong></div>
-      <div class="pub-venue">Preprint, bioRxiv 2026.07.20.739027, 2026</div>
-      <div class="pub-links">
-        <a class="pub-link" href="https://doi.org/10.1101/2026.07.20.739027" target="_blank">bioRxiv</a>
-        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
-      </div>
-      <pre class="pub-bib" hidden><code>@article{omidi2026denovo,
-  title   = {De Novo Design of Protein Switches with Diffusion-Based Ensemble Sampling},
-  author  = {Omidi, Ali and He, Jiajun and Bui, Jennifer M. and Gsponer, J\&quot;org and Syed, Saifuddin},
-  journal = {bioRxiv},
-  year    = {2026},
-  doi     = {10.1101/2026.07.20.739027}
-}</code></pre>
-    </div>
-
-    <div class="pub-item" data-year="2024" data-status="under-review" data-kind="preprint">
-      <div class="pub-title">Uniform Ergodicity of Parallel Tempering with Efficient Local Exploration</div>
-      <div class="pub-authors">Nikola Surjanovic, <strong>Saifuddin Syed</strong>, Alexandre Bouchard-C&ocirc;t&eacute;, Trevor Campbell</div>
-      <div class="pub-venue">Preprint, 2024</div>
-      <div class="pub-links">
-        <a class="pub-link" href="https://arxiv.org/abs/2405.11384" target="_blank">arXiv</a>
-        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
-      </div>
-      <pre class="pub-bib" hidden><code>@misc{surjanovic2024uniform,
-  title         = {Uniform Ergodicity of Parallel Tempering with Efficient Local Exploration},
-  author        = {Surjanovic, Nikola and Syed, Saifuddin and Bouchard-C\^ot\&#x27;e, Alexandre and Campbell, Trevor},
-  year          = {2024},
-  eprint        = {2405.11384},
-  archivePrefix = {arXiv},
-  primaryClass  = {stat.CO}
-}</code></pre>
-    </div>
-
-    <div class="pub-group" data-count="1">Preprints</div>
-
-    <div class="pub-item" data-year="2025" data-status="preprint" data-kind="preprint">
-      <div class="pub-title">The Cosine Schedule is Fisher-Rao-Optimal for Masked Discrete Diffusion Models</div>
-      <div class="pub-authors">Leo Zhang, <strong>Saifuddin Syed</strong></div>
-      <div class="pub-venue">Preprint, 2025</div>
-      <div class="pub-links">
-        <a class="pub-link" href="https://arxiv.org/abs/2508.04884" target="_blank">arXiv</a>
-        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
-      </div>
-      <pre class="pub-bib" hidden><code>@misc{zhang2025cosine,
-  title         = {The Cosine Schedule is {F}isher-{R}ao-Optimal for Masked Discrete Diffusion Models},
-  author        = {Zhang, Leo and Syed, Saifuddin},
-  year          = {2025},
-  eprint        = {2508.04884},
-  archivePrefix = {arXiv},
-  primaryClass  = {stat.ML}
-}</code></pre>
-    </div>
-
-    <div class="pub-group" data-count="2">Workshop papers</div>
-
-    <div class="pub-item" data-year="2025" data-status="workshop" data-kind="workshop">
-      <div class="pub-title">Reproducible Sampling from Intractable Distributions with Pigeons.jl</div>
-      <div class="pub-authors">Nikola Surjanovic, Miguel Biron-Lattes, Paul Tiede, <strong>Saifuddin Syed</strong>, Trevor Campbell, Alexandre Bouchard-C&ocirc;t&eacute;</div>
-      <div class="pub-venue">CODEML Workshop, International Conference on Machine Learning, 2025</div>
-      <div class="pub-links">
-        <a class="pub-link" href="https://github.com/Julia-Tempering/Pigeons.jl" target="_blank">Code</a>
-        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
-      </div>
-      <pre class="pub-bib" hidden><code>@inproceedings{surjanovic2025reproducible,
-  title     = {Reproducible Sampling from Intractable Distributions with Pigeons.jl},
-  author    = {Surjanovic, Nikola and Biron-Lattes, Miguel and Tiede, Paul and Syed, Saifuddin and Campbell, Trevor and Bouchard-C\^ot\&#x27;e, Alexandre},
-  booktitle = {Championing Open-source Development in Machine Learning Workshop, International Conference on Machine Learning ({ICML})},
-  year      = {2025}
-}</code></pre>
-    </div>
-
-    <div class="pub-item" data-year="2025" data-status="workshop" data-kind="workshop">
-      <div class="pub-title">Generalised Parallel Tempering: Flexible Replica Exchange via Flows and Diffusions</div>
-      <div class="pub-authors">Leo Zhang, Peter Potaptchik, Arnaud Doucet, Hai-Dang Dau, <strong>Saifuddin Syed</strong></div>
-      <div class="pub-venue">Frontiers in Probabilistic Inference Workshop, International Conference on Learning Representations, 2025</div>
-      <div class="pub-links">
-        <a class="pub-link" href="#" target="_blank">arXiv</a>
-        <button type="button" class="pub-link pub-bib-btn" aria-expanded="false">BibTeX</button>
-      </div>
-      <pre class="pub-bib" hidden><code>@inproceedings{zhang2025generalised,
-  title     = {Generalised Parallel Tempering: Flexible Replica Exchange via Flows and Diffusions},
-  author    = {Zhang, Leo and Potaptchik, Peter and Doucet, Arnaud and Dau, Hai-Dang and Syed, Saifuddin},
-  booktitle = {Frontiers in Probabilistic Inference Workshop, International Conference on Learning Representations ({ICLR})},
-  year      = {2025}
 }</code></pre>
     </div>
 
@@ -653,68 +677,6 @@
 
 </div>
 
-<script>
-/* Publications: regroup by type or year. Progressive enhancement:
-   with JS off, the static markup already renders grouped by type. */
-(function () {
-  var list = document.getElementById('pub-list');
-  if (!list) return;
-  var section = document.getElementById('publications');
-  section.classList.add('pub-js');
-
-  var LABEL = { 'peer-reviewed': 'Peer-reviewed', 'under-review': 'Under review', 'preprint': 'Preprints', 'workshop': 'Workshop papers' };
-  var ORDER = { 'peer-reviewed': 0, 'under-review': 1, 'preprint': 2, 'workshop': 3 };
-
-  var items = Array.prototype.slice.call(list.querySelectorAll('.pub-item'));
-  items.forEach(function (el) {
-    el.dataset.y = +el.dataset.year;
-    el.dataset.o = ORDER[el.dataset.status];
-  });
-
-  function render(mode) {
-    Array.prototype.slice.call(list.querySelectorAll('.pub-group'))
-      .forEach(function (g) { g.remove(); });
-
-    var sorted = items.slice().sort(function (a, b) {
-      return mode === 'year'
-        ? b.dataset.y - a.dataset.y || a.dataset.o - b.dataset.o
-        : a.dataset.o - b.dataset.o || b.dataset.y - a.dataset.y;
-    });
-
-    var counts = {};
-    sorted.forEach(function (el) {
-      var k = mode === 'year' ? el.dataset.year : el.dataset.status;
-      counts[k] = (counts[k] || 0) + 1;
-    });
-
-    var frag = document.createDocumentFragment(), cur = null;
-    sorted.forEach(function (el) {
-      var k = mode === 'year' ? el.dataset.year : el.dataset.status;
-      if (k !== cur) {
-        cur = k;
-        var h = document.createElement('div');
-        h.className = 'pub-group';
-        h.textContent = mode === 'year' ? k : LABEL[k];
-        h.setAttribute('data-count', counts[k]);
-        frag.appendChild(h);
-      }
-      frag.appendChild(el);
-    });
-    list.appendChild(frag);
-  }
-
-  section.querySelector('.pub-seg').addEventListener('click', function (e) {
-    var btn = e.target.closest('.pub-seg-btn');
-    if (!btn || btn.classList.contains('is-on')) return;
-    section.querySelectorAll('.pub-seg-btn').forEach(function (b) {
-      b.classList.toggle('is-on', b === btn);
-    });
-    render(btn.dataset.group);
-  });
-
-  render('status');
-})();
-</script>
 
 <script>
 /* BibTeX: expand one entry at a time, with copy-to-clipboard. */
