@@ -659,3 +659,68 @@ section:last-of-type { border-bottom: none; }
 }
 
 .topic-refs a:hover { background: #ede9fe; text-decoration: none; }
+
+/* ── Publications: group headings + footnote ──
+   Append these to assets/style.css, after the existing
+   .pub-award rule (around line 344).                     */
+
+.pub-group {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 2rem 0 0.2rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.pub-group:first-of-type { margin-top: 0.6rem; }
+
+/* the item directly under a group heading shouldn't double up the rule */
+.pub-group + .pub-item { padding-top: 0.9rem; }
+
+.pub-authors sup {
+  font-size: 0.7em;
+  line-height: 0;
+}
+
+.pub-footnote {
+  margin-top: 1.6rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+/* ── Prospective students ── */
+.recruit {
+  margin-top: 1.8rem;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid var(--rule);
+  background: rgba(0, 0, 0, 0.015);
+}
+
+.recruit-head {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.7rem;
+}
+
+.recruit p {
+  font-size: 0.88rem;
+  line-height: 1.62;
+  font-weight: 300;
+  margin-bottom: 0.7rem;
+}
+
+.recruit p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
