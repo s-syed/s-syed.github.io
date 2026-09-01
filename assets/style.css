@@ -243,15 +243,6 @@ section:last-of-type { border-bottom: none; }
   color: var(--muted);
 }
 
-.recruit-note {
-  padding: 1rem 1.2rem;
-  border-left: 3px solid var(--accent);
-  background: var(--tag-bg);
-  font-size: 0.9rem;
-  color: #2a2a2a;
-  font-weight: 300;
-}
-
 /* ── News ── */
 .news-item {
   display: grid;
@@ -677,16 +668,14 @@ section:last-of-type { border-bottom: none; }
 
 .recruit-lead {
   font-size: 1rem !important;
-  font-weight: 300 !important;
+  font-weight: 400 !important;
   line-height: 1.55 !important;
   color: var(--ink);
 }
 
 .recruit-note {
   margin-bottom: 0 !important;
-  padding-top: 0.8rem;
-  border-top: 1px solid #e9e2fb;
-  font-size: 0.8rem !important;
+  font-size: 0.82rem !important;
   color: var(--muted);
 }
 
@@ -747,13 +736,12 @@ section:last-of-type { border-bottom: none; }
 
 /* keep the accent bar showing while a BibTeX block is open */
 .pub-item:has(.pub-bib:not([hidden]))::before { transform: scaleX(1); }
-.pub-item:has(.pub-bib:not([hidden])) .pub-num { color: var(--accent); }
 
 @media (max-width: 640px) {
   .pub-bib code { font-size: 0.62rem; }
 }
 
-/* ── Publications: year groups, numbering, badges ── */
+/* ── Publications: year groups ── */
 .pub-group {
   font-family: 'DM Mono', monospace;
   font-size: 0.66rem;
@@ -769,25 +757,13 @@ section:last-of-type { border-bottom: none; }
 
 .pub-item {
   position: relative;
-  padding-left: 2.4rem;
-  transition: background 0.18s ease;
-}
-
-.pub-num {
-  position: absolute;
-  left: 0;
-  top: 1.15rem;
-  width: 1.7rem;
-  text-align: right;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.68rem;
-  color: var(--soft);
+  padding-left: 0.9rem;
 }
 
 .pub-item::before {
   content: '';
   position: absolute;
-  left: 2.05rem;
+  left: 0;
   top: 0.9rem;
   bottom: 0.9rem;
   width: 2px;
@@ -798,36 +774,11 @@ section:last-of-type { border-bottom: none; }
 }
 
 .pub-item:hover::before { transform: scaleX(1); }
-.pub-item:hover .pub-num { color: var(--accent); }
-
-.pub-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.55rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  font-weight: 400;
-  color: var(--muted);
-  border: 1px solid var(--rule);
-  padding: 0.1rem 0.4rem;
-  margin-left: 0.45rem;
-  vertical-align: 0.15em;
-  white-space: nowrap;
-}
 
 /* ── Doctoral thesis ── */
 .thesis {
-  padding: 1.2rem 0 1.4rem;
+  padding: 0.2rem 0 1.3rem 0.9rem;
   border-bottom: 1px solid var(--rule);
-  margin-bottom: 0.4rem;
-}
-
-.thesis-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--soft);
-  margin-bottom: 0.4rem;
 }
 
 .thesis-title {
@@ -841,23 +792,9 @@ section:last-of-type { border-bottom: none; }
   font-size: 0.85rem;
   font-weight: 300;
   color: var(--muted);
-  margin-bottom: 0.2rem;
-}
-
-.thesis-awards {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.05em;
-  color: var(--soft);
   margin-bottom: 0.55rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pub-item, .pub-item::before { transition: none; }
-}
-
-@media (max-width: 640px) {
-  .pub-item { padding-left: 1.9rem; }
-  .pub-num { width: 1.3rem; }
-  .pub-item::before { left: 1.6rem; }
+  .pub-item::before { transition: none; }
 }
