@@ -660,41 +660,6 @@ section:last-of-type { border-bottom: none; }
 
 .topic-refs a:hover { background: #ede9fe; text-decoration: none; }
 
-/* ── Publications: group headings + footnote ──
-   Append these to assets/style.css, after the existing
-   .pub-award rule (around line 344).                     */
-
-.pub-group {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 2rem 0 0.2rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--rule);
-}
-
-.pub-group:first-of-type { margin-top: 0.6rem; }
-
-/* the item directly under a group heading shouldn't double up the rule */
-.pub-group + .pub-item { padding-top: 0.9rem; }
-
-.pub-authors sup {
-  font-size: 0.7em;
-  line-height: 0;
-}
-
-.pub-footnote {
-  margin-top: 1.6rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--rule);
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-}
-
 /* ── Prospective students ── */
 .recruit {
   padding: 1.6rem 1.7rem;
@@ -728,4 +693,166 @@ section:last-of-type { border-bottom: none; }
 
 @media (max-width: 640px) {
   .recruit { padding: 1.2rem 1.1rem; }
+}
+
+/* ── Publications: toolbar + grouping ── */
+.pub-toolbar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.pub-js .pub-toolbar { display: flex; }
+
+.pub-seg { display: flex; gap: 0.3rem; }
+
+.pub-seg-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--rule);
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.pub-seg-btn:hover { color: var(--ink); border-color: var(--soft); }
+
+.pub-seg-btn.is-on {
+  color: var(--tag-text);
+  background: var(--tag-bg);
+  border-color: #ddd0fb;
+}
+
+.pub-total {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--soft);
+}
+
+/* group heading with a count badge on the right */
+.pub-group {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 2rem 0 0.2rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.pub-group::after {
+  content: attr(data-count);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  color: var(--soft);
+}
+
+.pub-group:first-child { margin-top: 0.9rem; }
+.pub-group + .pub-item { padding-top: 0.9rem; }
+
+/* hover: a thin accent bar slides in from the left */
+.pub-item {
+  position: relative;
+  padding-left: 0;
+  transition: padding-left 0.18s ease, background 0.18s ease;
+}
+
+.pub-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7rem;
+  bottom: 0.7rem;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.18s ease;
+}
+
+.pub-item:hover { padding-left: 0.85rem; }
+.pub-item:hover::before { transform: scaleY(1); }
+
+.pub-authors sup { font-size: 0.7em; line-height: 0; }
+
+.pub-footnote {
+  margin-top: 1.6rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pub-item, .pub-item::before { transition: none; }
+}
+
+/* ── Publications: BibTeX ── */
+.pub-bib-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  border: none;
+  cursor: pointer;
+  line-height: inherit;
+}
+
+.pub-bib-btn.is-on {
+  background: var(--accent);
+  color: #fff;
+}
+
+.pub-bib {
+  position: relative;
+  margin-top: 0.7rem;
+  padding: 0.85rem 1rem;
+  background: #fbfaff;
+  border: 1px solid #e9e2fb;
+  overflow-x: auto;
+}
+
+.pub-bib code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  line-height: 1.55;
+  color: var(--ink);
+  white-space: pre;
+}
+
+.pub-bib-copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  color: var(--tag-text);
+  background: var(--tag-bg);
+  border: 1px solid #e2d9fa;
+  padding: 0.18rem 0.5rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pub-bib-copy:hover { background: #ede9fe; }
+
+/* don't let the hover slide shift an open BibTeX block around */
+.pub-item:has(.pub-bib:not([hidden])) { padding-left: 0.85rem; }
+.pub-item:has(.pub-bib:not([hidden]))::before { transform: scaleY(1); }
+
+@media (max-width: 640px) {
+  .pub-bib code { font-size: 0.62rem; }
 }
