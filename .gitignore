@@ -1,2 +1,15 @@
+# macOS
+.DS_Store
+._*
+
+# Quarto
 /.quarto/
 **/*.quarto_ipynb
+/_site/
+
+# Editors
+.vscode/
+.idea/
+
+# Office temp files
+~$*
